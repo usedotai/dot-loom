@@ -1,0 +1,20 @@
+{
+  "name": "Dot Loom OpenRouter example",
+  "providers": {
+    "openrouter": {
+      "type": "openai-compatible",
+      "baseUrl": "https://openrouter.ai/api/v1",
+      "apiKey": "env:OPENROUTER_API_KEY",
+      "headers": {
+        "HTTP-Referer": "https://usedot.xyz",
+        "X-Title": "Dot Loom"
+      }
+    }
+  },
+  "models": {
+    "router": "openrouter/google/gemma-3-4b-it",
+    "drafter": "openrouter/deepseek/deepseek-chat",
+    "critic": "openrouter/qwen/qwen-2.5-coder-32b-instruct",
+    "finalizer": "openrouter/deepseek/deepseek-chat"
+  }
+}

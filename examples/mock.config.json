@@ -1,0 +1,44 @@
+{
+  "name": "Dot Loom mock demo",
+  "providers": {
+    "mock": {
+      "type": "mock"
+    }
+  },
+  "models": {
+    "router": "mock/router-small",
+    "drafter": "mock/worker-small",
+    "critic": "mock/critic-small",
+    "finalizer": "mock/finalizer-small"
+  },
+  "workers": {
+    "router": {
+      "model": "mock/router-small",
+      "label": "Mock router",
+      "capabilities": ["routing", "classification"],
+      "cost": "none",
+      "latency": "low"
+    },
+    "drafter": {
+      "model": "mock/worker-small",
+      "label": "Mock drafter",
+      "capabilities": ["drafting", "analysis"],
+      "cost": "none",
+      "latency": "low"
+    },
+    "critic": {
+      "model": "mock/critic-small",
+      "label": "Mock verifier",
+      "capabilities": ["verification", "privacy", "security"],
+      "cost": "none",
+      "latency": "low"
+    },
+    "finalizer": {
+      "model": "mock/finalizer-small",
+      "label": "Mock finalizer",
+      "capabilities": ["synthesis", "final-answer"],
+      "cost": "none",
+      "latency": "low"
+    }
+  }
+}

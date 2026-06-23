@@ -1,0 +1,24 @@
+{
+  "name": "@usedot/loom",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Provider-pluggable orchestration runtime for multi-model inference pipelines.",
+  "type": "module",
+  "bin": {
+    "dot-loom": "./src/cli.mjs"
+  },
+  "scripts": {
+    "loom": "node src/cli.mjs",
+    "start": "node src/cli.mjs",
+    "demo": "node src/cli.mjs run \"Review this API route for privacy and billing bugs.\" --pipeline code-review --config examples/mock.config.json",
+    "doctor": "node src/cli.mjs doctor --config examples/mock.config.json",
+    "test": "node src/cli.mjs run \"Find edge cases in a credits API.\" --pipeline code-review --config examples/mock.config.json --json",
+    "studio": "npm --prefix studio run dev",
+    "studio:install": "npm --prefix studio install",
+    "studio:build": "npm --prefix studio run build",
+    "verify": "npm run test && npm --prefix studio run build"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

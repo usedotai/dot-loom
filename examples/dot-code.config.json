@@ -1,0 +1,46 @@
+{
+  "name": "Dot Loom code-review lane over Dot API",
+  "providers": {
+    "dot": {
+      "type": "dot",
+      "baseUrl": "https://api.usedot.xyz/agent/v1",
+      "apiKey": "env:DOT_API_KEY"
+    }
+  },
+  "models": {
+    "router": "dot/dot-nemotron-nano",
+    "drafter": "dot/dot-deepseek-v4-flash",
+    "critic": "dot/dot-gemma-4-uncensored",
+    "finalizer": "dot/dot-qwen-coder-480b"
+  },
+  "workers": {
+    "router": {
+      "model": "dot/dot-nemotron-nano",
+      "label": "Nano router",
+      "capabilities": ["routing", "classification", "cheap-first-pass"],
+      "cost": "low",
+      "latency": "low"
+    },
+    "drafter": {
+      "model": "dot/dot-deepseek-v4-flash",
+      "label": "Flash drafter",
+      "capabilities": ["drafting", "implementation", "fast-analysis"],
+      "cost": "low",
+      "latency": "low"
+    },
+    "critic": {
+      "model": "dot/dot-gemma-4-uncensored",
+      "label": "Verifier",
+      "capabilities": ["verification", "privacy", "security", "edge-cases"],
+      "cost": "low",
+      "latency": "low"
+    },
+    "finalizer": {
+      "model": "dot/dot-qwen-coder-480b",
+      "label": "Code finalizer",
+      "capabilities": ["code", "synthesis", "api-review", "agent-integration"],
+      "cost": "medium",
+      "latency": "medium"
+    }
+  }
+}

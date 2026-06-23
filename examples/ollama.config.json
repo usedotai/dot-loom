@@ -1,0 +1,15 @@
+{
+  "name": "Dot Loom local Ollama demo",
+  "providers": {
+    "ollama": {
+      "type": "ollama",
+      "baseUrl": "http://localhost:11434"
+    }
+  },
+  "models": {
+    "router": "ollama/gemma3:4b",
+    "drafter": "ollama/qwen2.5-coder:7b",
+    "critic": "ollama/qwen3:8b",
+    "finalizer": "ollama/qwen3:8b"
+  }
+}

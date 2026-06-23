@@ -1,0 +1,16 @@
+{
+  "name": "Dot Loom over Dot API",
+  "providers": {
+    "dot": {
+      "type": "dot",
+      "baseUrl": "https://api.usedot.xyz/agent/v1",
+      "apiKey": "env:DOT_API_KEY"
+    }
+  },
+  "models": {
+    "router": "dot/dot-nemotron-nano",
+    "drafter": "dot/dot-deepseek-v4-flash",
+    "critic": "dot/dot-gemma-4-uncensored",
+    "finalizer": "dot/dot-deepseek-v4-flash"
+  }
+}
