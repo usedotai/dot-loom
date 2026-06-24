@@ -1,5 +1,7 @@
 # Dot Loom
 
+[![GitHub stars](https://img.shields.io/github/stars/usedotai/dot-loom?style=social)](https://github.com/usedotai/dot-loom/stargazers)
+
 Dot Loom is a provider-pluggable orchestration runtime for multi-model inference.
 
 It is not a new foundation model and it does not pretend to be one. It is a research and developer framework for composing existing models into role-based pipelines:
