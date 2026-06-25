@@ -397,3 +397,12 @@ Long term:
 - Train a conductor model for task decomposition.
 - Support hybrid local plus hosted execution.
 - Publish reproducible benchmarks for orchestration strategies.
+
+
+<a href="https://www.star-history.com/?repos=usedotai%2Fdot-loom&type=timeline&legend=bottom-right">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=usedotai/dot-loom&type=timeline&theme=dark&logscale&legend=bottom-right" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=usedotai/dot-loom&type=timeline&logscale&legend=bottom-right" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=usedotai/dot-loom&type=timeline&logscale&legend=bottom-right" />
+ </picture>
+</a>
