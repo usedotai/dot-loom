@@ -2,6 +2,7 @@
 import { loadConfig } from "./config.mjs";
 import { createLiveReporter, printDoctor, printHuman } from "./format.mjs";
 import { runAdaptive } from "./adaptive.mjs";
+import { renderEvalMarkdown, runEval } from "./eval.mjs";
 import { runBaseline, runFusion } from "./fusion.mjs";
 import { listPipelines } from "./pipelines/index.mjs";
 
@@ -15,6 +16,19 @@ try {
     for (const pipeline of listPipelines()) {
       console.log(`${pipeline.name}\n  ${pipeline.instruction}`);
     }
+  } else if (args.command === "eval") {
+    const config = await loadConfig(args.config);
+    const report = await runEval(config, {
+      ...args,
+      onRunStart: args.json
+        ? undefined
+        : ({ evalCase, strategy, iteration, iterations }) => {
+            const pass = iterations > 1 ? ` iteration=${iteration}/${iterations}` : "";
+            console.error(`[eval] ${evalCase.id} strategy=${strategy}${pass}`);
+          },
+    });
+    console.log(args.json ? JSON.stringify(report, null, 2) : renderEvalMarkdown(report));
+    if (!args.json && report.output) console.error(`\nWrote ${report.output}`);
   } else if (args.command === "run") {
     const config = await loadConfig(args.config);
     const input = args.prompt || args._.join(" ").trim();
@@ -46,6 +60,11 @@ function parseArgs(argv) {
     baseline: false,
     adaptive: false,
     stream: true,
+    dataset: "evals/mock-code-review.jsonl",
+    strategies: "baseline,fixed,adaptive",
+    iterations: 1,
+    output: undefined,
+    includeAnswers: false,
   };
 
   for (let i = 1; i < argv.length; i += 1) {
@@ -58,6 +77,11 @@ function parseArgs(argv) {
     else if (arg === "--baseline") parsed.baseline = true;
     else if (arg === "--adaptive") parsed.adaptive = true;
     else if (arg === "--no-stream") parsed.stream = false;
+    else if (arg === "--dataset") parsed.dataset = argv[++i];
+    else if (arg === "--strategies") parsed.strategies = argv[++i];
+    else if (arg === "--iterations") parsed.iterations = Number(argv[++i]);
+    else if (arg === "--output") parsed.output = argv[++i];
+    else if (arg === "--include-answers") parsed.includeAnswers = true;
     else parsed._.push(arg);
   }
   if (parsed.json) parsed.stream = false;
@@ -71,6 +95,8 @@ function printHelp() {
 Usage:
   node src/cli.mjs doctor --config examples/dot.config.json
   node src/cli.mjs pipelines
+  node src/cli.mjs eval --dataset evals/mock-code-review.jsonl --config examples/mock.config.json
+  node src/cli.mjs eval --dataset evals/my-suite.jsonl --strategies baseline,fixed,adaptive --output reports/eval.json
   node src/cli.mjs run "review this API" --pipeline code-review --config examples/dot.config.json
   node src/cli.mjs run "review this API" --adaptive --pipeline code-review --config examples/dot.config.json
   node src/cli.mjs run "review this API" --baseline --config examples/dot.config.json

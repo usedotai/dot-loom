@@ -27,13 +27,14 @@ What works now:
 - Provider abstraction for Dot, OpenAI-compatible APIs, Ollama, and mock runs.
 - Streaming CLI traces.
 - Per-role token and timing summaries.
+- Reproducible baseline vs fixed vs adaptive eval runs.
 - Studio UI for visualizing model interaction and live process traces.
 - BYOK Studio bridge that can run arbitrary role maps without persisting provider keys.
 - Access-list based context gating in adaptive mode.
 
 What is not done yet:
 
-- Formal eval harness across task suites.
+- Model-judged and human-reviewed eval suites.
 - Learned or evolved routing policies.
 - Parallel branch execution.
 - Tool-call isolation per worker.
@@ -132,6 +133,48 @@ node src/cli.mjs run "Find edge cases in a credits API." \
   --config examples/mock.config.json \
   --json
 ```
+
+## Reproducible Evaluations
+
+Compare the single-model baseline with fixed and adaptive Loom workflows:
+
+```bash
+npm run eval:mock
+```
+
+Or run your own JSONL suite and save the complete report:
+
+```bash
+node src/cli.mjs eval \
+  --dataset evals/my-suite.jsonl \
+  --config examples/my-provider.config.json \
+  --strategies baseline,fixed,adaptive \
+  --iterations 3 \
+  --output reports/my-suite.json
+```
+
+Each dataset line contains a prompt and deterministic acceptance checks:
+
+```json
+{"id":"credits-api","pipeline":"code-review","prompt":"Review this credits API.","checks":[{"type":"contains","value":"privacy"},{"type":"contains-any","values":["billing","credit"]},{"type":"not-contains","value":"sorry"}]}
+```
+
+Supported checks are `contains`, `contains-any`, and `not-contains`. Quality is the percentage of checks passed; pass rate is the percentage of runs that satisfy every check. This starter harness is deliberately deterministic. It does not claim that keyword checks replace model judges or human review.
+
+Cost is calculated from actual token usage only when every invoked model has explicit per-million-token pricing:
+
+```json
+{
+  "pricing": {
+    "provider/model-id": {
+      "inputPerMillion": 0.15,
+      "outputPerMillion": 0.60
+    }
+  }
+}
+```
+
+Pricing is configuration, never a built-in marketing assumption. If any price is missing, Loom reports cost as unavailable instead of inventing a number. Every JSON run includes a per-model token and cost breakdown. When the baseline has a non-zero measured cost, the report also normalizes it to a cost index of `100`.
 
 ## Studio
 
@@ -352,10 +395,17 @@ If a real API key was ever pasted in terminal history or a chat transcript, rota
 
 ## Verification
 
-Run the CLI smoke test:
+Run the automated tests:
 
 ```bash
 npm run test
+```
+
+Run the CLI smoke test and deterministic eval example:
+
+```bash
+npm run test:smoke
+npm run eval:mock
 ```
 
 Build the Studio:
@@ -375,8 +425,8 @@ npm run verify
 
 Near term:
 
-- Add a formal eval harness.
-- Add batch comparison: baseline vs fixed vs adaptive.
+- Add model-judged and human-reviewed eval suites.
+- Add parallel eval execution for larger datasets.
 - Persist anonymized local traces for regression tests.
 - Add LM Studio examples.
 - Add tool-call isolation and explicit tool permissions.

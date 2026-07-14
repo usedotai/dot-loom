@@ -11,6 +11,12 @@
     "critic": "mock/critic-small",
     "finalizer": "mock/finalizer-small"
   },
+  "pricing": {
+    "mock/router-small": { "inputPerMillion": 0, "outputPerMillion": 0 },
+    "mock/worker-small": { "inputPerMillion": 0, "outputPerMillion": 0 },
+    "mock/critic-small": { "inputPerMillion": 0, "outputPerMillion": 0 },
+    "mock/finalizer-small": { "inputPerMillion": 0, "outputPerMillion": 0 }
+  },
   "workers": {
     "router": {
       "model": "mock/router-small",

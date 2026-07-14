@@ -1,0 +1,2 @@
+{"id":"credits-api","pipeline":"code-review","prompt":"Review this credits API for billing and privacy edge cases.","checks":[{"type":"contains-any","values":["billing","credit"]},{"type":"contains","value":"privacy"},{"type":"contains-any","values":["verify","test"]}]}
+{"id":"replay-protection","pipeline":"code-review","prompt":"Review an API spend endpoint for replay and double-spend bugs.","checks":[{"type":"contains-any","values":["billing","spend"]},{"type":"contains-any","values":["verify","test"]},{"type":"not-contains","value":"sorry"}]}

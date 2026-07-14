@@ -12,11 +12,13 @@
     "start": "node src/cli.mjs",
     "demo": "node src/cli.mjs run \"Review this API route for privacy and billing bugs.\" --pipeline code-review --config examples/mock.config.json",
     "doctor": "node src/cli.mjs doctor --config examples/mock.config.json",
-    "test": "node src/cli.mjs run \"Find edge cases in a credits API.\" --pipeline code-review --config examples/mock.config.json --json",
+    "test": "node --test",
+    "test:smoke": "node src/cli.mjs run \"Find edge cases in a credits API.\" --pipeline code-review --config examples/mock.config.json --json",
+    "eval:mock": "node src/cli.mjs eval --dataset evals/mock-code-review.jsonl --config examples/mock.config.json",
     "studio": "npm --prefix studio run dev",
     "studio:install": "npm --prefix studio install",
     "studio:build": "npm --prefix studio run build",
-    "verify": "npm run test && npm --prefix studio run build"
+    "verify": "npm run test && npm run test:smoke && npm run eval:mock && npm --prefix studio run build"
   },
   "engines": {
     "node": ">=20"
