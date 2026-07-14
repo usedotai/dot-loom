@@ -26,7 +26,7 @@ export async function runAdaptive(config, input, options = {}) {
   });
 
   for (const step of planned.steps) {
-    const permission = canRunStep(budget);
+    const permission = canRunStep(budget, step);
     if (!permission.allowed) {
       budget.limited = true;
       budget.stopReason = permission.reason;
@@ -96,6 +96,7 @@ export function resolveAdaptiveLimits(config, options = {}) {
     dotProvider ? 1 : 0,
     "credit-per-call",
   );
+  const estimatedCreditsByModel = normalizeCreditEstimates(config.adaptive?.estimatedCreditsByModel);
   const maxCalls = positiveInteger(options.maxCalls ?? config.adaptive?.maxCalls, defaults.maxCalls, "max-calls");
   const maxLatencyMs = positiveInteger(
     options.maxLatencyMs ?? config.adaptive?.maxLatencyMs,
@@ -103,11 +104,12 @@ export function resolveAdaptiveLimits(config, options = {}) {
     "max-latency-ms",
   );
   const configuredCredits = options.maxCredits ?? config.adaptive?.maxCredits;
+  const largestEstimate = Math.max(estimatedCreditsPerCall, ...Object.values(estimatedCreditsByModel));
   const maxCredits = configuredCredits === undefined
-    ? estimatedCreditsPerCall > 0 ? maxCalls * estimatedCreditsPerCall : null
+    ? largestEstimate > 0 ? maxCalls * largestEstimate : null
     : positiveNumber(configuredCredits, "max-credits");
 
-  return { policy, maxCalls, maxCredits, maxLatencyMs, estimatedCreditsPerCall };
+  return { policy, maxCalls, maxCredits, maxLatencyMs, estimatedCreditsPerCall, estimatedCreditsByModel };
 }
 
 export function assessTask(input, pipelineName = "general") {
@@ -313,7 +315,7 @@ function workerSystemPrompt(step) {
     return "You are Dot Loom's adversarial verifier. Find correctness, privacy, security, and test gaps. Return concise evidence for the finalizer.";
   }
   if (step.role === "editor") {
-    return "You are Dot Loom's verifier-editor. Independently check the proposed answer, then return a complete corrected final answer—not commentary about the editing process.";
+    return "You are Dot Loom's verifier-editor. Independently check the proposed answer, then return a complete corrected final answer, not commentary about the editing process.";
   }
   if (step.role === "finalizer") {
     return "You are Dot Loom's finalizer. Synthesize a complete answer using only supported findings.";
@@ -334,13 +336,13 @@ function createBudget(limits) {
   };
 }
 
-function canRunStep(budget) {
+function canRunStep(budget, step) {
   if (budget.calls >= budget.limits.maxCalls) return { allowed: false, reason: "max-calls-reached" };
   if (Date.now() - budget.startedAt >= budget.limits.maxLatencyMs) {
     return { allowed: false, reason: "max-latency-reached" };
   }
   if (budget.limits.maxCredits !== null) {
-    const projected = Math.max(budget.actualCredits, budget.estimatedCredits) + budget.limits.estimatedCreditsPerCall;
+    const projected = Math.max(budget.actualCredits, budget.estimatedCredits) + estimatedCreditsFor(budget, step.workerRef);
     if (projected > budget.limits.maxCredits) return { allowed: false, reason: "max-credits-reached" };
   }
   return { allowed: true };
@@ -348,7 +350,7 @@ function canRunStep(budget) {
 
 function recordSpend(budget, traceItem) {
   budget.calls += 1;
-  budget.estimatedCredits += budget.limits.estimatedCreditsPerCall;
+  budget.estimatedCredits += estimatedCreditsFor(budget, traceItem.modelRef);
   if (traceItem.payment?.spent_credits !== undefined) {
     budget.sawCreditReceipt = true;
     budget.actualCredits += Number(traceItem.payment.spent_credits || 0);
@@ -376,7 +378,19 @@ function publicLimits(limits) {
     maxCredits: limits.maxCredits,
     maxLatencyMs: limits.maxLatencyMs,
     estimatedCreditsPerCall: limits.estimatedCreditsPerCall,
+    estimatedCreditsByModel: limits.estimatedCreditsByModel,
   };
+}
+
+function estimatedCreditsFor(budget, modelRef) {
+  return budget.limits.estimatedCreditsByModel?.[modelRef] ?? budget.limits.estimatedCreditsPerCall;
+}
+
+function normalizeCreditEstimates(value) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return {};
+  return Object.fromEntries(
+    Object.entries(value).map(([modelRef, estimate]) => [modelRef, nonNegativeNumber(estimate, 0, `estimated credits for ${modelRef}`)]),
+  );
 }
 
 function pickAnswer(candidate, outputs) {

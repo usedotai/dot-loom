@@ -580,27 +580,27 @@ function displayStrategy(strategy) {
 }
 
 function percent(value) {
-  return Number.isFinite(value) ? `${(value * 100).toFixed(1)}%` : "—";
+  return Number.isFinite(value) ? `${(value * 100).toFixed(1)}%` : "n/a";
 }
 
 function percentWithCi(value, interval) {
-  if (value === null) return "—";
+  if (value === null) return "n/a";
   if (!interval) return percent(value);
-  return `${percent(value)} (${percent(interval[0])}–${percent(interval[1])})`;
+  return `${percent(value)} (${percent(interval[0])} to ${percent(interval[1])})`;
 }
 
 function money(value) {
-  return value === null ? "—" : `$${value.toFixed(value >= 0.01 ? 4 : 6)}`;
+  return value === null ? "n/a" : `$${value.toFixed(value >= 0.01 ? 4 : 6)}`;
 }
 
 function formatSummaryCost(item) {
   if (item.avgCostUsd !== null) return money(item.avgCostUsd);
   if (Number.isFinite(item.avgSpentCredits)) return `${item.avgSpentCredits.toFixed(2)} cr`;
-  return "—";
+  return "n/a";
 }
 
 function index(value) {
-  return value === null ? "—" : `${value.toFixed(1)}`;
+  return value === null ? "n/a" : `${value.toFixed(1)}`;
 }
 
 function seconds(value) {

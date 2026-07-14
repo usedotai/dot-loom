@@ -16,7 +16,7 @@
     .note { font-size:13px; font-weight:600; fill:#334155; }
     .footnote { font-size:11px; fill:#64748b; }
   </style>
-<text x="54" y="46" class="title" text-anchor="start">Dot Loom v0.2: measured compute–quality trade-offs</text>
+<text x="54" y="46" class="title" text-anchor="start">Dot Loom v0.2: measured compute vs quality trade-offs</text>
 <text x="54" y="75" class="subtitle" text-anchor="start">3 high-risk code-review cases × 1 iteration; 9 judged runs</text>
 <text x="54" y="98" class="subtitle" text-anchor="start">Workflow credits exclude judge calls. Error bars show the reported 95% interval for mean judge quality.</text>
 <text x="72" y="132" class="panel-title" text-anchor="start">A  Provider credits vs judge quality</text>

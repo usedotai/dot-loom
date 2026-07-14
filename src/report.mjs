@@ -97,7 +97,7 @@ export function renderEvalHtml(report) {
     <div>
       <div class="eyebrow">Dot Loom · evaluation receipt</div>
       <h1>Measure the weave.</h1>
-      <p class="lede">Direct, fixed, and budgeted adaptive inference compared on the same tasks—with quality, call count, escalation, cost, and latency kept visible.</p>
+      <p class="lede">Direct, fixed, and budgeted adaptive inference compared on the same tasks, with quality, call count, escalation, cost, and latency kept visible.</p>
     </div>
     <div class="meta">
       <div class="trust">● measured, not estimated</div>
@@ -160,17 +160,17 @@ function metricChart(summary, key, title, formatter, explicitMax = null, lowerIs
     const value = item[key];
     const available = Number.isFinite(value);
     const width = available ? Math.max(0, Math.min(100, (value / max) * 100)) : 0;
-    return `<div class="bar-row"><div class="bar-meta"><span>${escapeHtml(displayStrategy(item.strategy))}</span><strong>${available ? escapeHtml(formatter(value)) : "—"}</strong></div><div class="track"><div class="fill" style="width:${width.toFixed(1)}%"></div></div></div>`;
+    return `<div class="bar-row"><div class="bar-meta"><span>${escapeHtml(displayStrategy(item.strategy))}</span><strong>${available ? escapeHtml(formatter(value)) : "n/a"}</strong></div><div class="track"><div class="fill" style="width:${width.toFixed(1)}%"></div></div></div>`;
   }).join("");
   return `<h3>${escapeHtml(title)}${lowerIsBetter ? " · lower is better" : ""}</h3>${bars}`;
 }
 
 function summaryRow(item) {
-  return `<tr><td>${escapeHtml(displayStrategy(item.strategy))}</td><td class="value-good">${percentWithCi(item.quality, item.qualityCi95)}</td><td>${Number(item.avgCalls || 0).toFixed(2)}</td><td>${percent(item.oneCallRate)}</td><td>${percent(item.escalationRate)}</td><td>${percent(item.routingAccuracy)}</td><td>${formatSummaryCost(item)}</td><td>${item.costIndex === null ? "—" : item.costIndex.toFixed(1)}</td><td>${seconds(item.p95LatencyMs)}</td><td>${percent(item.passRate)}</td></tr>`;
+  return `<tr><td>${escapeHtml(displayStrategy(item.strategy))}</td><td class="value-good">${percentWithCi(item.quality, item.qualityCi95)}</td><td>${Number(item.avgCalls || 0).toFixed(2)}</td><td>${percent(item.oneCallRate)}</td><td>${percent(item.escalationRate)}</td><td>${percent(item.routingAccuracy)}</td><td>${formatSummaryCost(item)}</td><td>${item.costIndex === null ? "n/a" : item.costIndex.toFixed(1)}</td><td>${seconds(item.p95LatencyMs)}</td><td>${percent(item.passRate)}</td></tr>`;
 }
 
 function runRow(run) {
-  return `<tr><td>${escapeHtml(run.caseId)}</td><td>${escapeHtml(displayStrategy(run.strategy))}</td><td>${percent(run.quality)}</td><td class="${run.passed ? "pass" : "fail"}">${run.passed ? "PASS" : "FAIL"}</td><td>${Number(run.callCount || 0)}</td><td>${run.workflowMode === "adaptive" ? run.escalated ? "YES" : "NO" : "—"}</td><td>${seconds(run.elapsedMs)}</td><td>${formatRunCost(run)}</td></tr>`;
+  return `<tr><td>${escapeHtml(run.caseId)}</td><td>${escapeHtml(displayStrategy(run.strategy))}</td><td>${percent(run.quality)}</td><td class="${run.passed ? "pass" : "fail"}">${run.passed ? "PASS" : "FAIL"}</td><td>${Number(run.callCount || 0)}</td><td>${run.workflowMode === "adaptive" ? run.escalated ? "YES" : "NO" : "n/a"}</td><td>${seconds(run.elapsedMs)}</td><td>${formatRunCost(run)}</td></tr>`;
 }
 
 function displayStrategy(strategy) {
@@ -178,11 +178,11 @@ function displayStrategy(strategy) {
   return labels[strategy] || strategy;
 }
 
-function percent(value) { return Number.isFinite(value) ? `${(value * 100).toFixed(1)}%` : "—"; }
-function percentWithCi(value, interval) { return Number.isFinite(value) && interval ? `${percent(value)}<br><small>${percent(interval[0])}–${percent(interval[1])}</small>` : percent(value); }
-function money(value) { return value === null ? "—" : `$${value.toFixed(value >= 0.01 ? 4 : 6)}`; }
-function formatSummaryCost(item) { return item.avgCostUsd !== null ? money(item.avgCostUsd) : Number.isFinite(item.avgSpentCredits) ? `${item.avgSpentCredits.toFixed(2)} cr` : "—"; }
-function formatRunCost(run) { return run.costUsd !== null ? money(run.costUsd) : Number.isFinite(run.spentCredits) ? `${run.spentCredits.toFixed(2)} cr` : "—"; }
+function percent(value) { return Number.isFinite(value) ? `${(value * 100).toFixed(1)}%` : "n/a"; }
+function percentWithCi(value, interval) { return Number.isFinite(value) && interval ? `${percent(value)}<br><small>${percent(interval[0])} to ${percent(interval[1])}</small>` : percent(value); }
+function money(value) { return value === null ? "n/a" : `$${value.toFixed(value >= 0.01 ? 4 : 6)}`; }
+function formatSummaryCost(item) { return item.avgCostUsd !== null ? money(item.avgCostUsd) : Number.isFinite(item.avgSpentCredits) ? `${item.avgSpentCredits.toFixed(2)} cr` : "n/a"; }
+function formatRunCost(run) { return run.costUsd !== null ? money(run.costUsd) : Number.isFinite(run.spentCredits) ? `${run.spentCredits.toFixed(2)} cr` : "n/a"; }
 function seconds(value) { return `${(Number(value || 0) / 1000).toFixed(2)}s`; }
 function shortPath(value) { return String(value || "").split(/[\\/]/).slice(-2).join("/"); }
 function escapeHtml(value) { return String(value ?? "").replace(/[&<>"']/g, (char) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" })[char]); }

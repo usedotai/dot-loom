@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="570" viewBox="0 0 1200 570" role="img" aria-labelledby="title desc">
+  <title id="title">Case-level single-model judge scores</title>
+  <desc id="desc">Case-level single-model judge scores. Values come from a committed raw benchmark receipt.</desc>
+  <rect width="1200" height="570" fill="#ffffff"/>
+  <style>
+    text { font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; fill:#111827; }
+    .title { font-size:25px; font-weight:600; }
+    .subtitle { font-size:14px; fill:#475569; }
+    .panel-title { font-size:16px; font-weight:600; }
+    .axis-label { font-size:13px; fill:#334155; }
+    .tick { font-size:12px; fill:#64748b; }
+    .point-label { font-size:11px; font-weight:600; }
+    .category { font-size:13px; font-weight:600; }
+    .note { font-size:13px; font-weight:600; fill:#334155; }
+    .footnote { font-size:11px; fill:#64748b; }
+    .heat-label-light { font-size:13px; font-weight:600; fill:#ffffff; }
+    .heat-label-dark { font-size:13px; font-weight:600; fill:#111827; }
+  </style>
+<text x="54" y="46" class="title" text-anchor="start">The aggregate ranking is not uniform across cases</text>
+<text x="54" y="76" class="subtitle" text-anchor="start">Cells show blinded judge score. A dot marks answers that also passed every deterministic check.</text>
+<text x="54" y="100" class="subtitle" text-anchor="start">Use case-level variation to avoid choosing a model from one average alone.</text>
+<text x="374" y="164" class="tick" text-anchor="middle">Credits spend</text>
+<text x="506" y="164" class="tick" text-anchor="middle">Tenant cache</text>
+<text x="638" y="164" class="tick" text-anchor="middle">Webhook replay</text>
+<text x="770" y="164" class="tick" text-anchor="middle">Stream refund</text>
+<text x="902" y="164" class="tick" text-anchor="middle">OAuth PKCE</text>
+<text x="1034" y="164" class="tick" text-anchor="middle">SSRF webhook</text>
+<text x="54" y="218" class="category" text-anchor="start">OpenAI solo</text>
+<rect x="310" y="180" width="128" height="60" fill="rgb(30,90,150)"/>
+<text x="374" y="217" class="heat-label-light" text-anchor="middle">100</text>
+<circle cx="425.0" cy="194.0" r="3.5" fill="#ffffff" stroke="#ffffff" stroke-width="1.5"/>
+<rect x="442" y="180" width="128" height="60" fill="rgb(30,90,150)"/>
+<text x="506" y="217" class="heat-label-light" text-anchor="middle">100</text>
+<circle cx="557.0" cy="194.0" r="3.5" fill="#ffffff" stroke="#ffffff" stroke-width="1.5"/>
+<rect x="574" y="180" width="128" height="60" fill="rgb(30,90,150)"/>
+<text x="638" y="217" class="heat-label-light" text-anchor="middle">100</text>
+<circle cx="689.0" cy="194.0" r="3.5" fill="#ffffff" stroke="#ffffff" stroke-width="1.5"/>
+<rect x="706" y="180" width="128" height="60" fill="rgb(30,90,150)"/>
+<text x="770" y="217" class="heat-label-light" text-anchor="middle">100</text>
+<circle cx="821.0" cy="194.0" r="3.5" fill="#ffffff" stroke="#ffffff" stroke-width="1.5"/>
+<rect x="838" y="180" width="128" height="60" fill="rgb(30,90,150)"/>
+<text x="902" y="217" class="heat-label-light" text-anchor="middle">100</text>
+<circle cx="953.0" cy="194.0" r="3.5" fill="#ffffff" stroke="#ffffff" stroke-width="1.5"/>
+<rect x="970" y="180" width="128" height="60" fill="rgb(30,90,150)"/>
+<text x="1034" y="217" class="heat-label-light" text-anchor="middle">100</text>
+<circle cx="1085.0" cy="194.0" r="3.5" fill="#ffffff" stroke="#ffffff" stroke-width="1.5"/>
+<text x="54" y="282" class="category" text-anchor="start">Claude solo</text>
+<rect x="310" y="244" width="128" height="60" fill="rgb(30,90,150)"/>
+<text x="374" y="281" class="heat-label-light" text-anchor="middle">100</text>
+<circle cx="425.0" cy="258.0" r="3.5" fill="#ffffff" stroke="#ffffff" stroke-width="1.5"/>
+<rect x="442" y="244" width="128" height="60" fill="rgb(30,90,150)"/>
+<text x="506" y="281" class="heat-label-light" text-anchor="middle">100</text>
+<circle cx="557.0" cy="258.0" r="3.5" fill="#ffffff" stroke="#ffffff" stroke-width="1.5"/>
+<rect x="574" y="244" width="128" height="60" fill="rgb(30,90,150)"/>
+<text x="638" y="281" class="heat-label-light" text-anchor="middle">100</text>
+<circle cx="689.0" cy="258.0" r="3.5" fill="#ffffff" stroke="#ffffff" stroke-width="1.5"/>
+<rect x="706" y="244" width="128" height="60" fill="rgb(176,199,224)"/>
+<text x="770" y="281" class="heat-label-dark" text-anchor="middle">30</text>
+<rect x="838" y="244" width="128" height="60" fill="rgb(30,90,150)"/>
+<text x="902" y="281" class="heat-label-light" text-anchor="middle">100</text>
+<circle cx="953.0" cy="258.0" r="3.5" fill="#ffffff" stroke="#ffffff" stroke-width="1.5"/>
+<rect x="970" y="244" width="128" height="60" fill="rgb(30,90,150)"/>
+<text x="1034" y="281" class="heat-label-light" text-anchor="middle">100</text>
+<circle cx="1085.0" cy="258.0" r="3.5" fill="#ffffff" stroke="#ffffff" stroke-width="1.5"/>
+<text x="54" y="346" class="category" text-anchor="start">Dot solo</text>
+<rect x="310" y="308" width="128" height="60" fill="rgb(40,98,155)"/>
+<text x="374" y="345" class="heat-label-light" text-anchor="middle">95</text>
+<circle cx="425.0" cy="322.0" r="3.5" fill="#ffffff" stroke="#ffffff" stroke-width="1.5"/>
+<rect x="442" y="308" width="128" height="60" fill="rgb(30,90,150)"/>
+<text x="506" y="345" class="heat-label-light" text-anchor="middle">100</text>
+<circle cx="557.0" cy="322.0" r="3.5" fill="#ffffff" stroke="#ffffff" stroke-width="1.5"/>
+<rect x="574" y="308" width="128" height="60" fill="rgb(239,246,255)"/>
+<text x="638" y="345" class="heat-label-dark" text-anchor="middle">0</text>
+<rect x="706" y="308" width="128" height="60" fill="rgb(135,168,203)"/>
+<text x="770" y="345" class="heat-label-dark" text-anchor="middle">50</text>
+<rect x="838" y="308" width="128" height="60" fill="rgb(51,106,161)"/>
+<text x="902" y="345" class="heat-label-light" text-anchor="middle">90</text>
+<circle cx="953.0" cy="322.0" r="3.5" fill="#ffffff" stroke="#ffffff" stroke-width="1.5"/>
+<rect x="970" y="308" width="128" height="60" fill="rgb(61,113,166)"/>
+<text x="1034" y="345" class="heat-label-light" text-anchor="middle">85</text>
+<rect x="310" y="412" width="24" height="15" fill="rgb(239,246,255)"/>
+<rect x="334" y="412" width="24" height="15" fill="rgb(218,230,245)"/>
+<rect x="358" y="412" width="24" height="15" fill="rgb(197,215,234)"/>
+<rect x="382" y="412" width="24" height="15" fill="rgb(176,199,224)"/>
+<rect x="406" y="412" width="24" height="15" fill="rgb(155,184,213)"/>
+<rect x="430" y="412" width="24" height="15" fill="rgb(135,168,203)"/>
+<rect x="454" y="412" width="24" height="15" fill="rgb(114,152,192)"/>
+<rect x="478" y="412" width="24" height="15" fill="rgb(93,137,182)"/>
+<rect x="502" y="412" width="24" height="15" fill="rgb(72,121,171)"/>
+<rect x="526" y="412" width="24" height="15" fill="rgb(51,106,161)"/>
+<rect x="550" y="412" width="24" height="15" fill="rgb(30,90,150)"/>
+<text x="310" y="447" class="tick" text-anchor="start">0</text>
+<text x="574" y="447" class="tick" text-anchor="end">100 judge score</text>
+<text x="54" y="526" class="footnote" text-anchor="start">Limits: six synthetic cases, one iteration, one model judge, no human review, and one shared API gateway.</text>
+</svg>

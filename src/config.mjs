@@ -32,6 +32,17 @@ function validateConfig(config, path) {
         throw new Error(`Invalid config at ${path}: adaptive.${key} must be a non-negative number.`);
       }
     }
+    if (config.adaptive.estimatedCreditsByModel !== undefined) {
+      const estimates = config.adaptive.estimatedCreditsByModel;
+      if (!estimates || typeof estimates !== "object" || Array.isArray(estimates)) {
+        throw new Error(`Invalid config at ${path}: adaptive.estimatedCreditsByModel must be an object.`);
+      }
+      for (const [modelRef, value] of Object.entries(estimates)) {
+        if (!modelRef.includes("/") || !Number.isFinite(Number(value)) || Number(value) < 0) {
+          throw new Error(`Invalid config at ${path}: adaptive.estimatedCreditsByModel has an invalid entry.`);
+        }
+      }
+    }
   }
 }
 

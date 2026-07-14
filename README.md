@@ -25,11 +25,11 @@ npm run eval:mock
 
 ```txt
 Strategy          Quality + CI    Avg calls    One-call rate    Escalation    Cost    P95
-Baseline          measured        1.00         100%             —             measured measured
+Baseline          measured        1.00         100%             n/a           measured measured
 Loom lean         measured        <=1.00       measured         0%            measured measured
 Loom balanced     measured        <=2.00       measured         measured      measured measured
 Loom strict       measured        <=3.00       measured         measured      measured measured
-Loom fixed        measured        4.00         0%               —             measured measured
+Loom fixed        measured        4.00         0%               n/a           measured measured
 ```
 
 Loom fills that table from actual runs. It leaves unavailable fields blank rather than inventing benchmark wins.
@@ -173,7 +173,23 @@ node src/cli.mjs run "Audit this authorization design." --adaptive --policy stri
   --config examples/mock.config.json
 ```
 
-`--max-calls`, `--max-credits`, and `--max-latency-ms` are hard pre-step ceilings. `--credit-per-call` supplies a planning estimate when a provider charges flat credits. Native provider receipts remain the source of actual credit usage.
+`--max-calls`, `--max-credits`, and `--max-latency-ms` are hard pre-step ceilings. `--credit-per-call` supplies a default planning estimate. When models have different provider-unit costs, configure `adaptive.estimatedCreditsByModel` so Loom can reserve the correct amount before each role starts:
+
+```json
+{
+  "adaptive": {
+    "maxCredits": 18,
+    "estimatedCreditsPerCall": 1,
+    "estimatedCreditsByModel": {
+      "dot/openai-gpt-5.5": 14,
+      "dot/claude-sonnet-5": 4,
+      "dot/dot-qwen-coder-480b": 1
+    }
+  }
+}
+```
+
+Native provider receipts remain the source of actual usage after a call. A call count is not a price estimate.
 
 Run baseline only:
 
@@ -231,7 +247,7 @@ node src/cli.mjs eval \
   --output reports/code-review-v1.json
 ```
 
-The judge receives the task, rubric, and candidate answer—not the strategy name, models, cost, or latency. Judge usage is recorded separately and excluded from workflow cost. Model judging remains a proxy; publishable studies should include human review.
+The judge receives the task, rubric, and candidate answer, but not the strategy name, models, cost, or latency. Judge usage is recorded separately and excluded from workflow cost. Model judging remains a proxy; publishable studies should include human review.
 
 Cost is calculated from actual token usage only when every invoked model has explicit per-million-token pricing:
 
@@ -248,7 +264,7 @@ Cost is calculated from actual token usage only when every invoked model has exp
 
 Pricing is configuration, never a built-in marketing assumption. If any price is missing, Loom reports USD cost as unavailable instead of inventing a number. Every JSON run includes per-model token usage and configured USD cost or native provider-receipt data. When the baseline has a non-zero measured cost, the report also normalizes it to a cost index of `100`.
 
-When a provider returns a native payment receipt, Loom can use that provider unit—such as Dot credits—without pretending it is USD. Judge cost is tracked separately and excluded from workflow cost.
+When a provider returns a native payment receipt, Loom can use that provider unit, such as Dot credits, without pretending it is USD. Judge cost is tracked separately and excluded from workflow cost.
 
 Output format follows the file extension:
 
@@ -260,6 +276,32 @@ report.json    complete machine-readable receipt
 ```
 
 Read the [benchmark methodology](docs/BENCHMARKING.md) before publishing performance claims.
+
+## OpenAI vs Claude vs Dot baseline benchmark
+
+![OpenAI, Claude, and Dot quality versus native credits and latency](docs/figures/cross-model-baselines.svg)
+
+On 2026-07-14, we ran OpenAI GPT-5.5, Claude Sonnet 5, and Dot Qwen Coder 480B on the same six frozen high-risk backend-review cases. A separate DeepSeek V4 Pro model judged all 18 answers without seeing model or strategy identity.
+
+| Single-model lane | Judge quality | 95% interval | Full pass rate | Avg provider credits | P95 latency |
+|---|---:|---:|---:|---:|---:|
+| OpenAI GPT-5.5 | 100.0% | 100.0% to 100.0% | 100.0% | 12.67 | 72.37s |
+| Claude Sonnet 5 | 88.3% | 65.5% to 100.0% | 83.3% | 3.50 | 64.73s |
+| Dot Qwen Coder 480B | 70.0% | 39.1% to 100.0% | 50.0% | 1.00 | 25.86s |
+
+Provider credits were model dependent. One call was not one credit: the OpenAI baseline averaged 12.67 credits, Claude 3.50, and Dot 1.00. This observation led directly to model-specific budget estimates in Loom's pre-step credit guard.
+
+![Case-level OpenAI, Claude, and Dot judge-score heatmap](docs/figures/cross-model-baseline-heatmap.svg)
+
+These are single-model baselines, not proof that cross-model review improves answers. The larger six-lane matrix stopped with HTTP 402 before the reviewer lanes completed. We publish the 18 completed answers and judge reasons, leave the missing comparisons blank, and provide the resumable benchmark command for a funded rerun.
+
+- [Raw baseline receipt with candidate answers and judge reasons](docs/benchmarks/cross-model-baselines-v1.json)
+- [Technical baseline report](docs/benchmarks/CROSS_MODEL_BASELINES.md)
+- [Baseline summary CSV](docs/figures/cross-model-baselines.csv)
+- Run the full six-lane matrix with `npm run benchmark:cross-model`.
+- Generate the completed paired-delta figures with `npm run figures:cross-model:complete`.
+
+Limitations: six synthetic cases, one iteration, one model judge, no human review, and all models accessed through the same Dot API gateway. Judge calls used 20 additional credits and are excluded from the workflow-credit column.
 
 ## Budgeted adaptive smoke benchmark (`v0.2`)
 
@@ -287,7 +329,7 @@ This remains an exploratory smoke result: three synthetic cases, one iteration, 
 
 ![Dot Loom routerless policy execution-depth and route-accuracy figure](docs/figures/policy-selectivity.svg)
 
-The 24-case mixed-difficulty suite checks whether each policy executes at the intended depth. Balanced used one call on 33.3% of cases and escalated the other 66.7%, averaging 1.67 calls with 100% structural route accuracy. Lean always stopped after one call; strict always ran three. Because this suite uses deterministic mock outputs, it validates policy selection and accounting—not model quality.
+The 24-case mixed-difficulty suite checks whether each policy executes at the intended depth. Balanced used one call on 33.3% of cases and escalated the other 66.7%, averaging 1.67 calls with 100% structural route accuracy. Lean always stopped after one call; strict always ran three. Because this suite uses deterministic mock outputs, it validates policy selection and accounting, not model quality.
 
 - [Raw structural-validation JSON](docs/benchmarks/adaptive-routing-mock.json)
 - [Figure data as CSV](docs/figures/policy-selectivity.csv)

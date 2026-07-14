@@ -54,7 +54,24 @@ Dot credit receipts may also be present in runtime traces, but credits are not s
 
 If all runs return native provider payment receipts, Loom reports average provider-unit cost and derives the cost index from that unit. Judge receipts are reported separately and never included in workflow cost.
 
-Adaptive call, estimated-credit, and latency limits are checked before each step. Native receipts are authoritative after a call; `estimatedCreditsPerCall` or `--credit-per-call` is only a reservation estimate used to decide whether another call fits.
+Adaptive call, estimated-credit, and latency limits are checked before each step. Native receipts are authoritative after a call. `estimatedCreditsPerCall` or `--credit-per-call` supplies the fallback reservation estimate used to decide whether another call fits.
+
+When model costs differ, set per-model reservation estimates:
+
+```json
+{
+  "adaptive": {
+    "maxCredits": 18,
+    "estimatedCreditsPerCall": 1,
+    "estimatedCreditsByModel": {
+      "provider/expensive-writer": 14,
+      "provider/reviewer": 4
+    }
+  }
+}
+```
+
+The estimate for the next planned worker is checked before the request begins. This reduces overspend risk, but it cannot guarantee a perfect cap when a provider's actual charge exceeds its configured estimate.
 
 ## Latency
 

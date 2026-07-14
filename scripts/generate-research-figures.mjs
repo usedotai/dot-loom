@@ -36,7 +36,7 @@ function renderSmokeFigure(report) {
   const palette = { baseline: "#2563a6", "adaptive-balanced": "#d97706", fixed: "#6b7280" };
   const out = [svgOpen(width, height, "Dot Loom v0.2 exploratory benchmark figure")];
 
-  out.push(text(54, 46, "Dot Loom v0.2: measured compute–quality trade-offs", "title"));
+  out.push(text(54, 46, "Dot Loom v0.2: measured compute vs quality trade-offs", "title"));
   out.push(text(54, 75, `${report.caseCount} high-risk code-review cases × ${report.iterations} iteration; ${report.evaluation.judgedRuns} judged runs`, "subtitle"));
   out.push(text(54, 98, "Workflow credits exclude judge calls. Error bars show the reported 95% interval for mean judge quality.", "subtitle"));
 

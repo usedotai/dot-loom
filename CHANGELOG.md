@@ -2,7 +2,7 @@
 
 All notable changes to Dot Loom are documented here. Benchmark results are linked to raw receipts and remain scoped to their stated datasets, models, and run settings.
 
-## 0.2.0 — 2026-07-14
+## 0.2.0 - 2026-07-14
 
 Dot Loom 0.2 replaces the original always-on four-call adaptive workflow with budgeted, routerless execution.
 
@@ -17,6 +17,9 @@ Dot Loom 0.2 replaces the original always-on four-call adaptive workflow with bu
 - `adaptive-routing-v1`: 24 frozen low-, medium-, and high-difficulty cases with expected-escalation labels.
 - Confidence intervals, average call count, one-call rate, escalation rate, route accuracy, and budget-limit rate in benchmark reports.
 - Reproducible research figures and CSV extracts generated from committed JSON receipts.
+- A six-case single-model baseline study covering OpenAI GPT-5.5, Claude Sonnet 5, and Dot Qwen Coder 480B, with all answers and judge reasons published.
+- Model-specific credit reservations through `adaptive.estimatedCreditsByModel`.
+- A reproducible six-lane cross-model benchmark runner for both OpenAI and Claude review directions plus a three-model strict lane.
 - Studio policy controls and measured `calls / cap` output.
 - Public-package metadata for `@usedot/loom@0.2.0`; the package has not yet been published to npm.
 
@@ -27,6 +30,7 @@ Dot Loom 0.2 replaces the original always-on four-call adaptive workflow with bu
 - Studio no longer displays a hard-coded savings percentage.
 - Tablet and mobile Studio layouts place the process stream in document flow instead of covering the network graph.
 - Benchmark failures now abort remaining in-flight jobs instead of allowing concurrent workers to continue spending.
+- Credit preflight now prices the next planned model instead of assuming every provider call has the same native-unit cost.
 
 ### Exploratory evidence
 
@@ -53,7 +57,7 @@ Balanced halved calls and credits relative to fixed review and reduced P95 laten
 - Routing is deterministic and local; a learned continual router remains future work.
 - Claude currently connects through OpenRouter or another OpenAI-compatible gateway; a native Anthropic adapter is not included.
 
-## 0.1.0 — 2026-07-14
+## 0.1.0 - 2026-07-14
 
 - Initial fixed and adaptive orchestration scaffold.
 - Dot, OpenAI-compatible, Ollama, and deterministic mock providers.

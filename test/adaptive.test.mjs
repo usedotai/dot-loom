@@ -68,6 +68,28 @@ test("explicit call and credit ceilings stop the workflow before another provide
   assert.equal(byCredits.workflow.budget.stopReason, "max-credits-reached");
 });
 
+test("model-specific credit estimates block an expensive reviewer before the call", async () => {
+  const estimatedConfig = {
+    ...config,
+    adaptive: {
+      estimatedCreditsPerCall: 1,
+      estimatedCreditsByModel: {
+        "mock/worker-small": 1,
+        "mock/critic-small": 4,
+      },
+    },
+  };
+  const result = await runAdaptive(estimatedConfig, "Review this payment API.", {
+    pipeline: "code-review",
+    policy: "balanced",
+    maxCredits: 3,
+    stream: false,
+  });
+  assert.equal(result.metrics.calls, 1);
+  assert.equal(result.workflow.budget.stopReason, "max-credits-reached");
+  assert.equal(result.workflow.budget.used.estimatedCredits, 1);
+});
+
 test("task assessment is local and policy validation is strict", () => {
   assert.equal(assessTask("Say hello", "general").risk, "low");
   assert.equal(assessTask("Review an SSRF-prone webhook API", "code-review").risk, "high");
