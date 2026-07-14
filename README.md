@@ -2,6 +2,8 @@
 
 [![GitHub stars](https://img.shields.io/github/stars/usedotai/dot-loom?style=social)](https://github.com/usedotai/dot-loom/stargazers)
 
+[Changelog](CHANGELOG.md) · [Benchmark methodology](docs/BENCHMARKING.md) · [Raw benchmark receipts](docs/benchmarks/)
+
 **Set a quality target and a cost ceiling. Spend extra inference only when the task earns it.**
 
 Dot Loom is an open, provider-pluggable adaptive inference runtime. Its default policy answers directly, then selectively buys verification for high-risk work. Every run exposes the chosen policy, call budget, escalation reason, cost, latency, tokens, and receipt.
@@ -261,7 +263,7 @@ Read the [benchmark methodology](docs/BENCHMARKING.md) before publishing perform
 
 ## Budgeted adaptive smoke benchmark (`v0.2`)
 
-![Dot Loom budgeted adaptive three-case code-review benchmark](docs/benchmarks/dot-code-review-smoke-v2.svg)
+![Dot Loom v0.2 cost-quality and cost-latency research figure](docs/figures/v02-cost-quality.svg)
 
 On 2026-07-14, we reran the same first three high-risk `code-review-v1` cases through the routerless budgeted runtime. Each answer was judged without strategy or model identity. Workflow calls and Dot credit receipts include every generation step; judge calls averaged one additional credit and remain separate.
 
@@ -276,13 +278,22 @@ Balanced cut calls and credits by 50% versus fixed review and reduced P95 latenc
 This remains an exploratory smoke result: three synthetic cases, one iteration, one provider, one model judge, no human review, and a 900-token per-call output cap. The judge model also served as Loom's critic, creating a possible self-preference dependency despite strategy blinding. Do not generalize the zero observed judge-quality gap beyond these runs.
 
 - [Raw `v0.2` JSON receipt](docs/benchmarks/dot-code-review-smoke-v2.json)
+- [Figure data as CSV](docs/figures/v02-smoke-summary.csv)
 - [Responsive `v0.2` HTML report](docs/benchmarks/dot-code-review-smoke-v2.html)
 - [`v0.2` Markdown report](docs/benchmarks/dot-code-review-smoke-v2.md)
 - [24-case structural routing validation](docs/benchmarks/adaptive-routing-mock.md)
 
-## Historical Dot smoke benchmark (`v0.1`)
+### Routerless policy selectivity
 
-![Dot Loom three-case exploratory code-review benchmark](docs/benchmarks/dot-code-review-smoke.svg)
+![Dot Loom routerless policy execution-depth and route-accuracy figure](docs/figures/policy-selectivity.svg)
+
+The 24-case mixed-difficulty suite checks whether each policy executes at the intended depth. Balanced used one call on 33.3% of cases and escalated the other 66.7%, averaging 1.67 calls with 100% structural route accuracy. Lean always stopped after one call; strict always ran three. Because this suite uses deterministic mock outputs, it validates policy selection and accounting—not model quality.
+
+- [Raw structural-validation JSON](docs/benchmarks/adaptive-routing-mock.json)
+- [Figure data as CSV](docs/figures/policy-selectivity.csv)
+- Rebuild both research figures from committed receipts with `npm run figures`.
+
+## Historical Dot smoke benchmark (`v0.1`)
 
 On 2026-07-14, we ran the first three `code-review-v1` cases once through the original `v0.1` Dot model map. Gemma judged answers without seeing strategy names or model identities. This receipt is retained as historical evidence and does **not** measure the routerless budgeted adaptive runtime introduced in `v0.2`.
 
@@ -304,8 +315,6 @@ This is an **exploratory smoke result**, not a general benchmark claim: three sy
 - [Publication methodology](docs/BENCHMARKING.md)
 
 ## What published studies suggest
-
-![Selected published evidence behind model routing, aggregation, and refinement](docs/assets/research-evidence.svg)
 
 These are results reported by the cited authors on different tasks, models, and metrics. They are **not Dot Loom results and are not directly comparable**.
 

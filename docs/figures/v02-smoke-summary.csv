@@ -1,0 +1,4 @@
+strategy,runs,judge_quality,quality_ci_low,quality_ci_high,avg_calls,avg_provider_credits,p95_latency_ms,pass_rate
+baseline,3,1,1,1,1,1,53557,0.6666666666666666
+adaptive-balanced,3,1,1,1,2,2,58108,0.6666666666666666
+fixed,3,0.9833333333333334,0.9506666666666667,1,4,4,85186,0.6666666666666666

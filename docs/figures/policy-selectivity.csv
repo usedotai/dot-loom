@@ -1,0 +1,6 @@
+strategy,runs,avg_calls,one_call_rate,escalation_rate,routing_accuracy,budget_limited_rate
+baseline,24,1,1,,,
+adaptive-lean,24,1,1,0,0.3333333333333333,0
+adaptive-balanced,24,1.6666666666666667,0.3333333333333333,0.6666666666666666,1,0
+adaptive-strict,24,3,0,1,0.6666666666666666,0
+fixed,24,4,0,,,

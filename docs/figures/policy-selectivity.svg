@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="640" viewBox="0 0 1200 640" role="img" aria-labelledby="title desc">
+  <title id="title">Dot Loom deterministic policy selectivity validation</title>
+  <desc id="desc">Dot Loom deterministic policy selectivity validation. Values are generated from committed benchmark JSON receipts.</desc>
+  <rect width="1200" height="640" fill="#ffffff"/>
+  <style>
+    text { font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; fill:#111827; }
+    .title { font-size:25px; font-weight:600; }
+    .subtitle { font-size:14px; fill:#475569; }
+    .panel-title { font-size:16px; font-weight:600; }
+    .axis-label { font-size:13px; fill:#334155; }
+    .tick { font-size:12px; fill:#64748b; }
+    .point-label { font-size:12px; font-weight:600; }
+    .category { font-size:14px; font-weight:600; }
+    .bar-label-light { font-size:11px; font-weight:600; fill:#ffffff; }
+    .legend { font-size:12px; fill:#334155; }
+    .note { font-size:13px; font-weight:600; fill:#334155; }
+    .footnote { font-size:11px; fill:#64748b; }
+  </style>
+<text x="54" y="46" class="title" text-anchor="start">Routerless policy validation on a frozen risk suite</text>
+<text x="54" y="75" class="subtitle" text-anchor="start">24 cases: 8 low-risk, 8 research, 8 high-risk engineering</text>
+<text x="54" y="98" class="subtitle" text-anchor="start">This figure validates routing behavior only; mock model outputs are excluded from quality interpretation.</text>
+<text x="54" y="142" class="panel-title" text-anchor="start">A  Execution depth</text>
+<text x="676" y="142" class="panel-title" text-anchor="start">B  Agreement with expected escalation labels</text>
+<text x="205" y="169" class="axis-label" text-anchor="start">Share of requests</text>
+<line x1="205" y1="180" x2="205" y2="448" stroke="#e5e7eb" stroke-width="1"/>
+<text x="205" y="470" class="tick" text-anchor="middle">0%</text>
+<line x1="292.5" y1="180" x2="292.5" y2="448" stroke="#e5e7eb" stroke-width="1"/>
+<text x="292.5" y="470" class="tick" text-anchor="middle">25%</text>
+<line x1="380" y1="180" x2="380" y2="448" stroke="#e5e7eb" stroke-width="1"/>
+<text x="380" y="470" class="tick" text-anchor="middle">50%</text>
+<line x1="467.5" y1="180" x2="467.5" y2="448" stroke="#e5e7eb" stroke-width="1"/>
+<text x="467.5" y="470" class="tick" text-anchor="middle">75%</text>
+<line x1="555" y1="180" x2="555" y2="448" stroke="#e5e7eb" stroke-width="1"/>
+<text x="555" y="470" class="tick" text-anchor="middle">100%</text>
+<text x="54" y="210" class="category" text-anchor="start">Lean</text>
+<rect x="205" y="188" width="350" height="34" fill="#2563a6"/>
+<rect x="555" y="188" width="0" height="34" fill="#d97706"/>
+<text x="380" y="210" class="bar-label-light" text-anchor="middle">100% one call</text>
+<text x="54" y="310" class="category" text-anchor="start">Balanced</text>
+<rect x="205" y="288" width="116.66666666666666" height="34" fill="#2563a6"/>
+<rect x="321.66666666666663" y="288" width="233.33333333333331" height="34" fill="#d97706"/>
+<text x="263.3333333333333" y="310" class="bar-label-light" text-anchor="middle">33% one call</text>
+<text x="438.33333333333326" y="310" class="bar-label-light" text-anchor="middle">67% escalated</text>
+<text x="54" y="410" class="category" text-anchor="start">Strict</text>
+<rect x="205" y="388" width="0" height="34" fill="#2563a6"/>
+<rect x="205" y="388" width="350" height="34" fill="#d97706"/>
+<text x="380" y="410" class="bar-label-light" text-anchor="middle">100% escalated</text>
+<line x1="720" y1="180" x2="720" y2="448" stroke="#e5e7eb" stroke-width="1"/>
+<text x="720" y="470" class="tick" text-anchor="middle">0%</text>
+<line x1="817.5" y1="180" x2="817.5" y2="448" stroke="#e5e7eb" stroke-width="1"/>
+<text x="817.5" y="470" class="tick" text-anchor="middle">25%</text>
+<line x1="915" y1="180" x2="915" y2="448" stroke="#e5e7eb" stroke-width="1"/>
+<text x="915" y="470" class="tick" text-anchor="middle">50%</text>
+<line x1="1012.5" y1="180" x2="1012.5" y2="448" stroke="#e5e7eb" stroke-width="1"/>
+<text x="1012.5" y="470" class="tick" text-anchor="middle">75%</text>
+<line x1="1110" y1="180" x2="1110" y2="448" stroke="#e5e7eb" stroke-width="1"/>
+<text x="1110" y="470" class="tick" text-anchor="middle">100%</text>
+<line x1="720" y1="205" x2="850" y2="205" stroke="#cbd5e1" stroke-width="2"/>
+<circle cx="850.0" cy="205.0" r="7" fill="#2563a6" stroke="#ffffff" stroke-width="2"/>
+<text x="862" y="210" class="point-label" text-anchor="start">33%</text>
+<line x1="720" y1="305" x2="1110" y2="305" stroke="#cbd5e1" stroke-width="2"/>
+<circle cx="1110.0" cy="305.0" r="7" fill="#d97706" stroke="#ffffff" stroke-width="2"/>
+<text x="1122" y="310" class="point-label" text-anchor="start">100%</text>
+<line x1="720" y1="405" x2="980" y2="405" stroke="#cbd5e1" stroke-width="2"/>
+<circle cx="980.0" cy="405.0" r="7" fill="#2563a6" stroke="#ffffff" stroke-width="2"/>
+<text x="992" y="410" class="point-label" text-anchor="start">67%</text>
+<rect x="54" y="505" width="14" height="14" fill="#2563a6"/>
+<text x="76" y="517" class="legend" text-anchor="start">Completed in one call</text>
+<rect x="245" y="505" width="14" height="14" fill="#d97706"/>
+<text x="267" y="517" class="legend" text-anchor="start">Escalated</text>
+<text x="54" y="557" class="note" text-anchor="start">Balanced matched all frozen escalation labels: low-risk tasks stopped after one call; research and high-risk engineering tasks received review.</text>
+<text x="54" y="588" class="footnote" text-anchor="start">Source: evals/adaptive-routing-v1.jsonl · deterministic mock run · generated 2026-07-14T10:32:33.592Z</text>
+</svg>
