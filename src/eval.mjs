@@ -9,6 +9,9 @@ const RUNNERS = {
   baseline: runBaseline,
   fixed: runFusion,
   adaptive: runAdaptive,
+  "adaptive-lean": (config, input, options) => runAdaptive(config, input, { ...options, policy: "lean" }),
+  "adaptive-balanced": (config, input, options) => runAdaptive(config, input, { ...options, policy: "balanced" }),
+  "adaptive-strict": (config, input, options) => runAdaptive(config, input, { ...options, policy: "strict" }),
 };
 
 export async function runEval(config, options = {}) {
@@ -20,6 +23,8 @@ export async function runEval(config, options = {}) {
   const iterations = positiveInteger(options.iterations, 1);
   const concurrency = positiveInteger(options.concurrency, 1);
   const judgeModel = options.judgeModel || config.models?.judge || null;
+  const controller = new AbortController();
+  const signal = options.signal ? AbortSignal.any([options.signal, controller.signal]) : controller.signal;
   const jobs = [];
   for (let iteration = 1; iteration <= iterations; iteration += 1) {
     for (const evalCase of cases) {
@@ -29,17 +34,25 @@ export async function runEval(config, options = {}) {
     }
   }
 
-  const runs = await mapLimit(jobs, concurrency, async ({ evalCase, strategy, iteration }) => {
+  let runs;
+  try {
+    runs = await mapLimit(jobs, concurrency, async ({ evalCase, strategy, iteration }) => {
     options.onRunStart?.({ evalCase, strategy, iteration, iterations });
     const result = await RUNNERS[strategy](config, evalCase.prompt, {
       pipeline: evalCase.pipeline || options.pipeline || "general",
       temperature: options.temperature,
       maxTokens: options.maxTokens,
+      policy: options.policy,
+      maxCalls: options.maxCalls,
+      maxCredits: options.maxCredits,
+      maxLatencyMs: options.maxLatencyMs,
+      creditPerCall: options.creditPerCall,
+      signal,
       stream: false,
     });
     const assessment = scoreCase(result.answer, evalCase.checks || []);
     const judge = judgeModel
-      ? await judgeAnswer(config, judgeModel, evalCase, result.answer, options)
+      ? await judgeAnswer(config, judgeModel, evalCase, result.answer, { ...options, signal })
       : null;
     const cost = calculateRunCost(config, result.trace);
     const run = {
@@ -53,21 +66,39 @@ export async function runEval(config, options = {}) {
       checks: assessment.checks,
       judge,
       elapsedMs: result.metrics.elapsedMs,
+      callCount: result.metrics.calls,
       totalTokens: result.metrics.totalTokens || 0,
       costUsd: cost.costUsd,
       spentCredits: cost.spentCredits,
       pricingComplete: cost.pricingComplete,
       missingPrices: cost.missingPrices,
       modelUsage: cost.modelUsage,
+      workflowMode: result.workflow?.mode || strategy,
+      policy: result.workflow?.policy || null,
+      escalated: result.workflow?.escalated ?? false,
+      escalationReason: result.workflow?.escalationReason || null,
+      budgetLimited: result.workflow?.budget?.limited ?? false,
+      budgetStopReason: result.workflow?.budget?.stopReason || null,
+      budget: result.workflow?.budget || null,
+      workflowReceipt: result.workflow?.receipt || null,
+      expectedEscalation: typeof evalCase.expectedEscalation === "boolean" ? evalCase.expectedEscalation : null,
+      routingCorrect:
+        result.workflow?.mode === "adaptive" && typeof evalCase.expectedEscalation === "boolean"
+          ? result.workflow.escalated === evalCase.expectedEscalation
+          : null,
       answer: options.includeAnswers ? result.answer : undefined,
     };
     options.onRunEnd?.(run);
     return run;
-  });
+    });
+  } catch (error) {
+    controller.abort(error);
+    throw error;
+  }
 
   const summary = summarizeEval(runs, strategies);
   const report = {
-    version: 1,
+    version: 2,
     generatedAt: new Date().toISOString(),
     dataset: datasetPath,
     datasetCaseCount: loadedCases.length,
@@ -81,6 +112,11 @@ export async function runEval(config, options = {}) {
       models: { ...(config.models || {}) },
       temperature: options.temperature ?? 0.2,
       maxTokens: options.maxTokens || null,
+      policy: strategies.includes("adaptive") ? options.policy || config.adaptive?.policy || "balanced" : null,
+      maxCalls: options.maxCalls || null,
+      maxCredits: options.maxCredits || null,
+      maxLatencyMs: options.maxLatencyMs || null,
+      creditPerCall: options.creditPerCall ?? null,
       judgeMaxTokens: judgeModel ? options.judgeMaxTokens || 300 : null,
       limit: options.limit || null,
     },
@@ -219,6 +255,7 @@ export async function judgeAnswer(config, modelRef, evalCase, answer, options = 
       temperature: 0,
       maxTokens: options.judgeMaxTokens || 300,
       stream: false,
+      signal: options.signal,
     },
   );
   const verdict = parseJudgeResponse(result.content);
@@ -277,11 +314,16 @@ export function summarizeEval(runs, strategies) {
     const priced = group.filter((run) => run.costUsd !== null);
     const credited = group.filter((run) => run.spentCredits !== null);
     const pricingComplete = priced.length === group.length;
+    const qualityValues = scored.map((run) => run.quality);
+    const adaptiveRuns = group.filter((run) => run.workflowMode === "adaptive");
+    const routingRuns = adaptiveRuns.filter((run) => run.routingCorrect !== null);
     return {
       strategy,
       runs: group.length,
-      quality: scored.length ? average(scored.map((run) => run.quality)) : null,
+      quality: scored.length ? average(qualityValues) : null,
+      qualityCi95: scored.length ? meanConfidenceInterval(qualityValues) : null,
       passRate: scored.length ? scored.filter((run) => run.passed).length / scored.length : null,
+      passRateCi95: scored.length ? wilsonInterval(scored.filter((run) => run.passed).length, scored.length) : null,
       avgCostUsd: pricingComplete && group.length ? average(group.map((run) => run.costUsd)) : null,
       avgSpentCredits:
         credited.length === group.length && group.length
@@ -289,6 +331,17 @@ export function summarizeEval(runs, strategies) {
           : null,
       costIndex: null,
       p95LatencyMs: percentile(group.map((run) => run.elapsedMs), 0.95),
+      avgCalls: group.length ? average(group.map((run) => Number(run.callCount || 0))) : 0,
+      oneCallRate: group.length ? group.filter((run) => Number(run.callCount || 0) === 1).length / group.length : null,
+      escalationRate: adaptiveRuns.length
+        ? adaptiveRuns.filter((run) => run.escalated).length / adaptiveRuns.length
+        : null,
+      budgetLimitedRate: adaptiveRuns.length
+        ? adaptiveRuns.filter((run) => run.budgetLimited).length / adaptiveRuns.length
+        : null,
+      routingAccuracy: routingRuns.length
+        ? routingRuns.filter((run) => run.routingCorrect).length / routingRuns.length
+        : null,
       avgTokens: group.length ? average(group.map((run) => run.totalTokens)) : 0,
       pricingComplete,
       missingPrices: [...new Set(group.flatMap((run) => run.missingPrices || []))],
@@ -318,12 +371,12 @@ export function renderEvalMarkdown(report) {
     `Dataset: ${report.dataset}`,
     `Cases: ${report.caseCount} · Iterations: ${report.iterations}`,
     "",
-    "| Strategy | Quality | Avg cost/run | Cost index | P95 latency | Pass rate |",
-    "|---|---:|---:|---:|---:|---:|",
+    "| Strategy | Quality (95% CI) | Avg calls | One-call rate | Escalation | Route accuracy | Avg cost/run | Cost index | P95 latency | Pass rate |",
+    "|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|",
   ];
   for (const item of report.summary) {
     lines.push(
-      `| ${displayStrategy(item.strategy)} | ${percent(item.quality)} | ${formatSummaryCost(item)} | ${index(item.costIndex)} | ${seconds(item.p95LatencyMs)} | ${percent(item.passRate)} |`,
+      `| ${displayStrategy(item.strategy)} | ${percentWithCi(item.quality, item.qualityCi95)} | ${Number(item.avgCalls || 0).toFixed(2)} | ${percent(item.oneCallRate)} | ${percent(item.escalationRate)} | ${percent(item.routingAccuracy)} | ${formatSummaryCost(item)} | ${index(item.costIndex)} | ${seconds(item.p95LatencyMs)} | ${percent(item.passRate)} |`,
     );
   }
   const qualitySource = report.evaluation?.judgeModel
@@ -383,12 +436,18 @@ function summarizeJudge(runs, judgeModel) {
 async function mapLimit(items, limit, mapper) {
   const results = new Array(items.length);
   let cursor = 0;
+  let stopped = false;
   async function worker() {
-    while (true) {
+    while (!stopped) {
       const index = cursor;
       cursor += 1;
       if (index >= items.length) return;
-      results[index] = await mapper(items[index], index);
+      try {
+        results[index] = await mapper(items[index], index);
+      } catch (error) {
+        stopped = true;
+        throw error;
+      }
     }
   }
   await Promise.all(Array.from({ length: Math.min(limit, items.length) }, () => worker()));
@@ -401,7 +460,9 @@ function normalizeStrategies(value) {
     : String(value || "baseline,fixed,adaptive").split(",");
   const strategies = [...new Set(requested.map((item) => item.trim()).filter(Boolean))];
   for (const strategy of strategies) {
-    if (!RUNNERS[strategy]) throw new Error(`Unknown eval strategy "${strategy}". Use baseline,fixed,adaptive.`);
+    if (!RUNNERS[strategy]) {
+      throw new Error(`Unknown eval strategy "${strategy}". Use baseline, fixed, adaptive, adaptive-lean, adaptive-balanced, or adaptive-strict.`);
+    }
   }
   if (!strategies.length) throw new Error("At least one eval strategy is required.");
   return strategies;
@@ -419,6 +480,9 @@ function validateEvalCase(evalCase, path, line) {
   }
   if (evalCase.checks !== undefined && !Array.isArray(evalCase.checks)) {
     throw new Error(`Invalid eval case "${evalCase.id}": checks must be an array.`);
+  }
+  if (evalCase.expectedEscalation !== undefined && typeof evalCase.expectedEscalation !== "boolean") {
+    throw new Error(`Invalid eval case "${evalCase.id}": expectedEscalation must be boolean.`);
   }
   for (const check of evalCase.checks || []) validateCheck(check, evalCase.id);
 }
@@ -483,12 +547,46 @@ function average(values) {
   return values.reduce((sum, value) => sum + value, 0) / values.length;
 }
 
+function meanConfidenceInterval(values) {
+  const mean = average(values);
+  if (values.length < 2) return [mean, mean];
+  const variance = values.reduce((sum, value) => sum + (value - mean) ** 2, 0) / (values.length - 1);
+  const margin = 1.96 * Math.sqrt(variance / values.length);
+  return [Math.max(0, mean - margin), Math.min(1, mean + margin)];
+}
+
+function wilsonInterval(successes, total) {
+  if (!total) return null;
+  const z = 1.96;
+  const proportion = successes / total;
+  const denominator = 1 + (z ** 2) / total;
+  const center = (proportion + (z ** 2) / (2 * total)) / denominator;
+  const margin =
+    (z / denominator) *
+    Math.sqrt((proportion * (1 - proportion)) / total + (z ** 2) / (4 * total ** 2));
+  return [Math.max(0, center - margin), Math.min(1, center + margin)];
+}
+
 function displayStrategy(strategy) {
-  return strategy === "fixed" ? "Loom fixed" : strategy === "adaptive" ? "Loom adaptive" : "Single-model baseline";
+  const labels = {
+    baseline: "Single-model baseline",
+    fixed: "Loom fixed",
+    adaptive: "Loom balanced",
+    "adaptive-lean": "Loom lean",
+    "adaptive-balanced": "Loom balanced",
+    "adaptive-strict": "Loom strict",
+  };
+  return labels[strategy] || strategy;
 }
 
 function percent(value) {
-  return value === null ? "—" : `${(value * 100).toFixed(1)}%`;
+  return Number.isFinite(value) ? `${(value * 100).toFixed(1)}%` : "—";
+}
+
+function percentWithCi(value, interval) {
+  if (value === null) return "—";
+  if (!interval) return percent(value);
+  return `${percent(value)} (${percent(interval[0])}–${percent(interval[1])})`;
 }
 
 function money(value) {

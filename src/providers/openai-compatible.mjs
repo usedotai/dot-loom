@@ -24,6 +24,7 @@ export async function chatWithOpenAICompatible(modelRef, messages, options = {})
       ...(modelRef.provider.headers || {}),
     },
     body: JSON.stringify(body),
+    signal: options.signal,
   });
 
   if (options.stream === true && response.ok) {

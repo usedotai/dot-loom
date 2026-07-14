@@ -1,5 +1,5 @@
 export async function chatWithMock(modelRef, messages, options = {}) {
-  await sleep(60);
+  await sleep(60, options.signal);
   const prompt = messages.map((m) => m.content).join("\n").slice(0, 1200);
   const role = modelRef.ref.includes("router")
     ? "router"
@@ -18,7 +18,7 @@ export async function chatWithMock(modelRef, messages, options = {}) {
     worker:
       "Draft: identify auth boundaries, credit accounting, replay/double-spend guards, streaming behavior, and provider isolation.",
     critic:
-      "Critique: verify the spend is committed only after successful generation, confirm idempotency keys, and test multi-tab vault sync.",
+      "Final review: verify billing and credit spend only after successful generation, protect privacy boundaries, enforce idempotency against replay and double-spend, and add concurrency and failure-path tests.",
     finalizer:
       "Final: route the request through a small specialist, verify the draft against billing/privacy invariants, then produce a concise patched plan with tests.",
   };
@@ -26,7 +26,7 @@ export async function chatWithMock(modelRef, messages, options = {}) {
   const content = contentByRole[role];
   if (options.stream === true && typeof options.onToken === "function") {
     for (const chunk of chunkText(content, 18)) {
-      await sleep(15);
+      await sleep(15, options.signal);
       options.onToken(chunk);
     }
   }
@@ -41,8 +41,22 @@ export async function chatWithMock(modelRef, messages, options = {}) {
   };
 }
 
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+function sleep(ms, signal) {
+  return new Promise((resolve, reject) => {
+    if (signal?.aborted) {
+      reject(signal.reason || new Error("Request aborted."));
+      return;
+    }
+    const onAbort = () => {
+      clearTimeout(timer);
+      reject(signal.reason || new Error("Request aborted."));
+    };
+    const timer = setTimeout(() => {
+      signal?.removeEventListener("abort", onAbort);
+      resolve();
+    }, ms);
+    signal?.addEventListener("abort", onAbort, { once: true });
+  });
 }
 
 function chunkText(text, size) {

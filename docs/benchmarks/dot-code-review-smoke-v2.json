@@ -1,0 +1,1015 @@
+{
+  "version": 2,
+  "generatedAt": "2026-07-14T10:38:17.103Z",
+  "dataset": "evals/code-review-v1.jsonl",
+  "datasetCaseCount": 15,
+  "caseCount": 3,
+  "iterations": 1,
+  "concurrency": 3,
+  "strategies": [
+    "baseline",
+    "adaptive-balanced",
+    "fixed"
+  ],
+  "settings": {
+    "config": "examples/dot-code.config.json",
+    "configName": "Dot Loom code-review lane over Dot API",
+    "models": {
+      "router": "dot/dot-nemotron-nano",
+      "drafter": "dot/dot-deepseek-v4-flash",
+      "critic": "dot/dot-gemma-4-uncensored",
+      "finalizer": "dot/dot-qwen-coder-480b"
+    },
+    "temperature": 0.2,
+    "maxTokens": 900,
+    "policy": "balanced",
+    "maxCalls": null,
+    "maxCredits": null,
+    "maxLatencyMs": 120000,
+    "creditPerCall": null,
+    "judgeMaxTokens": 300,
+    "limit": 3
+  },
+  "evaluation": {
+    "qualitySource": "model-judge",
+    "judgeModel": "dot/dot-gemma-4-uncensored",
+    "judgedRuns": 9,
+    "avgJudgeCostUsd": null,
+    "avgJudgeSpentCredits": 1,
+    "pricingComplete": false
+  },
+  "summary": [
+    {
+      "strategy": "baseline",
+      "runs": 3,
+      "quality": 1,
+      "qualityCi95": [
+        1,
+        1
+      ],
+      "passRate": 0.6666666666666666,
+      "passRateCi95": [
+        0.20765495512648796,
+        0.9385096847238394
+      ],
+      "avgCostUsd": null,
+      "avgSpentCredits": 1,
+      "costIndex": 100,
+      "p95LatencyMs": 53557,
+      "avgCalls": 1,
+      "oneCallRate": 1,
+      "escalationRate": null,
+      "budgetLimitedRate": null,
+      "routingAccuracy": null,
+      "avgTokens": 1465.3333333333333,
+      "pricingComplete": false,
+      "missingPrices": [
+        "dot/dot-qwen-coder-480b"
+      ]
+    },
+    {
+      "strategy": "adaptive-balanced",
+      "runs": 3,
+      "quality": 1,
+      "qualityCi95": [
+        1,
+        1
+      ],
+      "passRate": 0.6666666666666666,
+      "passRateCi95": [
+        0.20765495512648796,
+        0.9385096847238394
+      ],
+      "avgCostUsd": null,
+      "avgSpentCredits": 2,
+      "costIndex": 200,
+      "p95LatencyMs": 58108,
+      "avgCalls": 2,
+      "oneCallRate": 0,
+      "escalationRate": 1,
+      "budgetLimitedRate": 0,
+      "routingAccuracy": null,
+      "avgTokens": 16441.666666666668,
+      "pricingComplete": false,
+      "missingPrices": [
+        "dot/dot-deepseek-v4-flash",
+        "dot/dot-gemma-4-uncensored"
+      ]
+    },
+    {
+      "strategy": "fixed",
+      "runs": 3,
+      "quality": 0.9833333333333334,
+      "qualityCi95": [
+        0.9506666666666667,
+        1
+      ],
+      "passRate": 0.6666666666666666,
+      "passRateCi95": [
+        0.20765495512648796,
+        0.9385096847238394
+      ],
+      "avgCostUsd": null,
+      "avgSpentCredits": 4,
+      "costIndex": 400,
+      "p95LatencyMs": 85186,
+      "avgCalls": 4,
+      "oneCallRate": 0,
+      "escalationRate": null,
+      "budgetLimitedRate": null,
+      "routingAccuracy": null,
+      "avgTokens": 14428.333333333334,
+      "pricingComplete": false,
+      "missingPrices": [
+        "dot/dot-nemotron-nano",
+        "dot/dot-deepseek-v4-flash",
+        "dot/dot-gemma-4-uncensored",
+        "dot/dot-qwen-coder-480b"
+      ]
+    }
+  ],
+  "runs": [
+    {
+      "caseId": "idempotent-credit-spend",
+      "iteration": 1,
+      "strategy": "baseline",
+      "pipeline": "baseline",
+      "passed": true,
+      "quality": 1,
+      "deterministicQuality": 1,
+      "checks": [
+        {
+          "type": "contains-any",
+          "values": [
+            "idempotency",
+            "idempotent",
+            "replay"
+          ],
+          "passed": true
+        },
+        {
+          "type": "contains-any",
+          "values": [
+            "transaction",
+            "atomic",
+            "lock"
+          ],
+          "passed": true
+        },
+        {
+          "type": "contains-any",
+          "values": [
+            "concurrent",
+            "race",
+            "double-spend"
+          ],
+          "passed": true
+        },
+        {
+          "type": "contains",
+          "value": "test",
+          "passed": true
+        }
+      ],
+      "judge": {
+        "modelRef": "dot/dot-gemma-4-uncensored",
+        "score": 1,
+        "passed": true,
+        "reason": "The answer correctly identifies non-atomic updates, race conditions, and idempotency issues, and provides concrete fixes and tests for each.",
+        "elapsedMs": 2291,
+        "usage": {
+          "prompt_tokens": 2577,
+          "completion_tokens": 50,
+          "total_tokens": 2627,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "costUsd": null,
+        "spentCredits": 1,
+        "pricingComplete": false
+      },
+      "elapsedMs": 29117,
+      "callCount": 1,
+      "totalTokens": 2305,
+      "costUsd": null,
+      "spentCredits": 1,
+      "pricingComplete": false,
+      "missingPrices": [
+        "dot/dot-qwen-coder-480b"
+      ],
+      "modelUsage": [
+        {
+          "modelRef": "dot/dot-qwen-coder-480b",
+          "inputTokens": 1460,
+          "outputTokens": 845,
+          "costUsd": null,
+          "spentCredits": 1
+        }
+      ],
+      "workflowMode": "baseline",
+      "policy": null,
+      "escalated": false,
+      "escalationReason": null,
+      "budgetLimited": false,
+      "budgetStopReason": null,
+      "expectedEscalation": null,
+      "routingCorrect": null
+    },
+    {
+      "caseId": "idempotent-credit-spend",
+      "iteration": 1,
+      "strategy": "adaptive-balanced",
+      "pipeline": "code-review:adaptive-balanced",
+      "passed": true,
+      "quality": 1,
+      "deterministicQuality": 1,
+      "checks": [
+        {
+          "type": "contains-any",
+          "values": [
+            "idempotency",
+            "idempotent",
+            "replay"
+          ],
+          "passed": true
+        },
+        {
+          "type": "contains-any",
+          "values": [
+            "transaction",
+            "atomic",
+            "lock"
+          ],
+          "passed": true
+        },
+        {
+          "type": "contains-any",
+          "values": [
+            "concurrent",
+            "race",
+            "double-spend"
+          ],
+          "passed": true
+        },
+        {
+          "type": "contains",
+          "value": "test",
+          "passed": true
+        }
+      ],
+      "judge": {
+        "modelRef": "dot/dot-gemma-4-uncensored",
+        "score": 1,
+        "passed": true,
+        "reason": "The review correctly identifies the critical race condition in balance updates, the need for idempotency to handle retries, and the risk of partial failures in distributed transactions, providing concrete fixes and tests for each.",
+        "elapsedMs": 2748,
+        "usage": {
+          "prompt_tokens": 2592,
+          "completion_tokens": 64,
+          "total_tokens": 2656,
+          "prompt_tokens_details": {
+            "cached_tokens": 1536
+          },
+          "cache_read_input_tokens": 1536
+        },
+        "costUsd": null,
+        "spentCredits": 1,
+        "pricingComplete": false
+      },
+      "elapsedMs": 43459,
+      "callCount": 2,
+      "totalTokens": 10022,
+      "costUsd": null,
+      "spentCredits": 2,
+      "pricingComplete": false,
+      "missingPrices": [
+        "dot/dot-deepseek-v4-flash",
+        "dot/dot-gemma-4-uncensored"
+      ],
+      "modelUsage": [
+        {
+          "modelRef": "dot/dot-deepseek-v4-flash",
+          "inputTokens": 1531,
+          "outputTokens": 2922,
+          "costUsd": null,
+          "spentCredits": 1
+        },
+        {
+          "modelRef": "dot/dot-gemma-4-uncensored",
+          "inputTokens": 4669,
+          "outputTokens": 900,
+          "costUsd": null,
+          "spentCredits": 1
+        }
+      ],
+      "workflowMode": "adaptive",
+      "policy": "balanced",
+      "escalated": true,
+      "escalationReason": "high-risk task: money",
+      "budgetLimited": false,
+      "budgetStopReason": null,
+      "expectedEscalation": null,
+      "routingCorrect": null
+    },
+    {
+      "caseId": "idempotent-credit-spend",
+      "iteration": 1,
+      "strategy": "fixed",
+      "pipeline": "code-review",
+      "passed": true,
+      "quality": 0.95,
+      "deterministicQuality": 1,
+      "checks": [
+        {
+          "type": "contains-any",
+          "values": [
+            "idempotency",
+            "idempotent",
+            "replay"
+          ],
+          "passed": true
+        },
+        {
+          "type": "contains-any",
+          "values": [
+            "transaction",
+            "atomic",
+            "lock"
+          ],
+          "passed": true
+        },
+        {
+          "type": "contains-any",
+          "values": [
+            "concurrent",
+            "race",
+            "double-spend"
+          ],
+          "passed": true
+        },
+        {
+          "type": "contains",
+          "value": "test",
+          "passed": true
+        }
+      ],
+      "judge": {
+        "modelRef": "dot/dot-gemma-4-uncensored",
+        "score": 0.95,
+        "passed": true,
+        "reason": "The answer correctly identifies non-atomic updates, race conditions, and idempotency issues, providing concrete fixes and tests for each.",
+        "elapsedMs": 2946,
+        "usage": {
+          "prompt_tokens": 2577,
+          "completion_tokens": 48,
+          "total_tokens": 2625,
+          "prompt_tokens_details": {
+            "cached_tokens": 1536
+          },
+          "cache_read_input_tokens": 1536
+        },
+        "costUsd": null,
+        "spentCredits": 1,
+        "pricingComplete": false
+      },
+      "elapsedMs": 85186,
+      "callCount": 4,
+      "totalTokens": 17475,
+      "costUsd": null,
+      "spentCredits": 4,
+      "pricingComplete": false,
+      "missingPrices": [
+        "dot/dot-nemotron-nano",
+        "dot/dot-deepseek-v4-flash",
+        "dot/dot-gemma-4-uncensored",
+        "dot/dot-qwen-coder-480b"
+      ],
+      "modelUsage": [
+        {
+          "modelRef": "dot/dot-nemotron-nano",
+          "inputTokens": 1522,
+          "outputTokens": 900,
+          "costUsd": null,
+          "spentCredits": 1
+        },
+        {
+          "modelRef": "dot/dot-deepseek-v4-flash",
+          "inputTokens": 2310,
+          "outputTokens": 1971,
+          "costUsd": null,
+          "spentCredits": 1
+        },
+        {
+          "modelRef": "dot/dot-gemma-4-uncensored",
+          "inputTokens": 4113,
+          "outputTokens": 900,
+          "costUsd": null,
+          "spentCredits": 1
+        },
+        {
+          "modelRef": "dot/dot-qwen-coder-480b",
+          "inputTokens": 4859,
+          "outputTokens": 900,
+          "costUsd": null,
+          "spentCredits": 1
+        }
+      ],
+      "workflowMode": "fixed",
+      "policy": null,
+      "escalated": false,
+      "escalationReason": null,
+      "budgetLimited": false,
+      "budgetStopReason": null,
+      "expectedEscalation": null,
+      "routingCorrect": null
+    },
+    {
+      "caseId": "tenant-cache-leak",
+      "iteration": 1,
+      "strategy": "baseline",
+      "pipeline": "baseline",
+      "passed": true,
+      "quality": 1,
+      "deterministicQuality": 1,
+      "checks": [
+        {
+          "type": "contains-any",
+          "values": [
+            "tenant",
+            "cross-tenant"
+          ],
+          "passed": true
+        },
+        {
+          "type": "contains",
+          "value": "cache",
+          "passed": true
+        },
+        {
+          "type": "contains-any",
+          "values": [
+            "authorization",
+            "permission",
+            "access control"
+          ],
+          "passed": true
+        },
+        {
+          "type": "contains",
+          "value": "test",
+          "passed": true
+        }
+      ],
+      "judge": {
+        "modelRef": "dot/dot-gemma-4-uncensored",
+        "score": 1,
+        "passed": true,
+        "reason": "The answer correctly identifies cross-tenant data leakage, the need for authorization before caching, the requirement for tenant-scoped cache keys, and provides comprehensive regression tests to verify isolation.",
+        "elapsedMs": 3316,
+        "usage": {
+          "prompt_tokens": 1339,
+          "completion_tokens": 59,
+          "total_tokens": 1398,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "costUsd": null,
+        "spentCredits": 1,
+        "pricingComplete": false
+      },
+      "elapsedMs": 53557,
+      "callCount": 1,
+      "totalTokens": 1113,
+      "costUsd": null,
+      "spentCredits": 1,
+      "pricingComplete": false,
+      "missingPrices": [
+        "dot/dot-qwen-coder-480b"
+      ],
+      "modelUsage": [
+        {
+          "modelRef": "dot/dot-qwen-coder-480b",
+          "inputTokens": 213,
+          "outputTokens": 900,
+          "costUsd": null,
+          "spentCredits": 1
+        }
+      ],
+      "workflowMode": "baseline",
+      "policy": null,
+      "escalated": false,
+      "escalationReason": null,
+      "budgetLimited": false,
+      "budgetStopReason": null,
+      "expectedEscalation": null,
+      "routingCorrect": null
+    },
+    {
+      "caseId": "tenant-cache-leak",
+      "iteration": 1,
+      "strategy": "adaptive-balanced",
+      "pipeline": "code-review:adaptive-balanced",
+      "passed": true,
+      "quality": 1,
+      "deterministicQuality": 1,
+      "checks": [
+        {
+          "type": "contains-any",
+          "values": [
+            "tenant",
+            "cross-tenant"
+          ],
+          "passed": true
+        },
+        {
+          "type": "contains",
+          "value": "cache",
+          "passed": true
+        },
+        {
+          "type": "contains-any",
+          "values": [
+            "authorization",
+            "permission",
+            "access control"
+          ],
+          "passed": true
+        },
+        {
+          "type": "contains",
+          "value": "test",
+          "passed": true
+        }
+      ],
+      "judge": {
+        "modelRef": "dot/dot-gemma-4-uncensored",
+        "score": 1,
+        "passed": true,
+        "reason": "The answer correctly identifies cross-tenant data leakage, proposes tenant-scoped cache keys and middleware reordering, and provides specific regression tests to verify isolation.",
+        "elapsedMs": 1998,
+        "usage": {
+          "prompt_tokens": 1272,
+          "completion_tokens": 54,
+          "total_tokens": 1326,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "costUsd": null,
+        "spentCredits": 1,
+        "pricingComplete": false
+      },
+      "elapsedMs": 58108,
+      "callCount": 2,
+      "totalTokens": 30207,
+      "costUsd": null,
+      "spentCredits": 2,
+      "pricingComplete": false,
+      "missingPrices": [
+        "dot/dot-deepseek-v4-flash",
+        "dot/dot-gemma-4-uncensored"
+      ],
+      "modelUsage": [
+        {
+          "modelRef": "dot/dot-deepseek-v4-flash",
+          "inputTokens": 1511,
+          "outputTokens": 2024,
+          "costUsd": null,
+          "spentCredits": 1
+        },
+        {
+          "modelRef": "dot/dot-gemma-4-uncensored",
+          "inputTokens": 25772,
+          "outputTokens": 900,
+          "costUsd": null,
+          "spentCredits": 1
+        }
+      ],
+      "workflowMode": "adaptive",
+      "policy": "balanced",
+      "escalated": true,
+      "escalationReason": "high-risk task: security, identity",
+      "budgetLimited": false,
+      "budgetStopReason": null,
+      "expectedEscalation": null,
+      "routingCorrect": null
+    },
+    {
+      "caseId": "tenant-cache-leak",
+      "iteration": 1,
+      "strategy": "fixed",
+      "pipeline": "code-review",
+      "passed": true,
+      "quality": 1,
+      "deterministicQuality": 1,
+      "checks": [
+        {
+          "type": "contains-any",
+          "values": [
+            "tenant",
+            "cross-tenant"
+          ],
+          "passed": true
+        },
+        {
+          "type": "contains",
+          "value": "cache",
+          "passed": true
+        },
+        {
+          "type": "contains-any",
+          "values": [
+            "authorization",
+            "permission",
+            "access control"
+          ],
+          "passed": true
+        },
+        {
+          "type": "contains",
+          "value": "test",
+          "passed": true
+        }
+      ],
+      "judge": {
+        "modelRef": "dot/dot-gemma-4-uncensored",
+        "score": 1,
+        "passed": true,
+        "reason": "The answer correctly identifies the critical flaw of caching before authorization, proposes including tenant/user context in the cache key, and outlines necessary regression tests to prevent cross-tenant data leakage.",
+        "elapsedMs": 5750,
+        "usage": {
+          "prompt_tokens": 1347,
+          "completion_tokens": 60,
+          "total_tokens": 1407,
+          "prompt_tokens_details": {
+            "cached_tokens": 224
+          },
+          "cache_read_input_tokens": 224
+        },
+        "costUsd": null,
+        "spentCredits": 1,
+        "pricingComplete": false
+      },
+      "elapsedMs": 82415,
+      "callCount": 4,
+      "totalTokens": 12188,
+      "costUsd": null,
+      "spentCredits": 4,
+      "pricingComplete": false,
+      "missingPrices": [
+        "dot/dot-nemotron-nano",
+        "dot/dot-deepseek-v4-flash",
+        "dot/dot-gemma-4-uncensored",
+        "dot/dot-qwen-coder-480b"
+      ],
+      "modelUsage": [
+        {
+          "modelRef": "dot/dot-nemotron-nano",
+          "inputTokens": 246,
+          "outputTokens": 900,
+          "costUsd": null,
+          "spentCredits": 1
+        },
+        {
+          "modelRef": "dot/dot-deepseek-v4-flash",
+          "inputTokens": 1117,
+          "outputTokens": 2089,
+          "costUsd": null,
+          "spentCredits": 1
+        },
+        {
+          "modelRef": "dot/dot-gemma-4-uncensored",
+          "inputTokens": 2668,
+          "outputTokens": 900,
+          "costUsd": null,
+          "spentCredits": 1
+        },
+        {
+          "modelRef": "dot/dot-qwen-coder-480b",
+          "inputTokens": 3368,
+          "outputTokens": 900,
+          "costUsd": null,
+          "spentCredits": 1
+        }
+      ],
+      "workflowMode": "fixed",
+      "policy": null,
+      "escalated": false,
+      "escalationReason": null,
+      "budgetLimited": false,
+      "budgetStopReason": null,
+      "expectedEscalation": null,
+      "routingCorrect": null
+    },
+    {
+      "caseId": "webhook-signature-replay",
+      "iteration": 1,
+      "strategy": "baseline",
+      "pipeline": "baseline",
+      "passed": false,
+      "quality": 1,
+      "deterministicQuality": 0.75,
+      "checks": [
+        {
+          "type": "contains-any",
+          "values": [
+            "raw body",
+            "raw bytes"
+          ],
+          "passed": false
+        },
+        {
+          "type": "contains-any",
+          "values": [
+            "replay",
+            "dedup",
+            "idempot"
+          ],
+          "passed": true
+        },
+        {
+          "type": "contains-any",
+          "values": [
+            "timestamp",
+            "freshness",
+            "window"
+          ],
+          "passed": true
+        },
+        {
+          "type": "contains-any",
+          "values": [
+            "constant-time",
+            "timing"
+          ],
+          "passed": true
+        }
+      ],
+      "judge": {
+        "modelRef": "dot/dot-gemma-4-uncensored",
+        "score": 1,
+        "passed": true,
+        "reason": "The answer covers all rubric requirements: raw byte signature verification, constant-time comparison, timestamp freshness, event-ID deduplication, and idempotent retry behavior.",
+        "elapsedMs": 2055,
+        "usage": {
+          "prompt_tokens": 1216,
+          "completion_tokens": 55,
+          "total_tokens": 1271,
+          "prompt_tokens_details": {
+            "cached_tokens": 192
+          },
+          "cache_read_input_tokens": 192
+        },
+        "costUsd": null,
+        "spentCredits": 1,
+        "pricingComplete": false
+      },
+      "elapsedMs": 29898,
+      "callCount": 1,
+      "totalTokens": 978,
+      "costUsd": null,
+      "spentCredits": 1,
+      "pricingComplete": false,
+      "missingPrices": [
+        "dot/dot-qwen-coder-480b"
+      ],
+      "modelUsage": [
+        {
+          "modelRef": "dot/dot-qwen-coder-480b",
+          "inputTokens": 213,
+          "outputTokens": 765,
+          "costUsd": null,
+          "spentCredits": 1
+        }
+      ],
+      "workflowMode": "baseline",
+      "policy": null,
+      "escalated": false,
+      "escalationReason": null,
+      "budgetLimited": false,
+      "budgetStopReason": null,
+      "expectedEscalation": null,
+      "routingCorrect": null
+    },
+    {
+      "caseId": "webhook-signature-replay",
+      "iteration": 1,
+      "strategy": "adaptive-balanced",
+      "pipeline": "code-review:adaptive-balanced",
+      "passed": false,
+      "quality": 1,
+      "deterministicQuality": 0.75,
+      "checks": [
+        {
+          "type": "contains-any",
+          "values": [
+            "raw body",
+            "raw bytes"
+          ],
+          "passed": false
+        },
+        {
+          "type": "contains-any",
+          "values": [
+            "replay",
+            "dedup",
+            "idempot"
+          ],
+          "passed": true
+        },
+        {
+          "type": "contains-any",
+          "values": [
+            "timestamp",
+            "freshness",
+            "window"
+          ],
+          "passed": true
+        },
+        {
+          "type": "contains-any",
+          "values": [
+            "constant-time",
+            "timing"
+          ],
+          "passed": true
+        }
+      ],
+      "judge": {
+        "modelRef": "dot/dot-gemma-4-uncensored",
+        "score": 1,
+        "passed": true,
+        "reason": "The answer comprehensively addresses all rubric requirements, including raw byte verification, constant-time comparison, timestamp freshness, and idempotency/deduplication.",
+        "elapsedMs": 2127,
+        "usage": {
+          "prompt_tokens": 1265,
+          "completion_tokens": 53,
+          "total_tokens": 1318,
+          "prompt_tokens_details": {
+            "cached_tokens": 192
+          },
+          "cache_read_input_tokens": 192
+        },
+        "costUsd": null,
+        "spentCredits": 1,
+        "pricingComplete": false
+      },
+      "elapsedMs": 46719,
+      "callCount": 2,
+      "totalTokens": 9096,
+      "costUsd": null,
+      "spentCredits": 2,
+      "pricingComplete": false,
+      "missingPrices": [
+        "dot/dot-deepseek-v4-flash",
+        "dot/dot-gemma-4-uncensored"
+      ],
+      "modelUsage": [
+        {
+          "modelRef": "dot/dot-deepseek-v4-flash",
+          "inputTokens": 1515,
+          "outputTokens": 2710,
+          "costUsd": null,
+          "spentCredits": 1
+        },
+        {
+          "modelRef": "dot/dot-gemma-4-uncensored",
+          "inputTokens": 3971,
+          "outputTokens": 900,
+          "costUsd": null,
+          "spentCredits": 1
+        }
+      ],
+      "workflowMode": "adaptive",
+      "policy": "balanced",
+      "escalated": true,
+      "escalationReason": "high-risk task profile",
+      "budgetLimited": false,
+      "budgetStopReason": null,
+      "expectedEscalation": null,
+      "routingCorrect": null
+    },
+    {
+      "caseId": "webhook-signature-replay",
+      "iteration": 1,
+      "strategy": "fixed",
+      "pipeline": "code-review",
+      "passed": false,
+      "quality": 1,
+      "deterministicQuality": 0.75,
+      "checks": [
+        {
+          "type": "contains-any",
+          "values": [
+            "raw body",
+            "raw bytes"
+          ],
+          "passed": false
+        },
+        {
+          "type": "contains-any",
+          "values": [
+            "replay",
+            "dedup",
+            "idempot"
+          ],
+          "passed": true
+        },
+        {
+          "type": "contains-any",
+          "values": [
+            "timestamp",
+            "freshness",
+            "window"
+          ],
+          "passed": true
+        },
+        {
+          "type": "contains-any",
+          "values": [
+            "constant-time",
+            "timing"
+          ],
+          "passed": true
+        }
+      ],
+      "judge": {
+        "modelRef": "dot/dot-gemma-4-uncensored",
+        "score": 1,
+        "passed": true,
+        "reason": "The answer comprehensively addresses all rubric requirements, including raw byte signature verification, constant-time comparison, timestamp freshness, and idempotency for retries.",
+        "elapsedMs": 2051,
+        "usage": {
+          "prompt_tokens": 1328,
+          "completion_tokens": 53,
+          "total_tokens": 1381,
+          "prompt_tokens_details": {
+            "cached_tokens": 224
+          },
+          "cache_read_input_tokens": 224
+        },
+        "costUsd": null,
+        "spentCredits": 1,
+        "pricingComplete": false
+      },
+      "elapsedMs": 62076,
+      "callCount": 4,
+      "totalTokens": 13622,
+      "costUsd": null,
+      "spentCredits": 4,
+      "pricingComplete": false,
+      "missingPrices": [
+        "dot/dot-nemotron-nano",
+        "dot/dot-deepseek-v4-flash",
+        "dot/dot-gemma-4-uncensored",
+        "dot/dot-qwen-coder-480b"
+      ],
+      "modelUsage": [
+        {
+          "modelRef": "dot/dot-nemotron-nano",
+          "inputTokens": 250,
+          "outputTokens": 900,
+          "costUsd": null,
+          "spentCredits": 1
+        },
+        {
+          "modelRef": "dot/dot-deepseek-v4-flash",
+          "inputTokens": 2266,
+          "outputTokens": 1139,
+          "costUsd": null,
+          "spentCredits": 1
+        },
+        {
+          "modelRef": "dot/dot-gemma-4-uncensored",
+          "inputTokens": 3325,
+          "outputTokens": 900,
+          "costUsd": null,
+          "spentCredits": 1
+        },
+        {
+          "modelRef": "dot/dot-qwen-coder-480b",
+          "inputTokens": 3942,
+          "outputTokens": 900,
+          "costUsd": null,
+          "spentCredits": 1
+        }
+      ],
+      "workflowMode": "fixed",
+      "policy": null,
+      "escalated": false,
+      "escalationReason": null,
+      "budgetLimited": false,
+      "budgetStopReason": null,
+      "expectedEscalation": null,
+      "routingCorrect": null
+    }
+  ],
+  "artifacts": {
+    "json": "docs/benchmarks/dot-code-review-smoke-v2.json",
+    "markdown": "docs/benchmarks/dot-code-review-smoke-v2.md",
+    "html": "docs/benchmarks/dot-code-review-smoke-v2.html",
+    "svg": "docs/benchmarks/dot-code-review-smoke-v2.svg"
+  }
+}

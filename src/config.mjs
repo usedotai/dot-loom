@@ -19,6 +19,20 @@ function validateConfig(config, path) {
   if (!config.models || typeof config.models !== "object") {
     throw new Error(`Invalid config at ${path}: missing models.`);
   }
+  if (config.adaptive !== undefined) {
+    if (!config.adaptive || typeof config.adaptive !== "object" || Array.isArray(config.adaptive)) {
+      throw new Error(`Invalid config at ${path}: adaptive must be an object.`);
+    }
+    if (config.adaptive.policy && !["lean", "balanced", "strict"].includes(config.adaptive.policy)) {
+      throw new Error(`Invalid config at ${path}: adaptive.policy must be lean, balanced, or strict.`);
+    }
+    for (const key of ["maxCalls", "maxCredits", "maxLatencyMs", "estimatedCreditsPerCall"]) {
+      const value = config.adaptive[key];
+      if (value !== undefined && (!Number.isFinite(Number(value)) || Number(value) < 0)) {
+        throw new Error(`Invalid config at ${path}: adaptive.${key} must be a non-negative number.`);
+      }
+    }
+  }
 }
 
 function expandEnv(value) {

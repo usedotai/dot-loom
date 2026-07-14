@@ -12,5 +12,9 @@
     "drafter": "dot/dot-deepseek-v4-flash",
     "critic": "dot/dot-gemma-4-uncensored",
     "finalizer": "dot/dot-deepseek-v4-flash"
+  },
+  "adaptive": {
+    "policy": "balanced",
+    "estimatedCreditsPerCall": 1
   }
 }

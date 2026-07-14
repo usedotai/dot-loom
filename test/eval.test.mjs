@@ -79,6 +79,8 @@ test("summary derives baseline-relative cost index and p95 latency", () => {
   assert.equal(summary[1].costIndex, 50);
   assert.equal(summary[1].quality, 0.75);
   assert.equal(summary[1].passRate, 0.5);
+  assert.equal(summary[0].avgCalls, 1);
+  assert.deepEqual(summary[0].qualityCi95, [1, 1]);
 });
 
 test("unscored cases do not inflate pass rate", () => {
@@ -86,6 +88,20 @@ test("unscored cases do not inflate pass rate", () => {
   const unscored = { ...run("baseline", null, 1, 1, 100), quality: null };
   const [summary] = summarizeEval([scored, unscored], ["baseline"]);
   assert.equal(summary.passRate, 0);
+});
+
+test("summary reports adaptive selectivity and routing accuracy", () => {
+  const [summary] = summarizeEval(
+    [
+      { ...run("adaptive-balanced", 1, 1, 2, 100), workflowMode: "adaptive", escalated: false, routingCorrect: true },
+      { ...run("adaptive-balanced", 1, 1, 4, 200), workflowMode: "adaptive", escalated: true, routingCorrect: true },
+    ],
+    ["adaptive-balanced"],
+  );
+  assert.equal(summary.avgCalls, 2);
+  assert.equal(summary.oneCallRate, 0);
+  assert.equal(summary.escalationRate, 0.5);
+  assert.equal(summary.routingAccuracy, 1);
 });
 
 test("Markdown report labels costs as averages", () => {
@@ -159,6 +175,7 @@ function run(strategy, quality, passed, costUsd, elapsedMs) {
     costUsd,
     elapsedMs,
     totalTokens: 10,
+    callCount: strategy === "baseline" ? 1 : 2,
     missingPrices: [],
   };
 }

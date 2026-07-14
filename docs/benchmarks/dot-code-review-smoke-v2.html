@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dot Loom benchmark</title>
+  <style>
+    :root { color-scheme:dark; --ink:#ece9df; --muted:#96958e; --line:#2d302d; --panel:#151816; --accent:#b7f36b; --warm:#e3b86c; --danger:#ff866e; --bg:#0c0f0d; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    body::before { content:""; position:fixed; inset:0; pointer-events:none; opacity:.22; background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px); background-size:32px 32px; }
+    main { width:min(1180px,calc(100% - 48px)); margin:0 auto; padding:56px 0 80px; position:relative; }
+    header { display:grid; grid-template-columns:minmax(0,1.45fr) minmax(280px,.55fr); gap:48px; align-items:end; border-bottom:1px solid var(--line); padding-bottom:36px; }
+    .eyebrow,.label { color:var(--accent); font:700 11px/1.2 ui-monospace,SFMono-Regular,Menlo,monospace; letter-spacing:.16em; text-transform:uppercase; }
+    h1 { margin:14px 0 16px; max-width:760px; font-size:clamp(44px,7vw,88px); line-height:.9; letter-spacing:-.065em; font-weight:760; }
+    .lede { color:#b9b8b1; max-width:700px; font-size:18px; line-height:1.55; margin:0; }
+    .meta { display:grid; gap:12px; border-left:1px solid var(--line); padding-left:24px; min-width:0; }
+    .meta-row { display:flex; justify-content:space-between; gap:20px; font-size:13px; }
+    .meta-row span:first-child { color:var(--muted); }
+    .meta-row strong { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-weight:500; overflow-wrap:anywhere; text-align:right; }
+    .trust { display:inline-flex; width:max-content; gap:8px; align-items:center; color:var(--accent); border:1px solid #3e5b2d; padding:7px 9px; font:700 10px/1 ui-monospace,SFMono-Regular,Menlo,monospace; letter-spacing:.1em; text-transform:uppercase; }
+    section { margin-top:52px; }
+    .section-head { display:flex; align-items:end; justify-content:space-between; gap:24px; margin-bottom:18px; }
+    h2 { margin:7px 0 0; font-size:28px; letter-spacing:-.035em; }
+    .method-chip { color:var(--muted); border:1px solid var(--line); padding:7px 10px; font:11px ui-monospace,SFMono-Regular,Menlo,monospace; }
+    .table-wrap { overflow:auto; border:1px solid var(--line); background:rgba(21,24,22,.86); }
+    table { border-collapse:collapse; width:100%; min-width:760px; }
+    th,td { padding:17px 18px; border-bottom:1px solid var(--line); text-align:right; font-size:14px; }
+    th { color:var(--muted); font:700 10px ui-monospace,SFMono-Regular,Menlo,monospace; letter-spacing:.1em; text-transform:uppercase; background:#111411; }
+    th:first-child,td:first-child { text-align:left; }
+    tbody tr:last-child td { border-bottom:0; }
+    td:first-child { font-weight:680; }
+    .value-good { color:var(--accent); }
+    .charts { display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:1px; background:var(--line); border:1px solid var(--line); }
+    .chart { min-width:0; background:var(--panel); padding:22px; }
+    .chart h3 { margin:0 0 24px; color:var(--muted); font:700 10px ui-monospace,SFMono-Regular,Menlo,monospace; letter-spacing:.1em; text-transform:uppercase; }
+    .bar-row { margin-top:18px; }
+    .bar-meta { display:flex; justify-content:space-between; gap:16px; font-size:12px; margin-bottom:8px; }
+    .bar-meta span:first-child { color:#c3c2bb; }
+    .bar-meta strong { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; }
+    .track { height:7px; background:#252925; overflow:hidden; }
+    .fill { height:100%; background:var(--accent); }
+    .reverse .fill { background:var(--warm); }
+    .empty { min-height:180px; background:var(--panel); padding:22px; display:flex; flex-direction:column; justify-content:flex-end; gap:9px; }
+    .empty strong { color:var(--warm); font-size:15px; }
+    .empty span { color:var(--muted); font-size:13px; line-height:1.5; }
+    .runs td { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:12px; }
+    .pass { color:var(--accent); } .fail { color:var(--danger); }
+    footer { margin-top:36px; border-top:1px solid var(--line); padding-top:20px; display:flex; justify-content:space-between; gap:24px; color:var(--muted); font-size:12px; line-height:1.5; }
+    footer strong { color:#c3c2bb; }
+    @media (max-width:980px) { header { grid-template-columns:1fr; } .meta { border-left:0; border-top:1px solid var(--line); padding:20px 0 0; } .charts { grid-template-columns:1fr; } }
+    @media (max-width:620px) {
+      main { width:min(100% - 28px,1180px); padding-top:32px; }
+      h1 { font-size:50px; }
+      .section-head,footer { align-items:flex-start; flex-direction:column; }
+      header { gap:28px; }
+      .lede { font-size:16px; }
+      .meta-row strong { max-width:62%; }
+      table { min-width:100%; table-layout:auto; }
+      th,td { padding:13px 10px; font-size:12px; }
+      .summary th:nth-child(4),.summary td:nth-child(4),.summary th:nth-child(5),.summary td:nth-child(5),.summary th:nth-child(6),.summary td:nth-child(6),.summary th:nth-child(8),.summary td:nth-child(8),.summary th:nth-child(10),.summary td:nth-child(10) { display:none; }
+      .runs th:nth-child(3),.runs td:nth-child(3),.runs th:nth-child(4),.runs td:nth-child(4),.runs th:nth-child(6),.runs td:nth-child(6),.runs th:nth-child(7),.runs td:nth-child(7) { display:none; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <div>
+      <div class="eyebrow">Dot Loom · evaluation receipt</div>
+      <h1>Measure the weave.</h1>
+      <p class="lede">Direct, fixed, and budgeted adaptive inference compared on the same tasks—with quality, call count, escalation, cost, and latency kept visible.</p>
+    </div>
+    <div class="meta">
+      <div class="trust">● measured, not estimated</div>
+      <div class="meta-row"><span>Dataset</span><strong>evals/code-review-v1.jsonl</strong></div>
+      <div class="meta-row"><span>Cases</span><strong>3 × 1 iteration</strong></div>
+      <div class="meta-row"><span>Generated</span><strong>2026-07-14T10:38:17.103Z</strong></div>
+    </div>
+  </header>
+  <section>
+    <div class="section-head"><div><div class="label">01 · Result</div><h2>Strategy comparison</h2></div><span class="method-chip">judge · dot/dot-gemma-4-uncensored</span></div>
+    <div class="table-wrap"><table class="summary"><thead><tr><th>Strategy</th><th>Quality</th><th>Avg calls</th><th>One call</th><th>Escalation</th><th>Route accuracy</th><th>Avg cost/run</th><th>Cost index</th><th>P95 latency</th><th>Pass rate</th></tr></thead><tbody><tr><td>Single-model baseline</td><td class="value-good">100.0%<br><small>100.0%–100.0%</small></td><td>1.00</td><td>100.0%</td><td>—</td><td>—</td><td>1.00 cr</td><td>100.0</td><td>53.56s</td><td>66.7%</td></tr><tr><td>Loom balanced</td><td class="value-good">100.0%<br><small>100.0%–100.0%</small></td><td>2.00</td><td>0.0%</td><td>100.0%</td><td>—</td><td>2.00 cr</td><td>200.0</td><td>58.11s</td><td>66.7%</td></tr><tr><td>Loom fixed</td><td class="value-good">98.3%<br><small>95.1%–100.0%</small></td><td>4.00</td><td>0.0%</td><td>—</td><td>—</td><td>4.00 cr</td><td>400.0</td><td>85.19s</td><td>66.7%</td></tr></tbody></table></div>
+  </section>
+  <section>
+    <div class="section-head"><div><div class="label">02 · Shape</div><h2>Performance profile</h2></div></div>
+    <div class="charts"><div class="chart"><h3>Quality</h3><div class="bar-row"><div class="bar-meta"><span>Single-model baseline</span><strong>100.0%</strong></div><div class="track"><div class="fill" style="width:100.0%"></div></div></div><div class="bar-row"><div class="bar-meta"><span>Loom balanced</span><strong>100.0%</strong></div><div class="track"><div class="fill" style="width:100.0%"></div></div></div><div class="bar-row"><div class="bar-meta"><span>Loom fixed</span><strong>98.3%</strong></div><div class="track"><div class="fill" style="width:98.3%"></div></div></div></div><div class="chart reverse"><h3>Calls per request · lower is better</h3><div class="bar-row"><div class="bar-meta"><span>Single-model baseline</span><strong>1.00</strong></div><div class="track"><div class="fill" style="width:25.0%"></div></div></div><div class="bar-row"><div class="bar-meta"><span>Loom balanced</span><strong>2.00</strong></div><div class="track"><div class="fill" style="width:50.0%"></div></div></div><div class="bar-row"><div class="bar-meta"><span>Loom fixed</span><strong>4.00</strong></div><div class="track"><div class="fill" style="width:100.0%"></div></div></div></div><div class="chart"><h3>Cost index · lower is better</h3><div class="bar-row"><div class="bar-meta"><span>Single-model baseline</span><strong>100.0</strong></div><div class="track"><div class="fill" style="width:25.0%"></div></div></div><div class="bar-row"><div class="bar-meta"><span>Loom balanced</span><strong>200.0</strong></div><div class="track"><div class="fill" style="width:50.0%"></div></div></div><div class="bar-row"><div class="bar-meta"><span>Loom fixed</span><strong>400.0</strong></div><div class="track"><div class="fill" style="width:100.0%"></div></div></div></div></div>
+  </section>
+  <section>
+    <div class="section-head"><div><div class="label">03 · Evidence</div><h2>Run ledger</h2></div><span class="method-chip">9 runs</span></div>
+    <div class="table-wrap"><table class="runs"><thead><tr><th>Case</th><th>Strategy</th><th>Quality</th><th>Status</th><th>Calls</th><th>Escalated</th><th>Latency</th><th>Cost</th></tr></thead><tbody><tr><td>idempotent-credit-spend</td><td>Single-model baseline</td><td>100.0%</td><td class="pass">PASS</td><td>1</td><td>—</td><td>29.12s</td><td>1.00 cr</td></tr><tr><td>idempotent-credit-spend</td><td>Loom balanced</td><td>100.0%</td><td class="pass">PASS</td><td>2</td><td>YES</td><td>43.46s</td><td>2.00 cr</td></tr><tr><td>idempotent-credit-spend</td><td>Loom fixed</td><td>95.0%</td><td class="pass">PASS</td><td>4</td><td>—</td><td>85.19s</td><td>4.00 cr</td></tr><tr><td>tenant-cache-leak</td><td>Single-model baseline</td><td>100.0%</td><td class="pass">PASS</td><td>1</td><td>—</td><td>53.56s</td><td>1.00 cr</td></tr><tr><td>tenant-cache-leak</td><td>Loom balanced</td><td>100.0%</td><td class="pass">PASS</td><td>2</td><td>YES</td><td>58.11s</td><td>2.00 cr</td></tr><tr><td>tenant-cache-leak</td><td>Loom fixed</td><td>100.0%</td><td class="pass">PASS</td><td>4</td><td>—</td><td>82.42s</td><td>4.00 cr</td></tr><tr><td>webhook-signature-replay</td><td>Single-model baseline</td><td>100.0%</td><td class="fail">FAIL</td><td>1</td><td>—</td><td>29.90s</td><td>1.00 cr</td></tr><tr><td>webhook-signature-replay</td><td>Loom balanced</td><td>100.0%</td><td class="fail">FAIL</td><td>2</td><td>YES</td><td>46.72s</td><td>2.00 cr</td></tr><tr><td>webhook-signature-replay</td><td>Loom fixed</td><td>100.0%</td><td class="fail">FAIL</td><td>4</td><td>—</td><td>62.08s</td><td>4.00 cr</td></tr></tbody></table></div>
+  </section>
+  <footer><span><strong>Quality source:</strong> model-judge. Workflow cost excludes judge calls.</span><span>Generated by Dot Loom · verify the JSON receipt before publishing claims.</span></footer>
+</main>
+</body>
+</html>

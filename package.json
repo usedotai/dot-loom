@@ -1,12 +1,25 @@
 {
   "name": "@usedot/loom",
-  "version": "0.1.0",
-  "private": true,
-  "description": "Provider-pluggable orchestration runtime for multi-model inference pipelines.",
+  "version": "0.2.0",
+  "private": false,
+  "description": "Budget-aware adaptive inference runtime with measurable quality, cost, and latency trade-offs.",
   "type": "module",
   "bin": {
     "dot-loom": "./src/cli.mjs"
   },
+  "files": [
+    "src",
+    "examples",
+    "evals/mock-code-review.jsonl",
+    "evals/adaptive-routing-v1.jsonl",
+    "README.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/usedotai/dot-loom.git"
+  },
+  "keywords": ["llm", "routing", "inference", "orchestration", "evaluation", "openai-compatible"],
   "scripts": {
     "loom": "node src/cli.mjs",
     "start": "node src/cli.mjs",
@@ -16,8 +29,9 @@
     "test:smoke": "node src/cli.mjs run \"Find edge cases in a credits API.\" --pipeline code-review --config examples/mock.config.json --json",
     "eval:mock": "node src/cli.mjs eval --dataset evals/mock-code-review.jsonl --config examples/mock.config.json",
     "eval:report": "node src/cli.mjs eval --dataset evals/mock-code-review.jsonl --config examples/mock.config.json --output reports/mock-eval.html",
-    "benchmark:dot:smoke": "node src/cli.mjs eval --dataset evals/code-review-v1.jsonl --config examples/dot-code.config.json --strategies baseline,fixed,adaptive --limit 3 --concurrency 3 --artifacts reports/dot-code-review-smoke",
-    "benchmark:dot": "node src/cli.mjs eval --dataset evals/code-review-v1.jsonl --config examples/dot-code.config.json --strategies baseline,fixed,adaptive --iterations 3 --concurrency 3 --artifacts reports/dot-code-review-v1",
+    "benchmark:adaptive:mock": "node src/cli.mjs eval --dataset evals/adaptive-routing-v1.jsonl --config examples/mock.config.json --strategies baseline,adaptive-lean,adaptive-balanced,adaptive-strict,fixed --concurrency 3 --artifacts reports/adaptive-routing-mock",
+    "benchmark:dot:smoke": "node src/cli.mjs eval --dataset evals/code-review-v1.jsonl --config examples/dot-code.config.json --strategies baseline,adaptive-balanced,fixed --limit 3 --concurrency 3 --artifacts reports/dot-code-review-smoke-v2",
+    "benchmark:dot": "node src/cli.mjs eval --dataset evals/adaptive-routing-v1.jsonl --config examples/dot-code.config.json --strategies baseline,adaptive-lean,adaptive-balanced,adaptive-strict,fixed --iterations 3 --concurrency 3 --artifacts reports/dot-adaptive-routing-v1",
     "studio": "npm --prefix studio run dev",
     "studio:install": "npm --prefix studio install",
     "studio:build": "npm --prefix studio run build",

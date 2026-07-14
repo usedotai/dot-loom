@@ -19,6 +19,34 @@ Ong et al. train routers from preference data to select between stronger and wea
 - Code: [lm-sys/RouteLLM](https://github.com/lm-sys/RouteLLM)
 - Loom connection: future learned routing policies calibrated from benchmark traces.
 
+### BEST-Route
+
+Jitkrittum et al. route both the model and the number of generated samples from query difficulty and a quality threshold. The paper reports up to 60% cost reduction with less than a 1% performance drop in its evaluated settings.
+
+- Paper: [BEST-Route: Adaptive LLM Routing with Test-Time Optimal Compute](https://arxiv.org/abs/2506.22716)
+- Loom connection: treat direct, sample-and-select, verify, and strict review as separate computation strategies.
+
+### R2-Router
+
+Xue et al. model output length as a controllable routing variable and jointly select model and length budget.
+
+- Paper: [R2-Router: A New Paradigm for LLM Routing with Reasoning](https://openreview.net/forum?id=S3m1tSp8F4)
+- Loom connection: route output-token ceilings alongside strategy depth.
+
+### CONCUR
+
+Chen et al. train modular predictors per computation strategy, supporting constrained routing and adding strategies without full retraining. The ICLR 2026 paper reports higher end-to-end accuracy and lower inference cost than the evaluated single strategies and routing baselines.
+
+- Paper: [CONCUR: A Framework for Continual Constrained and Unconstrained Routing](https://openreview.net/forum?id=gCUY6QIv8r)
+- Loom connection: one predictor per Loom strategy, selected under call, cost, and latency constraints.
+
+### Selective Deferred Routing
+
+This ICML 2026 work studies a local small model that answers first and selectively defers to a remote model.
+
+- Paper: [Selective Deferred Routing for Efficient Hybrid Inference](https://openreview.net/forum?id=CEKKZtZtqX)
+- Loom connection: hybrid local-first execution without paying a hosted router for every request.
+
 ## Multi-model aggregation
 
 ### Mixture-of-Agents
@@ -60,8 +88,34 @@ Zhuge et al. represent language-agent systems as computational graphs and optimi
 - Paper: [Language Agents as Optimizable Graphs](https://arxiv.org/abs/2402.16823)
 - Loom connection: evolving role maps and prompt policies from measured outcomes.
 
+### AFlow
+
+Zhang et al. formulate code-represented workflow optimization as a search problem and use execution feedback to refine graph structure. Their reported experiments show an average improvement over evaluated baselines and cases where smaller models outperform GPT-4o at much lower dollar cost.
+
+- Paper: [AFlow: Automating Agentic Workflow Generation](https://arxiv.org/abs/2410.10762)
+- Loom connection: optimize workflows offline on a training split, then freeze and evaluate them on held-out cases.
+
+## Evaluation reliability
+
+### Position and self-preference bias
+
+LLM judges can prefer candidates because of prompt position or familiarity with a model family's output style rather than task correctness.
+
+- Paper: [Judging the Judges: A Systematic Study of Position Bias in LLM-as-a-Judge](https://arxiv.org/abs/2406.07791)
+- Paper: [Self-Preference Bias in LLM-as-a-Judge](https://arxiv.org/abs/2410.21819)
+- Loom connection: randomize pairwise candidate order, keep strategy/model identity hidden, calibrate on a human-reviewed sample, and report uncertainty.
+
+## Agent security
+
+### AgentDojo
+
+Debenedetti et al. introduce an extensible environment with realistic tasks and hundreds of security cases for indirect prompt injection against tool-using agents.
+
+- Paper: [AgentDojo: A Dynamic Environment to Evaluate Prompt Injection Attacks and Defenses for LLM Agents](https://arxiv.org/abs/2406.13352)
+- Loom connection: tool access must be explicitly scoped and tested against untrusted retrieved content before Loom grows autonomous tool execution.
+
 ## Interpretation boundary
 
 These studies establish that routing, cascades, aggregation, and refinement can improve a cost/quality frontier under particular experimental conditions. They do not establish that adding workers always helps. Extra calls can increase latency, token duplication, and failure surface. Dot Loom exists to make that trade-off visible and reproducible for a user's own workload.
 
-Research findings verified against primary paper abstracts/pages on 2026-07-14.
+Research findings verified against primary paper and conference pages on 2026-07-14. Reported gains remain benchmark-specific and must not be presented as Dot Loom results until reproduced in this repository.

@@ -194,6 +194,8 @@ const OUTPUTS = {
 const sleep = (ms) => new Promise((resolve) => window.setTimeout(resolve, ms));
 
 const CLI_ROLE_MAP = {
+  direct: "drafter",
+  editor: "critic",
   route: "router",
   router: "router",
   draft: "drafter",
@@ -206,13 +208,12 @@ const CLI_ROLE_MAP = {
   finalizer: "finalizer",
 };
 
-function buildPlan({ mode, pipeline, budget, strictness }) {
-  const base = ["router"];
+function buildPlan({ mode, pipeline, budget }) {
   if (mode === "fixed") return ["router", "drafter", "critic", "finalizer"];
-  if (pipeline === "general" && budget === "lean") return ["router", "finalizer"];
-  if (strictness === "high") return ["router", "drafter", "critic", "finalizer"];
-  if (pipeline === "research") return ["router", "drafter", "critic", "finalizer"];
-  return [...base, "drafter", "critic", "finalizer"];
+  const direct = pipeline === "general" ? "finalizer" : "drafter";
+  if (budget === "lean" || (budget === "balanced" && pipeline === "general")) return [direct];
+  if (budget === "strict") return ["drafter", "critic", "finalizer"];
+  return [direct, "critic"];
 }
 
 // network-map node positions: signal-relay zig-zag across the transmission line
@@ -245,7 +246,6 @@ function App() {
   const [byokApiKey, setByokApiKey] = useState("");
   const [byokUseEnv, setByokUseEnv] = useState(false);
   const [byokModels, setByokModels] = useState(PROVIDER_PRESETS.mock.models);
-  const [strictness, setStrictness] = useState("normal");
   const [horizon, setHorizon] = useState(4);
   const [prompt, setPrompt] = useState(PIPELINES["code-review"].prompt);
   const [running, setRunning] = useState(false);
@@ -257,7 +257,7 @@ function App() {
   const [metrics, setMetrics] = useState({
     elapsed: 0,
     tokens: 0,
-    saved: "0%",
+    calls: 0,
     receipt: "idle",
   });
   const [terminal, setTerminal] = useState("");
@@ -293,8 +293,8 @@ function App() {
   }, [events, running]);
 
   const plan = useMemo(
-    () => buildPlan({ mode, pipeline, budget, strictness }),
-    [mode, pipeline, budget, strictness],
+    () => buildPlan({ mode, pipeline, budget }),
+    [mode, pipeline, budget],
   );
 
   const nodes = useMemo(() => layoutNodes(plan), [plan]);
@@ -372,13 +372,13 @@ function App() {
     setOutputs({});
     setEvents([]);
     setTerminal("");
-    setMetrics({ elapsed: 0, tokens: 0, saved: "0%", receipt: "warming" });
-    appendEvent("link established :: capturing route profile", "active");
+    setMetrics({ elapsed: 0, tokens: 0, calls: 0, receipt: "warming" });
+    appendEvent("link established :: applying local budget policy", "active");
 
     const start = performance.now();
     let tokenTotal = 0;
 
-    for (const workerId of plan) {
+    for (const [workerIndex, workerId] of plan.entries()) {
       if (abortRef.current) break;
       const worker = runtimeWorkers[workerId];
       setActive(workerId);
@@ -395,7 +395,7 @@ function App() {
         setMetrics({
           elapsed: (performance.now() - start) / 1000,
           tokens: tokenTotal,
-          saved: mode === "adaptive" ? "37%" : "0%",
+          calls: workerIndex + 1,
           receipt: `loom_${Math.abs(hash(`${prompt}${workerId}${tokenTotal}`)).toString(16).slice(0, 8)}`,
         });
       }
@@ -424,7 +424,7 @@ function App() {
     setOutputs({});
     setEvents([]);
     setTerminal("");
-    setMetrics({ elapsed: 0, tokens: 0, saved: "cli", receipt: "spawning" });
+    setMetrics({ elapsed: 0, tokens: 0, calls: 0, receipt: "spawning" });
 
     const started = performance.now();
     let currentNode = null;
@@ -444,18 +444,21 @@ function App() {
       for (const line of lines) {
         if (!line || /^-+$/.test(line.trim())) continue;
 
-        const stepStart = line.match(/^\[(route|router|draft|drafter|research|verify|critic|challenge|final|finalizer)\]\s+(.+)$/i);
+        const stepStart = line.match(/^\[(direct|editor|route|router|draft|drafter|research|verify|critic|challenge|final|finalizer)\]\s+(.+)$/i);
         if (stepStart) {
-          currentNode = CLI_ROLE_MAP[stepStart[1].toLowerCase()] || currentNode;
+          const stepId = stepStart[1].toLowerCase();
+          currentNode = stepId === "direct" && pipeline === "general" ? "finalizer" : CLI_ROLE_MAP[stepId] || currentNode;
           setActive(currentNode);
           appendEvent(`TX ${runtimeWorkers[currentNode]?.label || stepStart[1]} <- ${stepStart[2]}`, "active");
           continue;
         }
 
-        const stepDone = line.match(/^\[done:(route|router|draft|drafter|research|verify|critic|challenge|final|finalizer)\]\s+(.+)$/i);
+        const stepDone = line.match(/^\[done:(direct|editor|route|router|draft|drafter|research|verify|critic|challenge|final|finalizer)\]\s+(.+)$/i);
         if (stepDone) {
-          const node = CLI_ROLE_MAP[stepDone[1].toLowerCase()];
+          const stepId = stepDone[1].toLowerCase();
+          const node = stepId === "direct" && pipeline === "general" ? "finalizer" : CLI_ROLE_MAP[stepId];
           setCompleted((prev) => (prev.includes(node) ? prev : [...prev, node]));
+          setMetrics((prev) => ({ ...prev, calls: prev.calls + 1 }));
           appendEvent(`RX ${runtimeWorkers[node]?.label || stepDone[1]} :: ${stepDone[2]}`, "done");
           currentNode = null;
           continue;
@@ -506,6 +509,7 @@ function App() {
           prompt,
           pipeline,
           mode,
+          policy: budget,
           config: runtime === "cli-dot" ? "dot" : runtime === "cli-byok" ? "byok" : "mock",
           byok: runtime === "cli-byok" ? byokPayload() : undefined,
           temperature: 0.2,
@@ -567,7 +571,7 @@ function App() {
     setOutputs({});
     setEvents([]);
     setTerminal("");
-    setMetrics({ elapsed: 0, tokens: 0, saved: "0%", receipt: "idle" });
+    setMetrics({ elapsed: 0, tokens: 0, calls: 0, receipt: "idle" });
   }
 
   function stopRun() {
@@ -578,7 +582,8 @@ function App() {
     appendEvent("SIGINT :: link halted by operator", "warn");
   }
 
-  const finalAnswer = outputs.finalizer || outputs.final || "";
+  const finalAnswer = outputs.finalizer || outputs.critic || outputs.drafter || outputs.final || "";
+  const callCap = mode === "fixed" ? 4 : budget === "lean" ? 1 : budget === "strict" ? 3 : 2;
   const linkState = running ? "LINK//ACTIVE" : completed.length ? "LINK//SEALED" : "LINK//IDLE";
   const runtimeState =
     runtime === "cli-dot" && !bridgeStatus.dotApiKey
@@ -638,9 +643,8 @@ function App() {
           }}
           options={Object.entries(PIPELINES).map(([id, item]) => [id, item.label])}
         />
-        <Segmented label="budget" value={budget} onChange={setBudget} options={[["lean", "LEAN"], ["balanced", "BAL"], ["strong", "STRONG"]]} />
+        <Segmented label="policy" value={budget} onChange={setBudget} options={[["lean", "LEAN"], ["balanced", "BAL"], ["strict", "STRICT"]]} />
         <Segmented label="privacy" value={privacy} onChange={setPrivacy} options={[["smart", "SMART"], ["full", "FULL"], ["off", "OFF"]]} />
-        <Segmented label="verifier" value={strictness} onChange={setStrictness} options={[["normal", "NORM"], ["high", "HIGH"]]} />
         <div className="bridge-indicator">
           <span>bridge</span>
           <strong>{bridgeStatus.ok ? runtimeState : "OFFLINE"}</strong>
@@ -798,7 +802,7 @@ function App() {
           <div className="metrics-grid">
             <Metric icon={Radio} label="T+" value={`${metrics.elapsed.toFixed(1)}s`} />
             <Metric icon={Activity} label="payload" value={`${metrics.tokens.toLocaleString()} tok`} />
-            <Metric icon={Waypoints} label="compressed" value={metrics.saved} />
+            <Metric icon={Waypoints} label="calls / cap" value={`${metrics.calls}/${callCap}`} />
             <Metric icon={ShieldAlert} label="cipher" value={privacy} />
           </div>
         </section>

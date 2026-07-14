@@ -13,6 +13,10 @@
     "critic": "dot/dot-gemma-4-uncensored",
     "finalizer": "dot/dot-qwen-coder-480b"
   },
+  "adaptive": {
+    "policy": "balanced",
+    "estimatedCreditsPerCall": 1
+  },
   "workers": {
     "router": {
       "model": "dot/dot-nemotron-nano",

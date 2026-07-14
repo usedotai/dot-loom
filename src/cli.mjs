@@ -60,6 +60,11 @@ function parseArgs(argv) {
     json: false,
     baseline: false,
     adaptive: false,
+    policy: undefined,
+    maxCalls: undefined,
+    maxCredits: undefined,
+    maxLatencyMs: undefined,
+    creditPerCall: undefined,
     stream: true,
     dataset: "evals/mock-code-review.jsonl",
     strategies: "baseline,fixed,adaptive",
@@ -82,6 +87,11 @@ function parseArgs(argv) {
     else if (arg === "--json") parsed.json = true;
     else if (arg === "--baseline") parsed.baseline = true;
     else if (arg === "--adaptive") parsed.adaptive = true;
+    else if (arg === "--policy") parsed.policy = argv[++i];
+    else if (arg === "--max-calls") parsed.maxCalls = Number(argv[++i]);
+    else if (arg === "--max-credits") parsed.maxCredits = Number(argv[++i]);
+    else if (arg === "--max-latency-ms") parsed.maxLatencyMs = Number(argv[++i]);
+    else if (arg === "--credit-per-call") parsed.creditPerCall = Number(argv[++i]);
     else if (arg === "--no-stream") parsed.stream = false;
     else if (arg === "--dataset") parsed.dataset = argv[++i];
     else if (arg === "--strategies") parsed.strategies = argv[++i];
@@ -107,11 +117,13 @@ Usage:
   node src/cli.mjs doctor --config examples/dot.config.json
   node src/cli.mjs pipelines
   node src/cli.mjs eval --dataset evals/mock-code-review.jsonl --config examples/mock.config.json
-  node src/cli.mjs eval --dataset evals/code-review-v1.jsonl --strategies baseline,fixed,adaptive --output reports/eval.html
+  node src/cli.mjs eval --dataset evals/code-review-v1.jsonl --strategies baseline,adaptive-lean,adaptive-balanced,fixed --output reports/eval.html
   node src/cli.mjs eval --dataset evals/code-review-v1.jsonl --judge-model provider/judge-model --concurrency 3
   node src/cli.mjs eval --dataset evals/code-review-v1.jsonl --limit 3 --artifacts reports/smoke
   node src/cli.mjs run "review this API" --pipeline code-review --config examples/dot.config.json
-  node src/cli.mjs run "review this API" --adaptive --pipeline code-review --config examples/dot.config.json
+  node src/cli.mjs run "review this API" --adaptive --policy balanced --pipeline code-review --config examples/dot.config.json
+  node src/cli.mjs run "review this API" --adaptive --policy lean --max-calls 1 --config examples/dot.config.json
+  node src/cli.mjs run "review this API" --adaptive --max-credits 2 --max-latency-ms 30000 --config examples/dot.config.json
   node src/cli.mjs run "review this API" --baseline --config examples/dot.config.json
   node src/cli.mjs run "review this API" --max-tokens 2000 --config examples/dot.config.json
   node src/cli.mjs run "review this API" --no-stream --config examples/dot.config.json

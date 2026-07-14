@@ -12,6 +12,7 @@ export async function chatWithOllama(modelRef, messages, options = {}) {
         num_predict: options.maxTokens ?? 1200,
       },
     }),
+    signal: options.signal,
   });
 
   const text = await response.text();

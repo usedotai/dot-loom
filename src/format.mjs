@@ -8,6 +8,7 @@ export function printHuman(result, options = {}) {
   console.log("Dot Loom");
   console.log("========");
   console.log(`pipeline       ${result.pipeline}`);
+  if (result.workflow?.policy) console.log(`policy         ${result.workflow.policy}`);
   console.log(`calls          ${result.metrics.calls}`);
   console.log(`elapsed        ${(result.metrics.elapsedMs / 1000).toFixed(2)}s`);
   if (result.metrics.totalTokens) {
@@ -18,6 +19,11 @@ export function printHuman(result, options = {}) {
   }
   if (result.workflow?.receipt) {
     console.log(`receipt        ${result.workflow.receipt.traceHash}`);
+  }
+  if (result.workflow?.budget) {
+    const budget = result.workflow.budget;
+    console.log(`budget         ${budget.used.calls}/${budget.limits.maxCalls} calls${budget.limited ? ` (${budget.stopReason})` : ""}`);
+    if (result.workflow.escalated) console.log(`escalated      ${result.workflow.escalationReason}`);
   }
   if (result.workflow?.plan) {
     console.log("");
@@ -93,7 +99,8 @@ export function createLiveReporter(enabled = true) {
       if (empty) process.stdout.write(`[warn:${role}]${empty}\n`);
     },
     onWorkflowPlan({ plan }) {
-      process.stdout.write(`\n[workflow] ${plan.kind} complexity=${plan.complexity} steps=${plan.steps.length}\n`);
+      const budget = plan.budget ? ` maxCalls=${plan.budget.maxCalls} maxCredits=${plan.budget.maxCredits ?? "n/a"}` : "";
+      process.stdout.write(`\n[workflow] ${plan.kind} complexity=${plan.complexity} steps<=${plan.steps.length}${budget}\n`);
       for (const step of plan.steps) {
         const access = step.access?.length ? ` access=[${step.access.join(",")}]` : "";
         process.stdout.write(`[workflow] ${step.id} -> ${step.workerRef}${access}\n`);

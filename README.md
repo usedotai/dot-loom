@@ -2,14 +2,17 @@
 
 [![GitHub stars](https://img.shields.io/github/stars/usedotai/dot-loom?style=social)](https://github.com/usedotai/dot-loom/stargazers)
 
-**Stop guessing whether more models help. Measure it.**
+**Set a quality target and a cost ceiling. Spend extra inference only when the task earns it.**
 
-Dot Loom is a provider-pluggable orchestration and evaluation runtime for multi-model inference. It compares a strong single-model baseline against fixed and adaptive workflows on the same tasks, then produces an auditable receipt for quality, cost, latency, tokens, and pass rate.
+Dot Loom is an open, provider-pluggable adaptive inference runtime. Its default policy answers directly, then selectively buys verification for high-risk work. Every run exposes the chosen policy, call budget, escalation reason, cost, latency, tokens, and receipt.
 
-It is not a foundation model. It composes existing models into observable role-based pipelines:
+It is not a foundation model. It decides how much inference an existing request needs:
 
 ```txt
-router -> drafter -> critic/verifier -> finalizer
+low risk      direct answer                         1 call
+high risk     direct answer -> verifier/editor      2 calls
+strict        draft -> critic -> finalizer           3 calls
+fixed         router -> draft -> critic -> finalizer 4 calls
 ```
 
 Run the same workflow with Dot, OpenRouter, OpenAI-compatible endpoints, Ollama, LM Studio-compatible local servers, or deterministic mocks.
@@ -19,10 +22,12 @@ npm run eval:mock
 ```
 
 ```txt
-Strategy                 Quality    Avg cost/run    Cost index    P95 latency    Pass rate
-Single-model baseline    measured   measured        100           measured       measured
-Loom fixed               measured   measured        relative      measured       measured
-Loom adaptive            measured   measured        relative      measured       measured
+Strategy          Quality + CI    Avg calls    One-call rate    Escalation    Cost    P95
+Baseline          measured        1.00         100%             —             measured measured
+Loom lean         measured        <=1.00       measured         0%            measured measured
+Loom balanced     measured        <=2.00       measured         measured      measured measured
+Loom strict       measured        <=3.00       measured         measured      measured measured
+Loom fixed        measured        4.00         0%               —             measured measured
 ```
 
 Loom fills that table from actual runs. It leaves unavailable fields blank rather than inventing benchmark wins.
@@ -33,28 +38,32 @@ Dot Loom is the open R&D surface behind the same systems philosophy as Dot Super
 
 This repository is an early technical scaffold. It is suitable for experimentation, demos, local provider tests, and architecture review. It is not yet a benchmarked replacement for commercial multi-agent systems.
 
-Current maturity: strong prototype.
+Current maturity: testable alpha.
 
 What works now:
 
 - Fixed orchestration pipeline.
-- Adaptive workflow mode with a small planner.
+- Routerless `lean`, `balanced`, and `strict` adaptive policies.
+- Enforced call, estimated-credit, and wall-clock ceilings.
+- Selective verifier-editor escalation with no mandatory finalizer call.
 - Provider abstraction for Dot, OpenAI-compatible APIs, Ollama, and mock runs.
 - Streaming CLI traces.
 - Per-role token and timing summaries.
-- Reproducible baseline vs fixed vs adaptive eval runs.
+- Reproducible baseline vs lean vs balanced vs strict vs fixed eval runs.
 - Independent, strategy-blinded model judging with task-specific rubrics.
 - Parallel eval execution for larger suites.
 - Shareable HTML, SVG, Markdown, and JSON benchmark reports.
-- A 15-case adversarial backend/code-review benchmark suite.
+- A 15-case adversarial backend/code-review suite and 24-case mixed-difficulty routing suite.
+- Quality confidence intervals, call selectivity, route accuracy, and budget-limit reporting.
 - Studio UI for visualizing model interaction and live process traces.
 - BYOK Studio bridge that can run arbitrary role maps without persisting provider keys.
-- Access-list based context gating in adaptive mode.
+- Provider cancellation signals for adaptive latency ceilings.
+- Access-list based prior-output gating in adaptive mode.
 
 What is not done yet:
 
 - Human-reviewed benchmark results across multiple providers.
-- Learned or evolved routing policies.
+- Learned or continually calibrated routing policies; routing is currently a local deterministic policy.
 - Parallel branch execution.
 - Tool-call isolation per worker.
 - Long-term trace corpus and regression dashboard.
@@ -68,7 +77,7 @@ dot-loom/
     cli.mjs                         CLI entrypoint
     config.mjs                      provider/model config parsing
     fusion.mjs                      fixed pipeline runtime
-    adaptive.mjs                    adaptive planner/runtime
+    adaptive.mjs                    budgeted adaptive policy/runtime
     eval.mjs                        benchmark runner and scoring
     report.mjs                      shareable HTML/SVG reports
     providers/                      provider adapters
@@ -81,6 +90,7 @@ dot-loom/
     ollama.config.json              local Ollama example
   evals/
     code-review-v1.jsonl            adversarial public benchmark suite
+    adaptive-routing-v1.jsonl       mixed-difficulty routing benchmark
   docs/
     BENCHMARKING.md                 publication methodology
     STUDIES.md                      research evidence and boundaries
@@ -139,9 +149,29 @@ Run adaptive orchestration:
 ```bash
 node src/cli.mjs run "Review this API design for billing and privacy bugs." \
   --adaptive \
+  --policy balanced \
   --pipeline code-review \
   --config examples/mock.config.json
 ```
+
+Choose an explicit computation policy:
+
+```bash
+# One provider call maximum.
+node src/cli.mjs run "Summarize this note." --adaptive --policy lean --max-calls 1 \
+  --config examples/mock.config.json
+
+# One call normally; a second verifier-editor call for risky work.
+node src/cli.mjs run "Review this payment API." --adaptive --policy balanced \
+  --max-calls 2 --max-credits 2 --max-latency-ms 30000 \
+  --config examples/dot.config.json
+
+# Three-call review depth, still without a paid router.
+node src/cli.mjs run "Audit this authorization design." --adaptive --policy strict \
+  --config examples/mock.config.json
+```
+
+`--max-calls`, `--max-credits`, and `--max-latency-ms` are hard pre-step ceilings. `--credit-per-call` supplies a planning estimate when a provider charges flat credits. Native provider receipts remain the source of actual credit usage.
 
 Run baseline only:
 
@@ -162,7 +192,7 @@ node src/cli.mjs run "Find edge cases in a credits API." \
 
 ## Reproducible Evaluations
 
-Compare the single-model baseline with fixed and adaptive Loom workflows:
+Compare the single-model baseline with every Loom computation policy:
 
 ```bash
 npm run eval:mock
@@ -172,21 +202,21 @@ Run the public code-review suite and generate a shareable report:
 
 ```bash
 node src/cli.mjs eval \
-  --dataset evals/code-review-v1.jsonl \
+  --dataset evals/adaptive-routing-v1.jsonl \
   --config examples/dot-code.config.json \
-  --strategies baseline,fixed,adaptive \
+  --strategies baseline,adaptive-lean,adaptive-balanced,adaptive-strict,fixed \
   --iterations 3 \
   --concurrency 3 \
   --output reports/code-review-v1.html
 ```
 
-Each dataset line contains a prompt and deterministic acceptance checks:
+Each dataset line can contain a prompt, deterministic acceptance checks, and an expected escalation label:
 
 ```json
-{"id":"credits-api","pipeline":"code-review","prompt":"Review this credits API.","checks":[{"type":"contains","value":"privacy"},{"type":"contains-any","values":["billing","credit"]},{"type":"not-contains","value":"sorry"}]}
+{"id":"credits-api","pipeline":"code-review","expectedEscalation":true,"prompt":"Review this credits API.","checks":[{"type":"contains","value":"privacy"},{"type":"contains-any","values":["billing","credit"]},{"type":"not-contains","value":"sorry"}]}
 ```
 
-Supported checks are `contains`, `contains-any`, and `not-contains`. Without a model judge, quality is the percentage of checks passed and pass rate is the percentage of runs satisfying every check.
+Supported checks are `contains`, `contains-any`, and `not-contains`. Without a model judge, quality is the percentage of checks passed and pass rate is the percentage of runs satisfying every check. Reports include 95% confidence intervals, average calls, one-call rate, escalation rate, and route accuracy when labels are present.
 
 For rubric-based evaluation, use an independent judge model:
 
@@ -229,11 +259,32 @@ report.json    complete machine-readable receipt
 
 Read the [benchmark methodology](docs/BENCHMARKING.md) before publishing performance claims.
 
-## Exploratory Dot smoke benchmark
+## Budgeted adaptive smoke benchmark (`v0.2`)
+
+![Dot Loom budgeted adaptive three-case code-review benchmark](docs/benchmarks/dot-code-review-smoke-v2.svg)
+
+On 2026-07-14, we reran the same first three high-risk `code-review-v1` cases through the routerless budgeted runtime. Each answer was judged without strategy or model identity. Workflow calls and Dot credit receipts include every generation step; judge calls averaged one additional credit and remain separate.
+
+| Strategy | Judge quality | Avg calls | Provider cost/run | Cost index | P95 latency | Full pass rate |
+|---|---:|---:|---:|---:|---:|---:|
+| Single-model baseline | 100.0% | 1.00 | 1.00 credit | 100 | 53.56s | 66.7% |
+| Loom balanced | 100.0% | 2.00 | 2.00 credits | 200 | 58.11s | 66.7% |
+| Loom fixed | 98.3% | 4.00 | 4.00 credits | 400 | 85.19s | 66.7% |
+
+Balanced cut calls and credits by 50% versus fixed review and reduced P95 latency by roughly 32%, while matching the baseline on this sample. It did **not** beat the baseline on quality and still cost twice as much. Because all three cases are high-risk, balanced escalated every case; the 24-case mixed suite exists to measure one-call selectivity across easier work.
+
+This remains an exploratory smoke result: three synthetic cases, one iteration, one provider, one model judge, no human review, and a 900-token per-call output cap. The judge model also served as Loom's critic, creating a possible self-preference dependency despite strategy blinding. Do not generalize the zero observed judge-quality gap beyond these runs.
+
+- [Raw `v0.2` JSON receipt](docs/benchmarks/dot-code-review-smoke-v2.json)
+- [Responsive `v0.2` HTML report](docs/benchmarks/dot-code-review-smoke-v2.html)
+- [`v0.2` Markdown report](docs/benchmarks/dot-code-review-smoke-v2.md)
+- [24-case structural routing validation](docs/benchmarks/adaptive-routing-mock.md)
+
+## Historical Dot smoke benchmark (`v0.1`)
 
 ![Dot Loom three-case exploratory code-review benchmark](docs/benchmarks/dot-code-review-smoke.svg)
 
-On 2026-07-14, we ran the first three `code-review-v1` cases once through the Dot model map in `examples/dot-code.config.json`. Gemma judged answers without seeing strategy names or model identities.
+On 2026-07-14, we ran the first three `code-review-v1` cases once through the original `v0.1` Dot model map. Gemma judged answers without seeing strategy names or model identities. This receipt is retained as historical evidence and does **not** measure the routerless budgeted adaptive runtime introduced in `v0.2`.
 
 | Strategy | Judge quality | Provider cost/run | Cost index | P95 latency | Full pass rate |
 |---|---:|---:|---:|---:|---:|
@@ -241,7 +292,7 @@ On 2026-07-14, we ran the first three `code-review-v1` cases once through the Do
 | Loom fixed | 100.0% | 4.00 credits | 400 | 88.77s | 100.0% |
 | Loom adaptive | 98.3% | 4.00 credits | 400 | 82.25s | 66.7% |
 
-The useful finding is not “more models are cheaper.” On this tiny high-risk sample, fixed orchestration improved rubric/check coverage, but required four provider calls and roughly four times the latency and credits. Adaptive selected the same full workflow for these complex cases, so it did not save cost. That is exactly the trade-off Loom is designed to expose.
+The useful finding is not “more models are cheaper.” On this tiny high-risk sample, fixed orchestration improved rubric/check coverage, but required four provider calls and roughly four times the latency and credits. The old adaptive implementation also made four calls. That negative result directly motivated `v0.2`: no paid router, one call for accepted direct answers, two calls for balanced high-risk review, and explicit ceilings.
 
 This is an **exploratory smoke result**, not a general benchmark claim: three synthetic cases, one iteration, one provider, one model judge, no human review, and a 900-token workflow cap. Judge calls averaged one additional credit and are excluded from the workflow-cost column.
 
@@ -249,6 +300,7 @@ This is an **exploratory smoke result**, not a general benchmark claim: three sy
 - [Shareable HTML report](docs/benchmarks/dot-code-review-smoke.html)
 - [Markdown report](docs/benchmarks/dot-code-review-smoke.md)
 - [Full 15-case suite](evals/code-review-v1.jsonl)
+- [Mixed-difficulty 24-case routing suite](evals/adaptive-routing-v1.jsonl)
 - [Publication methodology](docs/BENCHMARKING.md)
 
 ## What published studies suggest
@@ -261,6 +313,9 @@ These are results reported by the cited authors on different tasks, models, and 
 |---|---|---|
 | [FrugalGPT](https://arxiv.org/abs/2305.05176) | Up to 98% cost reduction while matching the best individual LLM in reported experiments; or +4% accuracy over GPT-4 at the same cost | Cascades can improve a task-specific cost/quality frontier |
 | [RouteLLM](https://arxiv.org/abs/2406.18665) | More than 2× cost reduction in some settings without sacrificing response quality | Learned routing can avoid unnecessary strong-model calls |
+| [BEST-Route](https://arxiv.org/abs/2506.22716) | Up to 60% reported cost reduction with less than 1% performance drop by routing model and sample count | Loom should route complete computation strategies, not only model names |
+| [R2-Router](https://openreview.net/forum?id=S3m1tSp8F4) | Jointly routes model and output-length budget | Output length is part of the inference budget, not a fixed afterthought |
+| [CONCUR](https://openreview.net/forum?id=gCUY6QIv8r) | Modular per-strategy predictors support constrained and continual routing | New Loom strategies should be addable without retraining one monolithic router |
 | [Mixture-of-Agents](https://arxiv.org/abs/2406.04692) | 65.1 on AlpacaEval 2.0 for the reported open-source MoA configuration vs 57.5 for GPT-4 Omni | Aggregating diverse model outputs can outperform an individual model |
 | [Self-Refine](https://arxiv.org/abs/2303.17651) | Roughly 20 percentage points absolute average improvement across seven reported tasks | Feedback and refinement can improve first-pass outputs |
 
@@ -360,19 +415,27 @@ It is useful for debugging and direct comparisons against a single-model baselin
 
 ### Adaptive
 
-Adaptive mode asks the router for compact routing notes. Loom's current bounded planner then selects a deterministic task profile and worker sequence. Each step receives prior outputs admitted by its access list.
-
-The planner output is intentionally constrained:
+Adaptive mode does not make a paid router call. A local deterministic policy classifies task risk and chooses a bounded strategy:
 
 ```txt
-step id
-worker id
-objective
-allowed context ids
-expected artifact type
+lean       direct                                             <= 1 call
+balanced   direct -> conditional verifier/editor              <= 2 calls
+strict     direct -> adversarial verifier -> finalizer         <= 3 calls
 ```
 
-This is not a full autonomous agent loop yet. It is a bounded orchestration scaffold that makes model collaboration inspectable.
+The verifier-editor in balanced mode returns the corrected final answer itself, avoiding a separate synthesis call. Simple general requests stop after the direct answer. Security, identity, money, privacy, concurrency, and production-code signals trigger review.
+
+Every adaptive receipt records:
+
+```txt
+policy and task profile
+call, estimated-credit, and latency ceilings
+executed steps and admitted prior outputs
+escalation decision and reason
+actual provider receipts when available
+```
+
+This is a cold-start policy, not a learned router. The next research step is fitting per-strategy quality and cost predictors from held-out traces.
 
 ### Baseline
 
@@ -395,17 +458,16 @@ In adaptive mode, each worker currently receives:
 - role-specific instructions
 - no hidden global memory
 
-Access lists currently gate prior worker outputs, not the original task. This explicit boundary is the foundation for future enforceable task-level context policies.
+Access lists currently gate prior worker outputs, not the original task. The runtime also frames prior outputs as untrusted data so that a draft cannot instruct its verifier. This explicit boundary is the foundation for future enforceable task- and tool-level policies.
 
 ## Streaming and Observability
 
 The CLI streams role activity by default:
 
 ```txt
-[router] provider/model
-[drafter] provider/model
-[critic] provider/model
-[finalizer] provider/model
+[workflow] code-review complexity=high steps<=2 maxCalls=2 maxCredits=2
+[direct] provider/draft-model
+[verify] provider/verifier-model
 ```
 
 For providers that expose token chunks, the CLI prints tokens live. For providers that expose structured events, such as Dot privacy or billing frames, Loom prints those frames in the trace.
@@ -452,7 +514,7 @@ Dot Loom gets close on these primitives:
 
 - Standard CLI and JSON result surface.
 - Multiple workers behind one user-facing run.
-- Routing before execution.
+- Local risk profiling before adaptive execution.
 - Role assignment.
 - Context partitioning.
 - Verifier/critic pass.
@@ -521,6 +583,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) or open the benchmark-submission issue te
 
 Near term:
 
+- Run and publish the new `adaptive-routing-v1` suite across multiple providers.
 - Add human review and judge-agreement reporting.
 - Publish multi-provider `code-review-v1` results with raw receipts.
 - Persist anonymized local traces for regression tests.
@@ -532,7 +595,8 @@ Medium term:
 
 - Learn routing policies from trace outcomes.
 - Add model-pair calibration for drafter/verifier compatibility.
-- Add cost-aware planner objectives.
+- Fit modular per-strategy quality, cost, and latency predictors from held-out traces.
+- Jointly route output-token budgets and strategy depth.
 - Add historical benchmark regression dashboards.
 - Add local-only privacy mode for sensitive runs.
 

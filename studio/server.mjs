@@ -76,6 +76,7 @@ async function handleRun(req, res) {
   const configKey = ["dot", "mock", "byok"].includes(body.config) ? body.config : "mock";
   const pipeline = ["code-review", "research", "general"].includes(body.pipeline) ? body.pipeline : "general";
   const mode = body.mode === "adaptive" ? "adaptive" : "fixed";
+  const policy = ["lean", "balanced", "strict"].includes(body.policy) ? body.policy : "balanced";
   const temperature = Number.isFinite(Number(body.temperature)) ? String(Number(body.temperature)) : "0.2";
   const maxTokens = Number(body.maxTokens);
   const tempConfig = configKey === "byok" ? await createByokConfig(body.byok) : null;
@@ -92,7 +93,7 @@ async function handleRun(req, res) {
     "--temperature",
     temperature,
   ];
-  if (mode === "adaptive") args.push("--adaptive");
+  if (mode === "adaptive") args.push("--adaptive", "--policy", policy);
   if (Number.isFinite(maxTokens) && maxTokens > 0) args.push("--max-tokens", String(Math.min(maxTokens, 12000)));
 
   res.writeHead(200, {
@@ -116,8 +117,9 @@ async function handleRun(req, res) {
     config: configKey,
     provider: tempConfig?.provider || configKey,
     mode,
+    policy: mode === "adaptive" ? policy : null,
     pipeline,
-    command: ["node", "src/cli.mjs", "run", JSON.stringify(prompt), "--config", commandConfig, "--pipeline", pipeline, mode === "adaptive" ? "--adaptive" : ""]
+    command: ["node", "src/cli.mjs", "run", JSON.stringify(prompt), "--config", commandConfig, "--pipeline", pipeline, mode === "adaptive" ? "--adaptive" : "", mode === "adaptive" ? `--policy ${policy}` : ""]
       .filter(Boolean)
       .join(" "),
   });

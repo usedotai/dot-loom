@@ -1052,7 +1052,17 @@ textarea:focus {
     width: min(100vw - 24px, 760px);
     height: auto;
     min-height: 100dvh;
+    padding-bottom: 20px;
     overflow: visible;
+  }
+
+  .terminal-dock {
+    position: static;
+    left: auto;
+    bottom: auto;
+    width: 100%;
+    margin-top: 12px;
+    transform: none;
   }
 
   .workspace {
@@ -1150,8 +1160,7 @@ textarea:focus {
   }
 
   .terminal-dock {
-    bottom: 8px;
-    width: min(100vw - 16px, 460px);
+    width: 100%;
     height: var(--terminal-height);
     padding: 10px;
   }
