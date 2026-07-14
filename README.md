@@ -2,15 +2,30 @@
 
 [![GitHub stars](https://img.shields.io/github/stars/usedotai/dot-loom?style=social)](https://github.com/usedotai/dot-loom/stargazers)
 
-Dot Loom is a provider-pluggable orchestration runtime for multi-model inference.
+**Stop guessing whether more models help. Measure it.**
 
-It is not a new foundation model and it does not pretend to be one. It is a research and developer framework for composing existing models into role-based pipelines:
+Dot Loom is a provider-pluggable orchestration and evaluation runtime for multi-model inference. It compares a strong single-model baseline against fixed and adaptive workflows on the same tasks, then produces an auditable receipt for quality, cost, latency, tokens, and pass rate.
+
+It is not a foundation model. It composes existing models into observable role-based pipelines:
 
 ```txt
 router -> drafter -> critic/verifier -> finalizer
 ```
 
-The goal is to make the orchestration layer observable, configurable, and portable. A user can run the same workflow with Dot, OpenRouter, OpenAI-compatible endpoints, Ollama, LM Studio-compatible local servers, or deterministic mocks.
+Run the same workflow with Dot, OpenRouter, OpenAI-compatible endpoints, Ollama, LM Studio-compatible local servers, or deterministic mocks.
+
+```bash
+npm run eval:mock
+```
+
+```txt
+Strategy                 Quality    Avg cost/run    Cost index    P95 latency    Pass rate
+Single-model baseline    measured   measured        100           measured       measured
+Loom fixed               measured   measured        relative      measured       measured
+Loom adaptive            measured   measured        relative      measured       measured
+```
+
+Loom fills that table from actual runs. It leaves unavailable fields blank rather than inventing benchmark wins.
 
 Dot Loom is the open R&D surface behind the same systems philosophy as Dot Supercharged: do not assume one giant model is always the right inference primitive. Route, draft, verify, synthesize, and measure.
 
@@ -28,13 +43,17 @@ What works now:
 - Streaming CLI traces.
 - Per-role token and timing summaries.
 - Reproducible baseline vs fixed vs adaptive eval runs.
+- Independent, strategy-blinded model judging with task-specific rubrics.
+- Parallel eval execution for larger suites.
+- Shareable HTML, SVG, Markdown, and JSON benchmark reports.
+- A 15-case adversarial backend/code-review benchmark suite.
 - Studio UI for visualizing model interaction and live process traces.
 - BYOK Studio bridge that can run arbitrary role maps without persisting provider keys.
 - Access-list based context gating in adaptive mode.
 
 What is not done yet:
 
-- Model-judged and human-reviewed eval suites.
+- Human-reviewed benchmark results across multiple providers.
 - Learned or evolved routing policies.
 - Parallel branch execution.
 - Tool-call isolation per worker.
@@ -50,6 +69,8 @@ dot-loom/
     config.mjs                      provider/model config parsing
     fusion.mjs                      fixed pipeline runtime
     adaptive.mjs                    adaptive planner/runtime
+    eval.mjs                        benchmark runner and scoring
+    report.mjs                      shareable HTML/SVG reports
     providers/                      provider adapters
     pipelines/                      pipeline profiles
   examples/
@@ -58,6 +79,11 @@ dot-loom/
     dot-code.config.json            Dot API code-review lane
     openrouter.config.json          OpenRouter compatible example
     ollama.config.json              local Ollama example
+  evals/
+    code-review-v1.jsonl            adversarial public benchmark suite
+  docs/
+    BENCHMARKING.md                 publication methodology
+    STUDIES.md                      research evidence and boundaries
   studio/
     server.mjs                      local Studio bridge
     src/                            React visualization surface
@@ -142,15 +168,16 @@ Compare the single-model baseline with fixed and adaptive Loom workflows:
 npm run eval:mock
 ```
 
-Or run your own JSONL suite and save the complete report:
+Run the public code-review suite and generate a shareable report:
 
 ```bash
 node src/cli.mjs eval \
-  --dataset evals/my-suite.jsonl \
-  --config examples/my-provider.config.json \
+  --dataset evals/code-review-v1.jsonl \
+  --config examples/dot-code.config.json \
   --strategies baseline,fixed,adaptive \
   --iterations 3 \
-  --output reports/my-suite.json
+  --concurrency 3 \
+  --output reports/code-review-v1.html
 ```
 
 Each dataset line contains a prompt and deterministic acceptance checks:
@@ -159,7 +186,20 @@ Each dataset line contains a prompt and deterministic acceptance checks:
 {"id":"credits-api","pipeline":"code-review","prompt":"Review this credits API.","checks":[{"type":"contains","value":"privacy"},{"type":"contains-any","values":["billing","credit"]},{"type":"not-contains","value":"sorry"}]}
 ```
 
-Supported checks are `contains`, `contains-any`, and `not-contains`. Quality is the percentage of checks passed; pass rate is the percentage of runs that satisfy every check. This starter harness is deliberately deterministic. It does not claim that keyword checks replace model judges or human review.
+Supported checks are `contains`, `contains-any`, and `not-contains`. Without a model judge, quality is the percentage of checks passed and pass rate is the percentage of runs satisfying every check.
+
+For rubric-based evaluation, use an independent judge model:
+
+```bash
+node src/cli.mjs eval \
+  --dataset evals/code-review-v1.jsonl \
+  --config examples/dot-code.config.json \
+  --judge-model dot/your-independent-judge \
+  --include-answers \
+  --output reports/code-review-v1.json
+```
+
+The judge receives the task, rubric, and candidate answer—not the strategy name, models, cost, or latency. Judge usage is recorded separately and excluded from workflow cost. Model judging remains a proxy; publishable studies should include human review.
 
 Cost is calculated from actual token usage only when every invoked model has explicit per-million-token pricing:
 
@@ -174,7 +214,57 @@ Cost is calculated from actual token usage only when every invoked model has exp
 }
 ```
 
-Pricing is configuration, never a built-in marketing assumption. If any price is missing, Loom reports cost as unavailable instead of inventing a number. Every JSON run includes a per-model token and cost breakdown. When the baseline has a non-zero measured cost, the report also normalizes it to a cost index of `100`.
+Pricing is configuration, never a built-in marketing assumption. If any price is missing, Loom reports USD cost as unavailable instead of inventing a number. Every JSON run includes per-model token usage and configured USD cost or native provider-receipt data. When the baseline has a non-zero measured cost, the report also normalizes it to a cost index of `100`.
+
+When a provider returns a native payment receipt, Loom can use that provider unit—such as Dot credits—without pretending it is USD. Judge cost is tracked separately and excluded from workflow cost.
+
+Output format follows the file extension:
+
+```txt
+report.html    responsive evidence dashboard
+report.svg     shareable benchmark card
+report.md      Markdown comparison table
+report.json    complete machine-readable receipt
+```
+
+Read the [benchmark methodology](docs/BENCHMARKING.md) before publishing performance claims.
+
+## Exploratory Dot smoke benchmark
+
+![Dot Loom three-case exploratory code-review benchmark](docs/benchmarks/dot-code-review-smoke.svg)
+
+On 2026-07-14, we ran the first three `code-review-v1` cases once through the Dot model map in `examples/dot-code.config.json`. Gemma judged answers without seeing strategy names or model identities.
+
+| Strategy | Judge quality | Provider cost/run | Cost index | P95 latency | Full pass rate |
+|---|---:|---:|---:|---:|---:|
+| Single-model baseline | 96.7% | 1.00 credit | 100 | 22.70s | 66.7% |
+| Loom fixed | 100.0% | 4.00 credits | 400 | 88.77s | 100.0% |
+| Loom adaptive | 98.3% | 4.00 credits | 400 | 82.25s | 66.7% |
+
+The useful finding is not “more models are cheaper.” On this tiny high-risk sample, fixed orchestration improved rubric/check coverage, but required four provider calls and roughly four times the latency and credits. Adaptive selected the same full workflow for these complex cases, so it did not save cost. That is exactly the trade-off Loom is designed to expose.
+
+This is an **exploratory smoke result**, not a general benchmark claim: three synthetic cases, one iteration, one provider, one model judge, no human review, and a 900-token workflow cap. Judge calls averaged one additional credit and are excluded from the workflow-cost column.
+
+- [Raw JSON receipt](docs/benchmarks/dot-code-review-smoke.json)
+- [Shareable HTML report](docs/benchmarks/dot-code-review-smoke.html)
+- [Markdown report](docs/benchmarks/dot-code-review-smoke.md)
+- [Full 15-case suite](evals/code-review-v1.jsonl)
+- [Publication methodology](docs/BENCHMARKING.md)
+
+## What published studies suggest
+
+![Selected published evidence behind model routing, aggregation, and refinement](docs/assets/research-evidence.svg)
+
+These are results reported by the cited authors on different tasks, models, and metrics. They are **not Dot Loom results and are not directly comparable**.
+
+| Study | Author-reported finding | Why it matters to Loom |
+|---|---|---|
+| [FrugalGPT](https://arxiv.org/abs/2305.05176) | Up to 98% cost reduction while matching the best individual LLM in reported experiments; or +4% accuracy over GPT-4 at the same cost | Cascades can improve a task-specific cost/quality frontier |
+| [RouteLLM](https://arxiv.org/abs/2406.18665) | More than 2× cost reduction in some settings without sacrificing response quality | Learned routing can avoid unnecessary strong-model calls |
+| [Mixture-of-Agents](https://arxiv.org/abs/2406.04692) | 65.1 on AlpacaEval 2.0 for the reported open-source MoA configuration vs 57.5 for GPT-4 Omni | Aggregating diverse model outputs can outperform an individual model |
+| [Self-Refine](https://arxiv.org/abs/2303.17651) | Roughly 20 percentage points absolute average improvement across seven reported tasks | Feedback and refinement can improve first-pass outputs |
+
+See [Research behind Dot Loom](docs/STUDIES.md) for additional studies, direct links, and interpretation boundaries.
 
 ## Studio
 
@@ -270,7 +360,7 @@ It is useful for debugging and direct comparisons against a single-model baselin
 
 ### Adaptive
 
-Adaptive mode asks the router to produce a task plan. Each planned step selects a worker and receives only the context admitted by its access list.
+Adaptive mode asks the router for compact routing notes. Loom's current bounded planner then selects a deterministic task profile and worker sequence. Each step receives prior outputs admitted by its access list.
 
 The planner output is intentionally constrained:
 
@@ -298,14 +388,14 @@ Baseline mode sends the prompt to the finalizer model only. Use it to compare:
 
 Dot Loom treats context as an orchestration input, not a global blob.
 
-In adaptive mode, each worker receives:
+In adaptive mode, each worker currently receives:
 
-- the original task if allowed
+- the original task
 - prior outputs if listed by the planner
 - role-specific instructions
 - no hidden global memory
 
-This matters because multi-model systems can leak task state between components if every worker sees everything. Loom makes those boundaries explicit so they can later become enforceable policies.
+Access lists currently gate prior worker outputs, not the original task. This explicit boundary is the foundation for future enforceable task-level context policies.
 
 ## Streaming and Observability
 
@@ -328,11 +418,11 @@ Dot Loom is closest to a practical, hackable orchestration layer. It takes inspi
 
 Sakana Fugu is the closest product-level reference: a multi-agent orchestration system exposed through standard OpenAI-format APIs, with the orchestration hidden behind a normal model interface.
 
-Mixture-of-Agents shows that multiple LLM agents can outperform a single model by layering candidate responses and passing prior layer outputs forward.
+Mixture-of-Agents reports that multiple LLM agents can outperform an individual model in its evaluated settings by layering candidate responses and passing prior outputs forward.
 
-FrugalGPT shows that cascades and routing can reduce inference cost while preserving or improving quality for selected tasks.
+FrugalGPT reports that cascades and routing can reduce inference cost while preserving or improving quality for selected tasks.
 
-Self-Refine and Reflexion show the value of feedback and critique loops at inference time without weight updates.
+Self-Refine and Reflexion report gains from feedback and critique loops at inference time without weight updates in their evaluated settings.
 
 Tree of Thoughts formalizes deliberate search over intermediate reasoning states rather than a single left-to-right output path.
 
@@ -360,7 +450,7 @@ Dot Loom is not Fugu. Fugu is a hosted orchestration model interface with hidden
 
 Dot Loom gets close on these primitives:
 
-- Standard model-like entrypoint.
+- Standard CLI and JSON result surface.
 - Multiple workers behind one user-facing run.
 - Routing before execution.
 - Role assignment.
@@ -373,7 +463,7 @@ Dot Loom gets close on these primitives:
 Dot Loom is still behind on:
 
 - Learned conductor policy.
-- Production-grade benchmark suite.
+- Multi-provider, human-reviewed benchmark corpus.
 - Automatically evolved worker selection.
 - Parallel execution scheduler.
 - Built-in tool sandboxing.
@@ -421,12 +511,18 @@ Run both:
 npm run verify
 ```
 
+## Contributing benchmarks
+
+Provider adapters, pipeline profiles, datasets, and reproducible model recipes are welcome. Benchmark submissions must include raw receipts, exact model identifiers, run settings, limitations, and cases where Loom lost. Screenshots alone are not accepted as evidence.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) or open the benchmark-submission issue template.
+
 ## Roadmap
 
 Near term:
 
-- Add model-judged and human-reviewed eval suites.
-- Add parallel eval execution for larger datasets.
+- Add human review and judge-agreement reporting.
+- Publish multi-provider `code-review-v1` results with raw receipts.
 - Persist anonymized local traces for regression tests.
 - Add LM Studio examples.
 - Add tool-call isolation and explicit tool permissions.
@@ -437,7 +533,7 @@ Medium term:
 - Learn routing policies from trace outcomes.
 - Add model-pair calibration for drafter/verifier compatibility.
 - Add cost-aware planner objectives.
-- Add benchmark dashboards.
+- Add historical benchmark regression dashboards.
 - Add local-only privacy mode for sensitive runs.
 
 Long term:

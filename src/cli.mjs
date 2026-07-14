@@ -29,6 +29,7 @@ try {
     });
     console.log(args.json ? JSON.stringify(report, null, 2) : renderEvalMarkdown(report));
     if (!args.json && report.output) console.error(`\nWrote ${report.output}`);
+    if (!args.json && report.artifacts) console.error(`\nWrote ${Object.values(report.artifacts).join(", ")}`);
   } else if (args.command === "run") {
     const config = await loadConfig(args.config);
     const input = args.prompt || args._.join(" ").trim();
@@ -65,6 +66,11 @@ function parseArgs(argv) {
     iterations: 1,
     output: undefined,
     includeAnswers: false,
+    concurrency: 1,
+    judgeModel: undefined,
+    judgeMaxTokens: 300,
+    limit: undefined,
+    artifacts: undefined,
   };
 
   for (let i = 1; i < argv.length; i += 1) {
@@ -82,6 +88,11 @@ function parseArgs(argv) {
     else if (arg === "--iterations") parsed.iterations = Number(argv[++i]);
     else if (arg === "--output") parsed.output = argv[++i];
     else if (arg === "--include-answers") parsed.includeAnswers = true;
+    else if (arg === "--concurrency") parsed.concurrency = Number(argv[++i]);
+    else if (arg === "--judge-model") parsed.judgeModel = argv[++i];
+    else if (arg === "--judge-max-tokens") parsed.judgeMaxTokens = Number(argv[++i]);
+    else if (arg === "--limit") parsed.limit = Number(argv[++i]);
+    else if (arg === "--artifacts") parsed.artifacts = argv[++i];
     else parsed._.push(arg);
   }
   if (parsed.json) parsed.stream = false;
@@ -96,7 +107,9 @@ Usage:
   node src/cli.mjs doctor --config examples/dot.config.json
   node src/cli.mjs pipelines
   node src/cli.mjs eval --dataset evals/mock-code-review.jsonl --config examples/mock.config.json
-  node src/cli.mjs eval --dataset evals/my-suite.jsonl --strategies baseline,fixed,adaptive --output reports/eval.json
+  node src/cli.mjs eval --dataset evals/code-review-v1.jsonl --strategies baseline,fixed,adaptive --output reports/eval.html
+  node src/cli.mjs eval --dataset evals/code-review-v1.jsonl --judge-model provider/judge-model --concurrency 3
+  node src/cli.mjs eval --dataset evals/code-review-v1.jsonl --limit 3 --artifacts reports/smoke
   node src/cli.mjs run "review this API" --pipeline code-review --config examples/dot.config.json
   node src/cli.mjs run "review this API" --adaptive --pipeline code-review --config examples/dot.config.json
   node src/cli.mjs run "review this API" --baseline --config examples/dot.config.json

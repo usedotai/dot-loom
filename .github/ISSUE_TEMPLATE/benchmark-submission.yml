@@ -1,0 +1,53 @@
+name: Benchmark submission
+description: Propose a reproducible dataset, model recipe, or benchmark result.
+title: "[benchmark]: "
+labels: [benchmark]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping make multi-model claims reproducible. Do not include API keys, private prompts, or personal data.
+  - type: input
+    id: dataset
+    attributes:
+      label: Dataset and revision
+      description: Link the public dataset or PR path and identify its exact revision.
+    validations:
+      required: true
+  - type: textarea
+    id: models
+    attributes:
+      label: Provider and model map
+      description: List exact non-secret provider/model identifiers for every role and the judge.
+    validations:
+      required: true
+  - type: textarea
+    id: settings
+    attributes:
+      label: Run settings
+      description: Include date, iterations, temperature, token caps, concurrency, and pricing snapshot or receipt unit.
+    validations:
+      required: true
+  - type: textarea
+    id: artifacts
+    attributes:
+      label: Raw artifacts
+      description: Link JSON receipts and generated reports. Screenshots alone are insufficient.
+    validations:
+      required: true
+  - type: textarea
+    id: limitations
+    attributes:
+      label: Limitations and losses
+      description: State whether this is exploratory or confirmatory and identify cases where Loom lost.
+    validations:
+      required: true
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Submission checks
+      options:
+        - label: I verified that the artifacts contain no credentials, personal data, or machine-specific private paths.
+          required: true
+        - label: I followed docs/BENCHMARKING.md and did not present external-study results as Loom results.
+          required: true

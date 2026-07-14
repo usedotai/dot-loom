@@ -1,0 +1,923 @@
+{
+  "version": 1,
+  "generatedAt": "2026-07-14T09:54:28.833Z",
+  "dataset": "evals/code-review-v1.jsonl",
+  "caseCount": 3,
+  "iterations": 1,
+  "concurrency": 3,
+  "strategies": [
+    "baseline",
+    "fixed",
+    "adaptive"
+  ],
+  "evaluation": {
+    "qualitySource": "model-judge",
+    "judgeModel": "dot/dot-gemma-4-uncensored",
+    "judgedRuns": 9,
+    "avgJudgeCostUsd": null,
+    "avgJudgeSpentCredits": 1,
+    "pricingComplete": false
+  },
+  "summary": [
+    {
+      "strategy": "baseline",
+      "runs": 3,
+      "quality": 0.9666666666666667,
+      "passRate": 0.6666666666666666,
+      "avgCostUsd": null,
+      "avgSpentCredits": 1,
+      "costIndex": 100,
+      "p95LatencyMs": 22698,
+      "avgTokens": 1464.3333333333333,
+      "pricingComplete": false,
+      "missingPrices": [
+        "dot/dot-qwen-coder-480b"
+      ]
+    },
+    {
+      "strategy": "fixed",
+      "runs": 3,
+      "quality": 1,
+      "passRate": 1,
+      "avgCostUsd": null,
+      "avgSpentCredits": 4,
+      "costIndex": 400,
+      "p95LatencyMs": 88771,
+      "avgTokens": 14861.333333333334,
+      "pricingComplete": false,
+      "missingPrices": [
+        "dot/dot-nemotron-nano",
+        "dot/dot-deepseek-v4-flash",
+        "dot/dot-gemma-4-uncensored",
+        "dot/dot-qwen-coder-480b"
+      ]
+    },
+    {
+      "strategy": "adaptive",
+      "runs": 3,
+      "quality": 0.9833333333333334,
+      "passRate": 0.6666666666666666,
+      "avgCostUsd": null,
+      "avgSpentCredits": 4,
+      "costIndex": 400,
+      "p95LatencyMs": 82249,
+      "avgTokens": 15468.666666666666,
+      "pricingComplete": false,
+      "missingPrices": [
+        "dot/dot-nemotron-nano",
+        "dot/dot-deepseek-v4-flash",
+        "dot/dot-gemma-4-uncensored",
+        "dot/dot-qwen-coder-480b"
+      ]
+    }
+  ],
+  "runs": [
+    {
+      "caseId": "idempotent-credit-spend",
+      "iteration": 1,
+      "strategy": "baseline",
+      "pipeline": "baseline",
+      "passed": true,
+      "quality": 1,
+      "deterministicQuality": 1,
+      "checks": [
+        {
+          "type": "contains-any",
+          "values": [
+            "idempotency",
+            "idempotent",
+            "replay"
+          ],
+          "passed": true
+        },
+        {
+          "type": "contains-any",
+          "values": [
+            "transaction",
+            "atomic",
+            "lock"
+          ],
+          "passed": true
+        },
+        {
+          "type": "contains-any",
+          "values": [
+            "concurrent",
+            "race",
+            "double-spend"
+          ],
+          "passed": true
+        },
+        {
+          "type": "contains",
+          "value": "test",
+          "passed": true
+        }
+      ],
+      "judge": {
+        "modelRef": "dot/dot-gemma-4-uncensored",
+        "score": 1,
+        "passed": true,
+        "reason": "The review correctly identifies the critical race condition in balance updates, addresses idempotency for retries, and suggests transactional fixes and concurrency tests.",
+        "elapsedMs": 2434,
+        "usage": {
+          "prompt_tokens": 2644,
+          "completion_tokens": 51,
+          "total_tokens": 2695,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "costUsd": null,
+        "spentCredits": 1,
+        "pricingComplete": false
+      },
+      "elapsedMs": 22698,
+      "totalTokens": 2360,
+      "costUsd": null,
+      "spentCredits": 1,
+      "pricingComplete": false,
+      "missingPrices": [
+        "dot/dot-qwen-coder-480b"
+      ],
+      "modelUsage": [
+        {
+          "modelRef": "dot/dot-qwen-coder-480b",
+          "inputTokens": 1460,
+          "outputTokens": 900,
+          "costUsd": null
+        }
+      ],
+      "answer": "Here's a severity-ranked review of the authenticated `POST /credits/spend` endpoint, along with concrete fixes and tests to address potential issues.\n\n---\n\n### 🔴 **Critical: Race Conditions & Idempotency**\n\n#### **Issue**\nThe endpoint reads the current balance, calls an external model internal inference route, and then writes the reduced balance. This sequence is **not atomic** and lacks **idempotency**, which can lead to:\n- **Race conditions**: Concurrent requests can read the same balance and reduce it incorrectly.\n- **Double spending**: Retries with the same request body may spend credits multiple times.\n\n#### **Fixes**\n1. **Atomic Credit Deduction**:\n   - Use a database transaction to ensure the balance read and update are atomic.\n   - Example (pseudo-code):\n     ```sql\n     BEGIN TRANSACTION;\n     SELECT balance FROM users WHERE user_id = ? FOR UPDATE;\n     -- Check if balance >= cost\n     UPDATE users SET balance = balance - cost WHERE user_id = ?;\n     COMMIT;\n     ```\n\n2. **Idempotency Key**:\n   - Require clients to send a unique `idempotency_key` in the request header or body.\n   - Store processed keys in a table (e.g., `processed_requests`) with a TTL index.\n   - Before processing, check if the key exists. If yes, return the cached result.\n\n3. **Balance Check**:\n   - Ensure the balance is sufficient before deducting. If not, return a `402 Payment Required` or similar error.\n\n#### **Tests**\n- **Race Condition Test**:\n  - Simultaneously send 10 identical requests to `/credits/spend` with a user balance of 100 and cost of 10.\n  - Verify the final balance is 90, not 0 or negative.\n- **Idempotency Test**:\n  - Send a request with `idempotency_key=\"abc123\"`.\n  - Retry the same request with the same key.\n  - Assert the second request returns the same response (e.g., status 200 with identical body) and does not deduct credits again.\n\n---\n\n### 🟠 **High: External internal inference route Failure Handling**\n\n#### **Issue**\nIf the external model internal inference route fails after the balance is read but before the balance is updated, the system may be in an inconsistent state (e.g., credits deducted but no service delivered).\n\n#### **Fixes**\n1. **Compensating Transaction**:\n   - If the external call fails, log the failure and trigger a compensating transaction to refund the credits.\n   - Example:\n     ```python\n     try:\n         # Deduct credits\n         # Call external internal inference route\n     except ExternalProviderError:\n         # Refund credits\n         log_failure_and_refund(user_id, amount)\n     ```\n\n2. **Asynchronous Processing**:\n   - Use a job queue (e.g., Celery, Redis) to process credit deductions and external calls asynchronously. This ensures retries and better error handling.\n\n#### **Tests**\n- **External Failure Test**:\n  - Mock the external internal inference route to return an error.\n  - Assert that the user's balance is unchanged and a refund log entry is created.\n\n---\n\n### 🟡 **Medium: Retry Logic Abuse**\n\n#### **Issue**\nClients retry every 10 seconds with the same request body. If retries are not handled with idempotency, this can lead to excessive load or incorrect credit deductions.\n\n#### **Fixes**\n1. **Rate Limiting**:\n   - Implement rate limiting (e.g., max 5 requests/minute per user) to prevent abuse.\n2. **Retry Budget**:\n   - Track retry attempts server-side and reject requests after a threshold (e.g., 3 retries).\n\n#### **Tests**\n- **Rate Limit Test**:\n  - Send 10 requests in quick succession.\n  - Assert that the 6th+ request returns a `429 Too Many Requests` error.\n- **Retry Budget Test**:\n  - Simulate 4 retries with the same `idempotency_key`.\n  - Assert that the 4th retry is rejected with a `429` or similar error.\n\n---\n\n### 🟢 **Low: Logging & Monitoring**\n\n#### **Issue**\nWithout proper logging, it’s hard to debug issues like double spending or external"
+    },
+    {
+      "caseId": "idempotent-credit-spend",
+      "iteration": 1,
+      "strategy": "fixed",
+      "pipeline": "code-review",
+      "passed": true,
+      "quality": 1,
+      "deterministicQuality": 1,
+      "checks": [
+        {
+          "type": "contains-any",
+          "values": [
+            "idempotency",
+            "idempotent",
+            "replay"
+          ],
+          "passed": true
+        },
+        {
+          "type": "contains-any",
+          "values": [
+            "transaction",
+            "atomic",
+            "lock"
+          ],
+          "passed": true
+        },
+        {
+          "type": "contains-any",
+          "values": [
+            "concurrent",
+            "race",
+            "double-spend"
+          ],
+          "passed": true
+        },
+        {
+          "type": "contains",
+          "value": "test",
+          "passed": true
+        }
+      ],
+      "judge": {
+        "modelRef": "dot/dot-gemma-4-uncensored",
+        "score": 1,
+        "passed": true,
+        "reason": "The answer comprehensively addresses non-atomic updates, idempotency, and concurrency risks, providing concrete fixes and tests for each.",
+        "elapsedMs": 2312,
+        "usage": {
+          "prompt_tokens": 2607,
+          "completion_tokens": 48,
+          "total_tokens": 2655,
+          "prompt_tokens_details": {
+            "cached_tokens": 1568
+          },
+          "cache_read_input_tokens": 1568
+        },
+        "costUsd": null,
+        "spentCredits": 1,
+        "pricingComplete": false
+      },
+      "elapsedMs": 54700,
+      "totalTokens": 15690,
+      "costUsd": null,
+      "spentCredits": 4,
+      "pricingComplete": false,
+      "missingPrices": [
+        "dot/dot-nemotron-nano",
+        "dot/dot-deepseek-v4-flash",
+        "dot/dot-gemma-4-uncensored",
+        "dot/dot-qwen-coder-480b"
+      ],
+      "modelUsage": [
+        {
+          "modelRef": "dot/dot-nemotron-nano",
+          "inputTokens": 1522,
+          "outputTokens": 900,
+          "costUsd": null
+        },
+        {
+          "modelRef": "dot/dot-deepseek-v4-flash",
+          "inputTokens": 2326,
+          "outputTokens": 1185,
+          "costUsd": null
+        },
+        {
+          "modelRef": "dot/dot-gemma-4-uncensored",
+          "inputTokens": 3583,
+          "outputTokens": 900,
+          "costUsd": null
+        },
+        {
+          "modelRef": "dot/dot-qwen-coder-480b",
+          "inputTokens": 4374,
+          "outputTokens": 900,
+          "costUsd": null
+        }
+      ],
+      "answer": "Here's a severity-ranked review of the authenticated `POST /credits/spend` endpoint, prioritizing security, billing correctness, race conditions, and edge cases:\n\n| Rank | Issue | Why it matters | Concrete fix | Test to add |\n|------|-------|----------------|--------------|-------------|\n| **1** | **Race condition on balance read-modify-write** | Concurrent requests can read the same balance, deduct from it, and write back, leading to lost updates or negative balances. This breaks billing correctness. | Use an atomic database update: `UPDATE credits SET balance = balance - :spend WHERE id = :id AND balance >= :spend`. If the update affects 0 rows, return an error (e.g., insufficient balance). | Load-test with 100+ parallel requests spending small amounts. Verify final balance matches expected value and no negative balances occur. |\n| **2** | **No idempotency handling** | Clients retrying after 10s may resend the same request body. Without idempotency, users could be double-charged for a single intended spend. | Implement an `Idempotency-Key` header. Store processed keys with their responses in a cache (e.g., Redis) for a reasonable duration (e.g., 24h). If a duplicate key is received, return the cached response. | Send the same request twice with the same `Idempotency-Key`. Verify balance is deducted only once and both responses are identical. |\n| **3** | **Missing input validation** | Malicious clients could send negative or excessively large `spend` values, causing unexpected behavior, overflow, or denial-of-service. | Validate that `spend` is a positive integer within reasonable limits before processing. Return `400 Bad Request` for invalid inputs. | Unit test with `spend = -1`, `spend = 0`, and `spend = 2^63-1`. Verify appropriate `400` errors are returned. |\n| **4** | **Blocking external call without timeout** | If the external model internal inference route hangs, it can exhaust API worker threads, leading to service degradation or denial-of-service. | Wrap the external call in a strict timeout (e.g., 2-5 seconds) and implement a circuit breaker to fail fast if the service is down. | Mock the external call to delay its response by 30 seconds. Verify the endpoint returns a `504 Gateway Timeout` or similar error quickly. |\n| **5** | **Authorization bypass risk** | The endpoint is authenticated but may not verify that the authenticated user owns the credit account being debited. | Ensure the `account_id` in the request body matches the `user_id` extracted from the authenticated session/JWT. Return `403 Forbidden` if they don't match. | Authenticate as User A and attempt to spend credits from User B's account. Verify a `403 Forbidden` is returned. |\n| **6** | **Missing audit trail** | Without an immutable log of credit spends, billing disputes are difficult to resolve and financial audits are impossible. | Create a `credit_ledger` table. Every balance change must insert a corresponding record with `account_id`, `amount`, `timestamp`, and `request_id`. | Perform a successful spend and verify a corresponding record is inserted into the `credit_ledger` table with correct metadata. |\n| **7** | **Information leakage in error responses** | Detailed error messages can reveal internal system details (e.g., database structure) to potential attackers. | Map internal exceptions to generic, user-facing error codes (e.g., `ERR_INSUFFICIENT_FUNDS`) and log detailed errors internally. | Send malformed requests and verify responses are generic (e.g., `400 Bad Request` without internal details). |\n\n### Summary of Key Architectural Changes:\n1. **Atomic Transactions**: Replace read-calculate-write with a single atomic SQL update to ensure billing integrity.\n2. **Idempotency**: Implement `Idempotency-Key` to safely handle client retries.\n3. **Resilience Patterns**: Add timeouts and circuit breakers for external calls.\n4. **Authorization**: Enforce strict user-to-account ownership checks.\n5. **Audit Logging**: Maintain an immutable ledger of all credit transactions.\n6. **Input Validation**: Strictly validate"
+    },
+    {
+      "caseId": "idempotent-credit-spend",
+      "iteration": 1,
+      "strategy": "adaptive",
+      "pipeline": "code-review:adaptive",
+      "passed": true,
+      "quality": 1,
+      "deterministicQuality": 1,
+      "checks": [
+        {
+          "type": "contains-any",
+          "values": [
+            "idempotency",
+            "idempotent",
+            "replay"
+          ],
+          "passed": true
+        },
+        {
+          "type": "contains-any",
+          "values": [
+            "transaction",
+            "atomic",
+            "lock"
+          ],
+          "passed": true
+        },
+        {
+          "type": "contains-any",
+          "values": [
+            "concurrent",
+            "race",
+            "double-spend"
+          ],
+          "passed": true
+        },
+        {
+          "type": "contains",
+          "value": "test",
+          "passed": true
+        }
+      ],
+      "judge": {
+        "modelRef": "dot/dot-gemma-4-uncensored",
+        "score": 1,
+        "passed": true,
+        "reason": "The review correctly identifies the critical race condition in balance updates, the double-spend risk from retries, and provides concrete fixes and tests for each.",
+        "elapsedMs": 4543,
+        "usage": {
+          "prompt_tokens": 2641,
+          "completion_tokens": 54,
+          "total_tokens": 2695,
+          "prompt_tokens_details": {
+            "cached_tokens": 192
+          },
+          "cache_read_input_tokens": 192
+        },
+        "costUsd": null,
+        "spentCredits": 1,
+        "pricingComplete": false
+      },
+      "elapsedMs": 82249,
+      "totalTokens": 16554,
+      "costUsd": null,
+      "spentCredits": 4,
+      "pricingComplete": false,
+      "missingPrices": [
+        "dot/dot-nemotron-nano",
+        "dot/dot-deepseek-v4-flash",
+        "dot/dot-gemma-4-uncensored",
+        "dot/dot-qwen-coder-480b"
+      ],
+      "modelUsage": [
+        {
+          "modelRef": "dot/dot-nemotron-nano",
+          "inputTokens": 1602,
+          "outputTokens": 786,
+          "costUsd": null
+        },
+        {
+          "modelRef": "dot/dot-deepseek-v4-flash",
+          "inputTokens": 2304,
+          "outputTokens": 1706,
+          "costUsd": null
+        },
+        {
+          "modelRef": "dot/dot-gemma-4-uncensored",
+          "inputTokens": 3826,
+          "outputTokens": 900,
+          "costUsd": null
+        },
+        {
+          "modelRef": "dot/dot-qwen-coder-480b",
+          "inputTokens": 4530,
+          "outputTokens": 900,
+          "costUsd": null
+        }
+      ],
+      "answer": "### Senior Engineering Review: `POST /credits/spend`\n\n**Severity-Ranked Findings**\n\n---\n\n#### 1. Race Condition on Balance Read-Modify-Write (Critical)\n\n**Why It Matters:**  \nConcurrent requests can read the same balance, call the external model, and each write a reduced amount independently. This leads to a total deduction exceeding the user’s actual balance — a critical financial integrity issue.\n\n**Concrete Fix:**  \nUse an atomic database operation:\n```sql\nUPDATE users \nSET balance = balance - :amount \nWHERE user_id = :user_id AND balance >= :amount;\n```\nCheck that exactly one row was affected to confirm sufficient funds and atomicity.\n\n**Actionable Test:**  \nSimulate two concurrent requests attempting to deduct 10 credits from a balance of 15. Assert that only one succeeds and the final balance is 5.\n\n---\n\n#### 2. Double-Spend on Client Retries (Critical)\n\n**Why It Matters:**  \nClients retry after 10 seconds with the same request body. If the first request succeeded but timed out before responding, the retry may re-execute the external call and deduct again.\n\n**Concrete Fix:**  \nMake the endpoint idempotent by requiring a client-generated `idempotency_key` (UUID). Store processed keys in a database table with a unique constraint. Reject duplicate keys after the first successful processing.\n\n**Actionable Test:**  \nSend a request with `idempotency_key=\"abc\"`, then resend with the same key. Assert the second request returns the same response and does not re-deduct.\n\n---\n\n#### 3. No Validation of Deducted Amount (High)\n\n**Why It Matters:**  \nThe external model could return malformed data (negative, null, or excessively large values), leading to incorrect deductions or system instability.\n\n**Concrete Fix:**  \nValidate the external response strictly:\n- Ensure `amount` is a positive integer.\n- Clamp `amount` to a maximum per-request limit (e.g., 1000 credits).\n- Reject responses that don’t conform to expected schema.\n\n**Actionable Test:**  \nMock the external model to return invalid values (negative, null, string). Assert the endpoint rejects them with a 400 error and does not modify the balance.\n\n---\n\n#### 4. Missing Rate Limiting / Quota Enforcement (Medium)\n\n**Why It Matters:**  \nUnbounded requests can exhaust external model quotas or lead to unexpected billing costs. It also opens the door to abuse or accidental DoS.\n\n**Concrete Fix:**  \nImplement per-user rate limiting using a sliding window (e.g., Redis). Return `429 Too Many Requests` if limits are exceeded.\n\n**Actionable Test:**  \nSend 11 requests within one minute. Assert the 11th returns `429`.\n\n---\n\n#### 5. Inconsistent Error Handling and Rollback (Medium)\n\n**Why It Matters:**  \nIf the external call fails after the balance is deducted, credits are lost. If the deduction happens before the external call, the user may be charged for a failed operation.\n\n**Concrete Fix:**  \nWrap the external call and balance update in a single database transaction. Deduct only after the external call succeeds. On any failure, roll back the transaction.\n\n**Actionable Test:**  \nMock the external model to fail after a successful deduction. Assert the balance is reverted and no credits are lost.\n\n---\n\n#### 6. Missing Unit and Integration Tests (Medium)\n\n**Why It Matters:**  \nWithout concurrency and idempotency tests, critical failure modes are unverified and prone to regression.\n\n**Concrete Fix:**  \n- Unit test: balance update logic with mocked DB.\n- Integration test: concurrent HTTP requests using a test DB, verifying final balance and idempotency key uniqueness.\n\n**Actionable Test Plan:**\n```python\ndef test_concurrent_deductions():\n    # Start 5 threads each deducting 10 from balance=100\n    # Assert final balance == 50\n\ndef test_retry_idempotency():\n    # Send request with key=\"abc\", receive success\n    # Resend with same key, assert same response, balance unchanged\n```\n\n---\n\n#### 7. Hardcoded External Endpoint & Credentials (Low)\n\n**Why It Matters:**  \nHardcoding the external model URL or API key hinders deployment flexibility and risks credential leakage.\n\n**Concrete Fix:**  \nStore the"
+    },
+    {
+      "caseId": "tenant-cache-leak",
+      "iteration": 1,
+      "strategy": "baseline",
+      "pipeline": "baseline",
+      "passed": true,
+      "quality": 1,
+      "deterministicQuality": 1,
+      "checks": [
+        {
+          "type": "contains-any",
+          "values": [
+            "tenant",
+            "cross-tenant"
+          ],
+          "passed": true
+        },
+        {
+          "type": "contains",
+          "value": "cache",
+          "passed": true
+        },
+        {
+          "type": "contains-any",
+          "values": [
+            "authorization",
+            "permission",
+            "access control"
+          ],
+          "passed": true
+        },
+        {
+          "type": "contains",
+          "value": "test",
+          "passed": true
+        }
+      ],
+      "judge": {
+        "modelRef": "dot/dot-gemma-4-uncensored",
+        "score": 1,
+        "passed": true,
+        "reason": "The answer correctly identifies the cross-tenant data leakage vulnerability, provides a code fix that moves authorization before caching and incorporates tenant context into the cache key, and includes comprehensive regression tests.",
+        "elapsedMs": 2161,
+        "usage": {
+          "prompt_tokens": 1157,
+          "completion_tokens": 60,
+          "total_tokens": 1217,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "costUsd": null,
+        "spentCredits": 1,
+        "pricingComplete": false
+      },
+      "elapsedMs": 18123,
+      "totalTokens": 920,
+      "costUsd": null,
+      "spentCredits": 1,
+      "pricingComplete": false,
+      "missingPrices": [
+        "dot/dot-qwen-coder-480b"
+      ],
+      "modelUsage": [
+        {
+          "modelRef": "dot/dot-qwen-coder-480b",
+          "inputTokens": 213,
+          "outputTokens": 707,
+          "costUsd": null
+        }
+      ],
+      "answer": "Looking at this multi-tenant GET /projects/:id endpoint, I can identify a critical security vulnerability:\n\n## Security Finding\n\n**Cache Poisoning Leading to Unauthorized Data Access**\n\nThe endpoint caches responses by project ID only, before authorization middleware runs. This creates a cache poisoning vulnerability where:\n\n1. User A (authorized) requests project 123 → response cached\n2. User B (unauthorized) requests project 123 → gets cached response\n3. User B receives data they shouldn't have access to\n\n## Fix Implementation\n\n```javascript\n// BEFORE (vulnerable)\napp.get('/projects/:id', cacheMiddleware, authMiddleware, handler);\n\n// AFTER (fixed)\napp.get('/projects/:id', authMiddleware, (req, res, next) => {\n  // Include tenant/user context in cache key\n  const cacheKey = `project:${req.params.id}:user:${req.user.id}`;\n  // Or use tenant-based keying for multi-tenant systems\n  const cacheKey = `project:${req.params.id}:tenant:${req.user.tenantId}`;\n  \n  // Check cache with proper key\n  cache.get(cacheKey, (err, cachedData) => {\n    if (cachedData) return res.json(cachedData);\n    \n    // Continue to fetch and cache with proper key\n    next();\n  });\n}, handler);\n```\n\n## Regression Tests\n\n```javascript\n// Test 1: Cache Isolation\ntest('Users cannot access cached data of other users', async () => {\n  // User A requests project\n  await request(app)\n    .get('/projects/123')\n    .set('Authorization', 'Bearer userA-token');\n  \n  // User B should NOT get cached data\n  const response = await request(app)\n    .get('/projects/123')\n    .set('Authorization', 'Bearer userB-token');\n  \n  expect(response.status).toBe(403); // or 404\n});\n\n// Test 2: Authorized Access Still Works\ntest('Authorized users can access their own projects', async () => {\n  const response = await request(app)\n    .get('/projects/123')\n    .set('Authorization', 'Bearer authorized-user-token');\n  \n  expect(response.status).toBe(200);\n  expect(response.body.id).toBe('123');\n});\n\n// Test 3: Cache Key Uniqueness\ntest('Different users have separate cache entries', async () => {\n  const userAResponse = await request(app)\n    .get('/projects/123')\n    .set('Authorization', 'Bearer userA-token');\n  \n  const userBResponse = await request(app)\n    .get('/projects/456') \n    .set('Authorization', 'Bearer userB-token');\n  \n  // Should not interfere with each other\n  expect(userAResponse.status).toBe(200);\n  expect(userBResponse.status).toBe(200);\n});\n```\n\n## Additional Security Measures\n\n1. **Cache Key Namespace**: Include tenant ID in all cache keys\n2. **Cache TTL**: Implement appropriate cache expiration\n3. **Cache Invalidation**: Clear cache entries when permissions change\n4. **Monitoring**: Log cache hits/misses with user context for auditing\n\nThe core principle is that authorization must always precede caching in the middleware chain, and cache keys must include sufficient context to prevent cross-tenant data leakage."
+    },
+    {
+      "caseId": "tenant-cache-leak",
+      "iteration": 1,
+      "strategy": "fixed",
+      "pipeline": "code-review",
+      "passed": true,
+      "quality": 1,
+      "deterministicQuality": 1,
+      "checks": [
+        {
+          "type": "contains-any",
+          "values": [
+            "tenant",
+            "cross-tenant"
+          ],
+          "passed": true
+        },
+        {
+          "type": "contains",
+          "value": "cache",
+          "passed": true
+        },
+        {
+          "type": "contains-any",
+          "values": [
+            "authorization",
+            "permission",
+            "access control"
+          ],
+          "passed": true
+        },
+        {
+          "type": "contains",
+          "value": "test",
+          "passed": true
+        }
+      ],
+      "judge": {
+        "modelRef": "dot/dot-gemma-4-uncensored",
+        "score": 1,
+        "passed": true,
+        "reason": "The answer comprehensively addresses cross-tenant data leakage, the necessity of moving caching behind authorization, the requirement for tenant-scoped cache keys, and the need for negative testing.",
+        "elapsedMs": 2315,
+        "usage": {
+          "prompt_tokens": 1306,
+          "completion_tokens": 58,
+          "total_tokens": 1364,
+          "prompt_tokens_details": {
+            "cached_tokens": 192
+          },
+          "cache_read_input_tokens": 192
+        },
+        "costUsd": null,
+        "spentCredits": 1,
+        "pricingComplete": false
+      },
+      "elapsedMs": 88771,
+      "totalTokens": 12965,
+      "costUsd": null,
+      "spentCredits": 4,
+      "pricingComplete": false,
+      "missingPrices": [
+        "dot/dot-nemotron-nano",
+        "dot/dot-deepseek-v4-flash",
+        "dot/dot-gemma-4-uncensored",
+        "dot/dot-qwen-coder-480b"
+      ],
+      "modelUsage": [
+        {
+          "modelRef": "dot/dot-nemotron-nano",
+          "inputTokens": 246,
+          "outputTokens": 900,
+          "costUsd": null
+        },
+        {
+          "modelRef": "dot/dot-deepseek-v4-flash",
+          "inputTokens": 1133,
+          "outputTokens": 2189,
+          "costUsd": null
+        },
+        {
+          "modelRef": "dot/dot-gemma-4-uncensored",
+          "inputTokens": 2993,
+          "outputTokens": 900,
+          "costUsd": null
+        },
+        {
+          "modelRef": "dot/dot-qwen-coder-480b",
+          "inputTokens": 3704,
+          "outputTokens": 900,
+          "costUsd": null
+        }
+      ],
+      "answer": "## Senior Engineer Code Review: Multi-Tenant `GET /projects/:id` with Pre-Authorization Caching\n\n### Summary of Critical Issues\n\nThe endpoint caches responses **before** the authorization middleware runs, using only the project ID as the cache key. This introduces several multi-tenant security and privacy vulnerabilities that must be addressed immediately.\n\n---\n\n### 1. Security Findings\n\n#### 1.1 Authorization Bypass via Pre-Auth Caching\n- **Issue**: The cache is populated and served before the authorization check. Any request reaching the cache layer will receive the cached payload **regardless of the requester’s permissions**.\n- **Exploit**: An unprivileged tenant can send a request with a token that should only access project 7. If a privileged user previously requested project 42, the response for project 42 is cached and returned to the attacker.\n\n#### 1.2 Insufficient Cache Key Scoping\n- **Issue**: The cache key is only `:id` (e.g., `42`). This ignores:\n  - **Tenant context** (no tenant ID or user ID)\n  - **Query parameters** that alter the response (e.g., `?include=members`)\n  - **Authorization headers** (no `Vary` header)\n- **Exploit**: Two tenants each have a project with ID `42`. The first tenant’s request caches `{\"name\": \"Tenant1 Secret\"}`. The second tenant, using the same cache key, receives the first tenant’s data. This is a **direct cross-tenant data leak**.\n\n#### 1.3 Missing `Vary` Header for Shared Caches\n- **Issue**: If an external cache (CDN, reverse proxy) is used, the response is stored with no `Vary` headers. Any visitor to the CDN edge could receive another tenant’s project data.\n- **Impact**: Private project details (names, descriptions, member lists) become public.\n\n#### 1.4 Stale Data & Cache Integrity Risks\n- **Issue**: No explicit TTL or invalidation strategy is mentioned. Cached payloads may be served for an indefinite time.\n- **Exploit**: An attacker who can trigger a cache miss (e.g., by sending a non-cached project ID) may force a stale response that still contains sensitive fields even after the tenant has removed them.\n\n#### 1.5 Race Conditions in Cache Population\n- **Issue**: Two concurrent requests for the same project ID (from different tenants) can race. The first request starts generating the response (with Tenant A’s data) before authorization; the second request may read the cache while it is being written by the first, or worse, the first request may complete and cache Tenant A’s data, and the second request (Tenant B) may get a stale cache hit if keys are identical.\n\n---\n\n### 2. Concrete Fixes\n\n#### 2.1 Move Caching Behind Authorization\n- Never read or write the cache until the request has passed the authorization middleware.\n- The cache lookup must occur **after** the user’s identity and permissions are validated.\n\n#### 2.2 Design a Tenant-Aware Cache Key\n- Use a composite key that includes the tenant identifier (derived from the auth token) and all parameters that affect the response.\n  ```python\n  cache_key = f\"project:{project_id}:tenant:{tenant_id}:include:{include_params}\"\n  ```\n\n#### 2.3 Enforce `Vary` Headers\n- Add at least:\n  ```\n  Vary: Authorization, X-Tenant-Id, Accept, Accept-Encoding\n  ```\n  This tells internal caches that the response depends on these headers.\n\n#### 2.4 Add Time-Based Expiry and Explicit Invalidation\n- Set a short TTL (e.g., 5 minutes) on all project cache entries.\n- On any mutation of a project (create, update, delete), invalidate the specific cache key for that project **within that tenant’s namespace**.\n\n#### 2.5 Protect Against Cache Race Conditions\n- Use atomic cache write operations (e.g., `SETNX` with TTL) or a lock per key to prevent concurrent writes from different tenants overwriting each other.\n- Ensure that the cache is written only after the entire response is generated and authorized.\n\n#### 2.6 Validate Cache Key Uniqueness in Tests\n- Add automated tests that prove"
+    },
+    {
+      "caseId": "tenant-cache-leak",
+      "iteration": 1,
+      "strategy": "adaptive",
+      "pipeline": "code-review:adaptive",
+      "passed": true,
+      "quality": 1,
+      "deterministicQuality": 1,
+      "checks": [
+        {
+          "type": "contains-any",
+          "values": [
+            "tenant",
+            "cross-tenant"
+          ],
+          "passed": true
+        },
+        {
+          "type": "contains",
+          "value": "cache",
+          "passed": true
+        },
+        {
+          "type": "contains-any",
+          "values": [
+            "authorization",
+            "permission",
+            "access control"
+          ],
+          "passed": true
+        },
+        {
+          "type": "contains",
+          "value": "test",
+          "passed": true
+        }
+      ],
+      "judge": {
+        "modelRef": "dot/dot-gemma-4-uncensored",
+        "score": 1,
+        "passed": true,
+        "reason": "The answer correctly identifies cross-tenant leakage, the need for auth-before-cache ordering, the requirement for composite cache keys, and provides comprehensive negative regression tests.",
+        "elapsedMs": 2685,
+        "usage": {
+          "prompt_tokens": 1141,
+          "completion_tokens": 57,
+          "total_tokens": 1198,
+          "prompt_tokens_details": {
+            "cached_tokens": 192
+          },
+          "cache_read_input_tokens": 192
+        },
+        "costUsd": null,
+        "spentCredits": 1,
+        "pricingComplete": false
+      },
+      "elapsedMs": 61455,
+      "totalTokens": 14774,
+      "costUsd": null,
+      "spentCredits": 4,
+      "pricingComplete": false,
+      "missingPrices": [
+        "dot/dot-nemotron-nano",
+        "dot/dot-deepseek-v4-flash",
+        "dot/dot-gemma-4-uncensored",
+        "dot/dot-qwen-coder-480b"
+      ],
+      "modelUsage": [
+        {
+          "modelRef": "dot/dot-nemotron-nano",
+          "inputTokens": 1582,
+          "outputTokens": 806,
+          "costUsd": null
+        },
+        {
+          "modelRef": "dot/dot-deepseek-v4-flash",
+          "inputTokens": 2274,
+          "outputTokens": 1361,
+          "costUsd": null
+        },
+        {
+          "modelRef": "dot/dot-gemma-4-uncensored",
+          "inputTokens": 3404,
+          "outputTokens": 725,
+          "costUsd": null
+        },
+        {
+          "modelRef": "dot/dot-qwen-coder-480b",
+          "inputTokens": 3905,
+          "outputTokens": 717,
+          "costUsd": null
+        }
+      ],
+      "answer": "## Security Review: `GET /projects/:id` Endpoint\n\n### Critical Findings\n\n1. **Cache-Before-Auth Bypass**  \n   Caching occurs before authorization middleware runs, allowing any caller who guesses a valid `project_id` to retrieve cached data without authentication. This is a direct violation of tenant isolation and data privacy.\n\n2. **Missing Tenant Context in Cache Key**  \n   The cache key uses only `project_id`, enabling cross-tenant data leakage. If two tenants have the same project ID (or predictable IDs), one tenant can access another’s cached data, including sensitive billing or internal flags.\n\n3. **Stale Data and Improper Invalidation**  \n   Cached responses may persist beyond project updates, deletions, or role changes. This leads to incorrect billing displays, phantom access to deleted projects, and outdated information being served.\n\n4. **Race Condition on Cache Miss**  \n   Concurrent requests for the same uncached `project_id` can cause multiple simultaneous fetches, leading to redundant load, inconsistent cache writes, and potential overwrites of one tenant’s authorized data with another’s.\n\n---\n\n### Required Fixes\n\n1. **Reorder Middleware Chain**  \n   Move caching logic to execute **after** authorization middleware has confirmed access rights.\n\n2. **Use Composite Cache Keys**  \n   Construct cache keys that include tenant and user context:\n   ```\n   cache_key = hash(tenant_id + user_id + project_id)\n   ```\n\n3. **Implement Cache Invalidation Hooks**  \n   On any project mutation (`PUT`, `PATCH`, `DELETE`), invalidate all related cache entries scoped by `project_id`.\n\n4. **Verify Permissions on Cache Hit**  \n   Before returning a cached response, perform a lightweight check to ensure the user still has access (e.g., revalidate session token or role).\n\n5. **Atomic Cache Population**  \n   Use atomic operations (e.g., Redis `SETNX`) to prevent race conditions during cache population.\n\n---\n\n### Regression Tests\n\n1. **Cross-Tenant Data Leak Prevention**  \n   - Authenticate as User A (Tenant 1), request Project X → cache populated.  \n   - Authenticate as User B (Tenant 2), request same Project X.  \n   - **Assert**: User B receives 403 Forbidden or their own project data, never User A's cached response.\n\n2. **Unauthorized Access Rejection**  \n   - Request Project X without auth token → cache populated.  \n   - Request again with invalid/expired token.  \n   - **Assert**: Response is 401 Unauthorized, not cached 200 OK.\n\n3. **Cache Invalidation on Update/Delete**  \n   - Request Project X → cached.  \n   - Update Project X (e.g., change name or billing tier).  \n   - Request again.  \n   - **Assert**: New data returned; cache invalidated.\n\n4. **Race Condition Under Load**  \n   - Fire 50 concurrent requests for uncached Project X from different authenticated users.  \n   - **Assert**: No cross-tenant leakage, backend stability maintained, only one cache write per unique key.\n\n5. **Role Change Mid-Session**  \n   - Request Project X → cached.  \n   - Revoke user access or change role.  \n   - Request again.  \n   - **Assert**: 403 Forbidden; cached response bypassed due to permission mismatch.\n\nThese changes are essential to prevent data breaches, ensure billing correctness, and maintain tenant isolation in a multi-tenant environment."
+    },
+    {
+      "caseId": "webhook-signature-replay",
+      "iteration": 1,
+      "strategy": "baseline",
+      "pipeline": "baseline",
+      "passed": false,
+      "quality": 0.9,
+      "deterministicQuality": 0.75,
+      "checks": [
+        {
+          "type": "contains-any",
+          "values": [
+            "raw body",
+            "raw bytes"
+          ],
+          "passed": false
+        },
+        {
+          "type": "contains-any",
+          "values": [
+            "replay",
+            "dedup",
+            "idempot"
+          ],
+          "passed": true
+        },
+        {
+          "type": "contains-any",
+          "values": [
+            "timestamp",
+            "freshness",
+            "window"
+          ],
+          "passed": true
+        },
+        {
+          "type": "contains-any",
+          "values": [
+            "constant-time",
+            "timing"
+          ],
+          "passed": true
+        }
+      ],
+      "judge": {
+        "modelRef": "dot/dot-gemma-4-uncensored",
+        "score": 0.9,
+        "passed": true,
+        "reason": "The answer covers HMAC verification over raw bytes, constant-time comparison, timestamp freshness, and retry logic, though it omits explicit event-ID deduplication for idempotency.",
+        "elapsedMs": 10933,
+        "usage": {
+          "prompt_tokens": 1402,
+          "completion_tokens": 58,
+          "total_tokens": 1460,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "costUsd": null,
+        "spentCredits": 1,
+        "pricingComplete": false
+      },
+      "elapsedMs": 21498,
+      "totalTokens": 1113,
+      "costUsd": null,
+      "spentCredits": 1,
+      "pricingComplete": false,
+      "missingPrices": [
+        "dot/dot-qwen-coder-480b"
+      ],
+      "modelUsage": [
+        {
+          "modelRef": "dot/dot-qwen-coder-480b",
+          "inputTokens": 213,
+          "outputTokens": 900,
+          "costUsd": null
+        }
+      ],
+      "answer": "Here's a review of a webhook receiver implementation with HMAC validation, timestamp handling, and retry logic.\n\n## Findings (Severity-Ranked)\n\n### Critical\n1. **Missing HMAC validation** - Without proper HMAC validation, attackers can forge requests\n2. **No timestamp freshness window** - Vulnerable to replay attacks\n3. **Missing request signature verification** - No validation of request authenticity\n\n### High\n4. **No retry backoff strategy** - Immediate retries may overwhelm downstream services\n5. **No circuit breaker pattern** - Continuous retries during service outages waste resources\n6. **Missing idempotency handling** - Duplicate processing may cause unintended side effects\n\n### Medium\n7. **No request size limits** - Vulnerable to resource exhaustion attacks\n8. **Missing structured logging** - Difficult to debug and monitor failures\n9. **No request timeout configuration** - May hang indefinitely on slow handlers\n\n### Low\n10. **Missing request correlation IDs** - Hard to trace requests across systems\n11. **No metrics collection** - No visibility into processing performance\n\n## Safe Processing Design\n\n```python\nimport hashlib\nimport hmac\nimport json\nimport time\nfrom typing import Any, Dict, Optional\nimport logging\n\nclass WebhookReceiver:\n    def __init__(self, secret: str, max_retries: int = 3):\n        self.secret = secret.encode('utf-8')\n        self.max_retries = max_retries\n        self.logger = logging.getLogger(__name__)\n        \n    def verify_signature(self, body: bytes, signature: str) -> bool:\n        \"\"\"Verify HMAC signature\"\"\"\n        expected = hmac.new(\n            self.secret, \n            body, \n            hashlib.sha256\n        ).hexdigest()\n        return hmac.compare_digest(expected, signature)\n    \n    def verify_timestamp(self, timestamp: str, max_age: int = 300) -> bool:\n        \"\"\"Verify timestamp freshness (5 minutes default)\"\"\"\n        try:\n            ts = int(timestamp)\n            return abs(time.time() - ts) <= max_age\n        except (ValueError, TypeError):\n            return False\n    \n    def process_webhook(self, body: bytes, headers: Dict[str, str]) -> bool:\n        \"\"\"Process webhook with validation and retries\"\"\"\n        # 1. Validate signature\n        signature = headers.get('X-Signature')\n        if not signature or not self.verify_signature(body, signature):\n            self.logger.warning(\"Invalid signature\")\n            return False\n            \n        # 2. Validate timestamp\n        timestamp = headers.get('X-Timestamp')\n        if not timestamp or not self.verify_timestamp(timestamp):\n            self.logger.warning(\"Invalid or stale timestamp\")\n            return False\n            \n        # 3. Parse body\n        try:\n            payload = json.loads(body.decode('utf-8'))\n        except json.JSONDecodeError as e:\n            self.logger.error(f\"Invalid JSON: {e}\")\n            return False\n            \n        # 4. Process with retries\n        return self._retry_handler(payload)\n    \n    def _retry_handler(self, payload: Dict[str, Any], backoff_base: float = 1.0) -> bool:\n        \"\"\"Process with exponential backoff\"\"\"\n        for attempt in range(self.max_retries):\n            try:\n                # Your handler logic here\n                success = self.handle_webhook(payload)\n                if success:\n                    return True\n            except Exception as e:\n                self.logger.error(f\"Handler failed (attempt {attempt + 1}): {e}\")\n                if attempt < self.max_retries - 1:\n                    time.sleep(backoff_base * (2 ** attempt))  # Exponential backoff\n                else:\n                    self.logger.error(\"Max retries exceeded\")\n        return False\n    \n    def handle_webhook(self, payload: Dict[str, Any]) -> bool:\n        \"\"\"Implement your webhook handling logic\"\"\"\n        # Example implementation\n        try:\n            # Process payload\n            self.logger.info(f\"Processing webhook: {payload.get('id')}\")\n            return True\n        except Exception as e:\n            self.logger.error(f\"Webhook handling failed: {e}\")\n            raise\n```\n\n## Key Security Improvements\n\n1. **HMAC Validation**: Uses constant-time comparison to prevent timing attacks\n2. **Timestamp Freshness**: 5-minute window prevents replay attacks\n3. **Exponential Backoff**: Prevents overwhelming downstream services\n4"
+    },
+    {
+      "caseId": "webhook-signature-replay",
+      "iteration": 1,
+      "strategy": "fixed",
+      "pipeline": "code-review",
+      "passed": true,
+      "quality": 1,
+      "deterministicQuality": 1,
+      "checks": [
+        {
+          "type": "contains-any",
+          "values": [
+            "raw body",
+            "raw bytes"
+          ],
+          "passed": true
+        },
+        {
+          "type": "contains-any",
+          "values": [
+            "replay",
+            "dedup",
+            "idempot"
+          ],
+          "passed": true
+        },
+        {
+          "type": "contains-any",
+          "values": [
+            "timestamp",
+            "freshness",
+            "window"
+          ],
+          "passed": true
+        },
+        {
+          "type": "contains-any",
+          "values": [
+            "constant-time",
+            "timing"
+          ],
+          "passed": true
+        }
+      ],
+      "judge": {
+        "modelRef": "dot/dot-gemma-4-uncensored",
+        "score": 1,
+        "passed": true,
+        "reason": "The answer correctly identifies the need for raw byte HMAC verification, constant-time comparison, timestamp freshness, idempotency, and deduplication.",
+        "elapsedMs": 2418,
+        "usage": {
+          "prompt_tokens": 2578,
+          "completion_tokens": 51,
+          "total_tokens": 2629,
+          "prompt_tokens_details": {
+            "cached_tokens": 1504
+          },
+          "cache_read_input_tokens": 1504
+        },
+        "costUsd": null,
+        "spentCredits": 1,
+        "pricingComplete": false
+      },
+      "elapsedMs": 80176,
+      "totalTokens": 15929,
+      "costUsd": null,
+      "spentCredits": 4,
+      "pricingComplete": false,
+      "missingPrices": [
+        "dot/dot-nemotron-nano",
+        "dot/dot-deepseek-v4-flash",
+        "dot/dot-gemma-4-uncensored",
+        "dot/dot-qwen-coder-480b"
+      ],
+      "modelUsage": [
+        {
+          "modelRef": "dot/dot-nemotron-nano",
+          "inputTokens": 250,
+          "outputTokens": 900,
+          "costUsd": null
+        },
+        {
+          "modelRef": "dot/dot-deepseek-v4-flash",
+          "inputTokens": 2313,
+          "outputTokens": 1887,
+          "costUsd": null
+        },
+        {
+          "modelRef": "dot/dot-gemma-4-uncensored",
+          "inputTokens": 4064,
+          "outputTokens": 900,
+          "costUsd": null
+        },
+        {
+          "modelRef": "dot/dot-qwen-coder-480b",
+          "inputTokens": 4715,
+          "outputTokens": 900,
+          "costUsd": null
+        }
+      ],
+      "answer": "Here's the final code review with severity-ranked findings and a safe processing design.\n\n---\n\n## 🔍 Findings (Severity-Ranked)\n\n### 🔴 Critical: HMAC Validation on Parsed Body (Integrity/Security)\n*   **Issue:** Validating the HMAC over the *parsed* JSON object rather than the *raw request body*.\n*   **Impact:** JSON parsers are not deterministic. Differences in whitespace, key ordering, or character encoding between the sender and receiver will cause HMAC mismatches, leading to dropped legitimate events. More dangerously, it opens the door to \"parameter pollution\" or \"JSON injection\" where the HMAC is valid for the raw bytes but the parser interprets the object differently.\n*   **Fix:** Always compute the HMAC over the raw, unparsed byte stream.\n\n### 🔴 Critical: Missing Freshness Window (Replay Attacks)\n*   **Issue:** Accepting timestamps without a `max_age` check.\n*   **Impact:** An attacker can capture a valid signed request and replay it indefinitely. This can lead to duplicate billing, repeated state transitions, or resource exhaustion.\n*   **Fix:** Implement a strict freshness window (e.g., $\\pm 5$ minutes). Reject any request where `abs(current_time - timestamp) > window`.\n\n### 🟠 High: Lack of Idempotency in Retry Logic (Billing/Correctness)\n*   **Issue:** Retrying failed handlers without an idempotency key or deduplication mechanism.\n*   **Impact:** If a handler performs a non-idempotent action (e.g., charging a credit card, sending an email, incrementing a counter), retries will cause duplicate side effects. This directly impacts billing correctness and data integrity.\n*   **Fix:** Require an `Idempotency-Key` header. Store the result of the first successful processing attempt in a fast cache (e.g., Redis) and return that cached response for subsequent retries of the same key.\n\n### 🟠 High: Unbounded Concurrency & Lack of Backpressure (Availability)\n*   **Issue:** Processing webhooks synchronously or without a concurrency limit.\n*   **Impact:** A burst of webhooks (or a DoS attack) can exhaust database connections or memory, crashing the receiver and causing a cascade of failures across the system.\n*   **Fix:** Decouple ingestion from processing. Accept the request, validate the HMAC/Timestamp, enqueue the payload to a message broker (e.g., SQS, RabbitMQ), and return a `202 Accepted` immediately.\n\n### 🟡 Medium: Missing Schema Validation (Stability)\n*   **Issue:** Assuming the parsed JSON conforms to the expected structure.\n*   **Impact:** Unexpected fields or missing required fields will cause runtime exceptions in the handlers, triggering the retry loop and potentially clogging the queue with \"poison pill\" messages that can never succeed.\n*   **Fix:** Use a strict schema validator (e.g., Zod, JSON Schema) immediately after parsing.\n\n### 🟡 Medium: Logging Sensitive Data (Privacy)\n*   **Issue:** Logging the full request body for debugging.\n*   **Impact:** Potential leakage of PII or secrets into logs, violating privacy boundaries (GDPR/CCPA) or increasing log storage costs.\n*   **Fix:** Implement a redaction layer for logs; log only the `event_id` and `sender_id`.\n\n---\n\n## ✅ Safe Processing Design\n\nTo mitigate the risks above, the receiver should follow this strict pipeline:\n\n### 1. Ingestion & Authentication (Synchronous)\n*   **Raw Body Capture:** Read the request body as a raw byte array.\n*   **Timestamp Check:** Verify the `X-Timestamp` header is within the $\\pm 5$ minute window.\n*   **HMAC Verification:** Compute the HMAC of the **raw bytes** using the shared secret. Compare using a **constant-time comparison** function to prevent timing attacks.\n*   **Idempotency Check:** Check if the `Idempotency-Key` exists in the cache. If yes, return the cached response.\n\n### 2. Validation & Queueing (Synchronous)\n*   **Schema Validation:** Parse the JSON and validate it against a strict schema.\n*   **Persistence:** Push the validated payload to a message broker (e.g., SQS, RabbitMQ) for asynchronous processing.\n*   **Response:** Return a"
+    },
+    {
+      "caseId": "webhook-signature-replay",
+      "iteration": 1,
+      "strategy": "adaptive",
+      "pipeline": "code-review:adaptive",
+      "passed": false,
+      "quality": 0.95,
+      "deterministicQuality": 0.75,
+      "checks": [
+        {
+          "type": "contains-any",
+          "values": [
+            "raw body",
+            "raw bytes"
+          ],
+          "passed": false
+        },
+        {
+          "type": "contains-any",
+          "values": [
+            "replay",
+            "dedup",
+            "idempot"
+          ],
+          "passed": true
+        },
+        {
+          "type": "contains-any",
+          "values": [
+            "timestamp",
+            "freshness",
+            "window"
+          ],
+          "passed": true
+        },
+        {
+          "type": "contains-any",
+          "values": [
+            "constant-time",
+            "timing"
+          ],
+          "passed": true
+        }
+      ],
+      "judge": {
+        "modelRef": "dot/dot-gemma-4-uncensored",
+        "score": 0.95,
+        "passed": true,
+        "reason": "The review covers HMAC verification, constant-time comparison, timestamp freshness, and idempotent retries, meeting all rubric requirements.",
+        "elapsedMs": 1862,
+        "usage": {
+          "prompt_tokens": 2572,
+          "completion_tokens": 47,
+          "total_tokens": 2619,
+          "prompt_tokens_details": {
+            "cached_tokens": 1472
+          },
+          "cache_read_input_tokens": 1472
+        },
+        "costUsd": null,
+        "spentCredits": 1,
+        "pricingComplete": false
+      },
+      "elapsedMs": 60653,
+      "totalTokens": 15078,
+      "costUsd": null,
+      "spentCredits": 4,
+      "pricingComplete": false,
+      "missingPrices": [
+        "dot/dot-nemotron-nano",
+        "dot/dot-deepseek-v4-flash",
+        "dot/dot-gemma-4-uncensored",
+        "dot/dot-qwen-coder-480b"
+      ],
+      "modelUsage": [
+        {
+          "modelRef": "dot/dot-nemotron-nano",
+          "inputTokens": 1586,
+          "outputTokens": 389,
+          "costUsd": null
+        },
+        {
+          "modelRef": "dot/dot-deepseek-v4-flash",
+          "inputTokens": 1879,
+          "outputTokens": 1812,
+          "costUsd": null
+        },
+        {
+          "modelRef": "dot/dot-gemma-4-uncensored",
+          "inputTokens": 3732,
+          "outputTokens": 624,
+          "costUsd": null
+        },
+        {
+          "modelRef": "dot/dot-qwen-coder-480b",
+          "inputTokens": 4156,
+          "outputTokens": 900,
+          "costUsd": null
+        }
+      ],
+      "answer": "## Senior Engineering Review: Webhook Receiver\n\n**Scope:** HMAC-signed webhook receiver that validates signature over parsed JSON body, accepts timestamps with no freshness window, and retries failed handlers indefinitely.\n\n---\n\n### 1. High-Severity Findings\n\n#### 1.1 Replay Attack via Missing Timestamp Freshness\n- **Failure mode:** Attacker captures a signed request and replays it any time in the future. Without a freshness check (e.g., `|now - timestamp| > 5 minutes`), the same event can trigger billing operations, state mutations, or alerts repeatedly.\n- **Concrete risk:** If this webhook processes payment events or account changes, an unbounded replay window can cause duplicate charges, user data corruption, or automated support escalations.\n- **Implementation detail:** The timestamp must be extracted from a dedicated header (e.g., `X-Webhook-Timestamp`) and compared against a server-side clock, not embedded in the signed body (since the body is static). If the timestamp is inside the JSON, an attacker can copy the entire payload.\n\n#### 1.2 Unlimited Retries → Resource Exhaustion & Billing Spikes\n- **Failure mode:** Downstream handler failures (e.g., database timeout, transient network error) trigger immediate retries with no back-off or cap. A burst of concurrent requests can cause a retry storm, exhausting CPU/memory and inflating compute costs (e.g., Lambda invocations, serverless functions).\n- **Concrete risk:** Under load, a single failing handler can multiply resource usage by orders of magnitude, producing an unexpected cloud bill. In the worst case, the receiver itself becomes unresponsive due to runaway retry queues.\n- **Mitigation requirement:** Exponential back-off (e.g., 1s, 2s, 4s, …) + hard ceiling of 3–5 retries. Use a dead-letter queue for persistent failures.\n\n#### 1.3 Static HMAC Secret Exposed to Brute-Force\n- **Failure mode:** The HMAC secret is hard-coded or stored in a single environment variable with no rotation. An attacker who gains read access to the deployment environment (e.g., leaked env file, compromised CI) can forge signatures for arbitrary payloads.\n- **Concrete risk:** Complete loss of authenticity – any request will pass validation.\n- **Mitigation:** Use a secret management system (vault, KMS) that supports automatic rotation. Add a key ID to the request header so the receiver can use the correct secret without downtime.\n\n---\n\n### 2. Medium-Severity Findings\n\n#### 2.1 Missing Constant-Time HMAC Comparison\n- **Failure mode:** Using `==` or `===` on the HMAC hex digest allows timing attacks. An attacker can infer the correct signature character by character by measuring response latency.\n- **Concrete risk:** Over thousands of requests, the secret can be extracted offline, enabling forging of valid signatures.\n- **Fix:** Use `crypto.timingSafeEqual` (Node.js) or equivalent constant-time comparison routine.\n\n#### 2.2 Race Conditions in Handlers Under Concurrent Load\n- **Failure mode:** The webhook dispatch loop does not synchronize access to shared mutable state (e.g., counters, caches, file handles, database rows). When two requests trigger the same handler for the same resource, operations may interleave.\n- **Concrete risk:** duplicate inventory decrements, double credits issued, or inconsistent database writes.\n- **Mitigation:** Make handlers idempotent (use a correlation ID stored in the DB). If handlers are not idempotent, serialize requests per resource or use database transactions.\n\n#### 2.3 No Rate Limiting on Inbound Requests\n- **Failure mode:** A single source (IP, API key, or webhook internal inference route) can flood the endpoint with valid (or even invalid) requests. Even with correct HMAC, the system may be overwhelmed.\n- **Concrete risk:** Downstream timeouts cascading into retries, plus unbounded cost.\n- **Fix:** Apply a token-bucket or sliding-window rate limiter per sender identity. Reject non-conforming requests with 429 and do not queue them.\n\n#### 2.4 Raw JSON Exposed to Handlers Without Sanitization\n- **Failure mode:** The parsed body is passed to downstream handlers as a raw `map[string]any`. If handlers rely on the data being valid, an attacker could insert unexpected types (e.g., a nested array instead of"
+    }
+  ],
+  "artifacts": {
+    "json": "docs/benchmarks/dot-code-review-smoke.json",
+    "markdown": "docs/benchmarks/dot-code-review-smoke.md",
+    "html": "docs/benchmarks/dot-code-review-smoke.html",
+    "svg": "docs/benchmarks/dot-code-review-smoke.svg"
+  },
+  "datasetCaseCount": 15,
+  "settings": {
+    "config": "examples/dot-code.config.json",
+    "configName": "Dot Loom code-review lane over Dot API",
+    "models": {
+      "router": "dot/dot-nemotron-nano",
+      "drafter": "dot/dot-deepseek-v4-flash",
+      "critic": "dot/dot-gemma-4-uncensored",
+      "finalizer": "dot/dot-qwen-coder-480b"
+    },
+    "temperature": 0.2,
+    "maxTokens": 900,
+    "judgeMaxTokens": 300,
+    "limit": 3,
+    "creditReceiptGranularity": "run-total"
+  }
+}

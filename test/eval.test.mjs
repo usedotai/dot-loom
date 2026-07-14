@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { calculateRunCost, renderEvalMarkdown, scoreCase, summarizeEval } from "../src/eval.mjs";
+import { calculateRunCost, parseJudgeResponse, renderEvalMarkdown, scoreCase, summarizeEval } from "../src/eval.mjs";
+import { renderEvalHtml, renderEvalSvg } from "../src/report.mjs";
 
 test("scoreCase evaluates deterministic dataset checks", () => {
   const result = scoreCase("Billing is safe after verification tests.", [
@@ -34,6 +35,7 @@ test("calculateRunCost uses explicit per-million-token pricing", () => {
       inputTokens: 1_000_000,
       outputTokens: 500_000,
       costUsd: 6,
+      spentCredits: null,
     },
   ]);
 });
@@ -44,6 +46,20 @@ test("calculateRunCost refuses partial pricing", () => {
   ]);
   assert.equal(result.costUsd, null);
   assert.deepEqual(result.missingPrices, ["test/model"]);
+});
+
+test("calculateRunCost preserves provider credit receipts", () => {
+  const result = calculateRunCost({}, [
+    {
+      provider: "dot",
+      model: "model",
+      modelRef: "dot/model",
+      usage: { prompt_tokens: 10, completion_tokens: 5 },
+      payment: { spent_credits: 12.5 },
+    },
+  ]);
+  assert.equal(result.costUsd, null);
+  assert.equal(result.spentCredits, 12.5);
 });
 
 test("summary derives baseline-relative cost index and p95 latency", () => {
@@ -73,10 +89,54 @@ test("unscored cases do not inflate pass rate", () => {
 });
 
 test("Markdown report labels costs as averages", () => {
-  const markdown = renderEvalMarkdown({
+  const report = sampleReport();
+  const markdown = renderEvalMarkdown(report);
+  assert.match(markdown, /Avg cost\/run/);
+  assert.match(markdown, /Single-model baseline/);
+  assert.match(markdown, /82\.0%/);
+});
+
+test("judge response parser accepts fenced JSON and validates fields", () => {
+  const result = parseJudgeResponse('```json\n{"score": 84, "passed": true, "reason": "Specific and correct."}\n```');
+  assert.deepEqual(result, { score: 84, passed: true, reason: "Specific and correct." });
+  assert.deepEqual(parseJudgeResponse("Score: 71/100\nPassed: no\nReason: misses a race."), {
+    score: 71,
+    passed: false,
+    reason: "Score: 71/100\nPassed: no\nReason: misses a race.",
+  });
+  assert.throws(() => parseJudgeResponse('{"score": 140, "passed": true}'), /0 to 100/);
+});
+
+test("HTML and SVG reports are self-contained shareable artifacts", () => {
+  const report = sampleReport();
+  const html = renderEvalHtml(report);
+  const svg = renderEvalSvg(report);
+  assert.match(html, /<!doctype html>/);
+  assert.match(html, /Measure the weave/);
+  assert.match(html, /Strategy comparison/);
+  assert.match(svg, /<svg/);
+  assert.match(svg, /MEASURED, NOT ESTIMATED/);
+});
+
+function sampleReport() {
+  return {
+    version: 1,
+    generatedAt: "2026-07-14T00:00:00.000Z",
     dataset: "/tmp/eval.jsonl",
     caseCount: 1,
     iterations: 1,
+    evaluation: { qualitySource: "deterministic-checks", judgeModel: null },
+    runs: [
+      {
+        caseId: "sample",
+        strategy: "baseline",
+        quality: 0.82,
+        passed: true,
+        totalTokens: 100,
+        elapsedMs: 4200,
+        costUsd: 0.1,
+      },
+    ],
     summary: [
       {
         strategy: "baseline",
@@ -85,13 +145,11 @@ test("Markdown report labels costs as averages", () => {
         costIndex: 100,
         p95LatencyMs: 4200,
         passRate: 0.88,
+        avgTokens: 100,
       },
     ],
-  });
-  assert.match(markdown, /Avg cost\/run/);
-  assert.match(markdown, /Single-model baseline/);
-  assert.match(markdown, /82\.0%/);
-});
+  };
+}
 
 function run(strategy, quality, passed, costUsd, elapsedMs) {
   return {

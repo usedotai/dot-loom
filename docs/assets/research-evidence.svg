@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560" role="img" aria-labelledby="title desc">
+  <title id="title">Selected published evidence behind Dot Loom</title>
+  <desc id="desc">Four separate research findings about model routing, cascades, multi-agent aggregation, and self-refinement. Metrics come from different studies and are not directly comparable.</desc>
+  <rect width="1200" height="560" fill="#0c0f0d"/>
+  <path d="M0 32H1200M0 64H1200M0 96H1200M0 128H1200M0 160H1200M0 192H1200M0 224H1200M0 256H1200M0 288H1200M0 320H1200M0 352H1200M0 384H1200M0 416H1200M0 448H1200M0 480H1200M0 512H1200M32 0V560M64 0V560M96 0V560M128 0V560M160 0V560M192 0V560M224 0V560M256 0V560M288 0V560M320 0V560M352 0V560M384 0V560M416 0V560M448 0V560M480 0V560M512 0V560M544 0V560M576 0V560M608 0V560M640 0V560M672 0V560M704 0V560M736 0V560M768 0V560M800 0V560M832 0V560M864 0V560M896 0V560M928 0V560M960 0V560M992 0V560M1024 0V560M1056 0V560M1088 0V560M1120 0V560M1152 0V560M1184 0V560" stroke="#151815"/>
+  <text x="54" y="62" fill="#b7f36b" font-size="13" font-weight="700" letter-spacing="2" font-family="ui-monospace,monospace">EXTERNAL RESEARCH · REPORTED BY AUTHORS</text>
+  <text x="54" y="118" fill="#ece9df" font-size="42" font-weight="720" letter-spacing="-1.5" font-family="Inter,system-ui,sans-serif">Why measure orchestration?</text>
+  <text x="54" y="151" fill="#96958e" font-size="15" font-family="Inter,system-ui,sans-serif">Different papers, tasks, and metrics. These are not Loom results and should not be compared as one leaderboard.</text>
+  <g transform="translate(54 198)">
+    <rect width="260" height="260" fill="#151816" stroke="#2d302d"/>
+    <text x="22" y="34" fill="#96958e" font-size="12" letter-spacing="1.3" font-family="ui-monospace,monospace">FRUGALGPT</text>
+    <text x="22" y="105" fill="#ece9df" font-size="56" font-weight="720" font-family="Inter,system-ui,sans-serif">98%</text>
+    <text x="22" y="135" fill="#b7f36b" font-size="14" font-family="ui-monospace,monospace">UP TO COST REDUCTION</text>
+    <text x="22" y="182" fill="#b9b8b1" font-size="14" font-family="Inter,system-ui,sans-serif">Matched the best individual</text>
+    <text x="22" y="204" fill="#b9b8b1" font-size="14" font-family="Inter,system-ui,sans-serif">LLM in reported experiments.</text>
+    <text x="22" y="236" fill="#696b67" font-size="11" font-family="ui-monospace,monospace">ARXIV:2305.05176</text>
+  </g>
+  <g transform="translate(332 198)">
+    <rect width="260" height="260" fill="#151816" stroke="#2d302d"/>
+    <text x="22" y="34" fill="#96958e" font-size="12" letter-spacing="1.3" font-family="ui-monospace,monospace">ROUTELLM</text>
+    <text x="22" y="105" fill="#ece9df" font-size="56" font-weight="720" font-family="Inter,system-ui,sans-serif">2×+</text>
+    <text x="22" y="135" fill="#b7f36b" font-size="14" font-family="ui-monospace,monospace">COST REDUCTION</text>
+    <text x="22" y="182" fill="#b9b8b1" font-size="14" font-family="Inter,system-ui,sans-serif">Without quality loss in</text>
+    <text x="22" y="204" fill="#b9b8b1" font-size="14" font-family="Inter,system-ui,sans-serif">reported benchmark settings.</text>
+    <text x="22" y="236" fill="#696b67" font-size="11" font-family="ui-monospace,monospace">ARXIV:2406.18665</text>
+  </g>
+  <g transform="translate(610 198)">
+    <rect width="260" height="260" fill="#151816" stroke="#2d302d"/>
+    <text x="22" y="34" fill="#96958e" font-size="12" letter-spacing="1.3" font-family="ui-monospace,monospace">MIXTURE-OF-AGENTS</text>
+    <text x="22" y="105" fill="#ece9df" font-size="56" font-weight="720" font-family="Inter,system-ui,sans-serif">65.1</text>
+    <text x="22" y="135" fill="#b7f36b" font-size="14" font-family="ui-monospace,monospace">ALPACAEVAL 2.0</text>
+    <text x="22" y="182" fill="#b9b8b1" font-size="14" font-family="Inter,system-ui,sans-serif">Open-source MoA vs 57.5</text>
+    <text x="22" y="204" fill="#b9b8b1" font-size="14" font-family="Inter,system-ui,sans-serif">reported for GPT-4 Omni.</text>
+    <text x="22" y="236" fill="#696b67" font-size="11" font-family="ui-monospace,monospace">ARXIV:2406.04692</text>
+  </g>
+  <g transform="translate(888 198)">
+    <rect width="260" height="260" fill="#151816" stroke="#2d302d"/>
+    <text x="22" y="34" fill="#96958e" font-size="12" letter-spacing="1.3" font-family="ui-monospace,monospace">SELF-REFINE</text>
+    <text x="22" y="105" fill="#ece9df" font-size="56" font-weight="720" font-family="Inter,system-ui,sans-serif">≈20</text>
+    <text x="22" y="135" fill="#b7f36b" font-size="14" font-family="ui-monospace,monospace">POINTS ABSOLUTE</text>
+    <text x="22" y="182" fill="#b9b8b1" font-size="14" font-family="Inter,system-ui,sans-serif">Average task improvement</text>
+    <text x="22" y="204" fill="#b9b8b1" font-size="14" font-family="Inter,system-ui,sans-serif">reported across seven tasks.</text>
+    <text x="22" y="236" fill="#696b67" font-size="11" font-family="ui-monospace,monospace">ARXIV:2303.17651</text>
+  </g>
+  <text x="54" y="520" fill="#696b67" font-size="12" font-family="ui-monospace,monospace">READ THE PAPERS AND METHODOLOGY BEFORE TRANSFERRING ANY RESULT TO A NEW WORKLOAD.</text>
+</svg>

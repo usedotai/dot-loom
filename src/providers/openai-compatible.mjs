@@ -47,6 +47,7 @@ export async function chatWithOpenAICompatible(modelRef, messages, options = {})
   return {
     content: typeof content === "string" ? content : JSON.stringify(content ?? ""),
     usage: json?.usage || null,
+    payment: json?.dot_parameters?.agent_api_payment || null,
     raw: json,
   };
 }

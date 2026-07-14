@@ -11,6 +11,7 @@ import { createServer as createViteServer } from "vite";
 const rootDir = path.dirname(fileURLToPath(import.meta.url));
 const dotRoot = await resolveDotRoot(rootDir);
 const cliPath = path.join(dotRoot, "src", "cli.mjs");
+const host = process.env.HOST || "127.0.0.1";
 const configs = {
   mock: path.join(dotRoot, "examples", "mock.config.json"),
   dot: path.join(dotRoot, "examples", "dot-code.config.json"),
@@ -20,7 +21,7 @@ const vite = await createViteServer({
   root: rootDir,
   appType: "spa",
   server: {
-    host: "0.0.0.0",
+    host,
     middlewareMode: true,
   },
 });
@@ -56,11 +57,13 @@ const server = http.createServer(async (req, res) => {
   }
 });
 
-server.listen(Number(process.env.PORT || 3955), "0.0.0.0", () => {
+server.listen(Number(process.env.PORT || 3955), host, () => {
   const port = server.address().port;
   console.log(`Dot Loom Studio`);
   console.log(`  Local:   http://localhost:${port}/`);
-  console.log(`  Network: http://0.0.0.0:${port}/`);
+  if (host !== "127.0.0.1" && host !== "localhost") {
+    console.log(`  Network: http://${host}:${port}/`);
+  }
   console.log(`  CLI:     ${cliPath}`);
 });
 

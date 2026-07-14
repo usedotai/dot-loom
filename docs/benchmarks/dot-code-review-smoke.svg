@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Dot Loom benchmark summary">
+    <rect width="1200" height="630" fill="#0c0f0d"/>
+    <path d="M0 1H1200M0 33H1200M0 65H1200M0 97H1200M0 129H1200M0 161H1200M0 193H1200M0 225H1200M0 257H1200M0 289H1200M0 321H1200M0 353H1200M0 385H1200M0 417H1200M0 449H1200M0 481H1200M0 513H1200M0 545H1200M0 577H1200M0 609H1200" stroke="#151815"/>
+    <text x="64" y="72" fill="#b7f36b" font-size="14" font-weight="700" letter-spacing="2" font-family="ui-monospace,monospace">DOT LOOM · EVALUATION RECEIPT</text>
+    <text x="64" y="155" fill="#ece9df" font-size="68" font-weight="750" letter-spacing="-3" font-family="Inter,system-ui,sans-serif">Measure the weave.</text>
+    <text x="64" y="198" fill="#96958e" font-size="18" font-family="Inter,system-ui,sans-serif">3 cases · 1 iteration · evals/code-review-v1.jsonl</text>
+    <g transform="translate(64 0)">
+      <text x="0" y="258" fill="#96958e" font-size="15" font-family="ui-monospace,monospace">SINGLE-MODEL BASELINE</text>
+      <text x="0" y="330" fill="#ece9df" font-size="62" font-weight="700" font-family="Inter,system-ui,sans-serif">96.7%</text>
+      <rect x="0" y="354" width="292" height="9" fill="#252925"/><rect x="0" y="354" width="282.3" height="9" fill="#b7f36b"/>
+      <text x="0" y="405" fill="#96958e" font-size="14" font-family="ui-monospace,monospace">PASS 66.7%</text>
+      <text x="0" y="435" fill="#96958e" font-size="14" font-family="ui-monospace,monospace">P95 22.70s</text>
+      <text x="0" y="465" fill="#96958e" font-size="14" font-family="ui-monospace,monospace">COST 1.00 cr</text>
+    </g><g transform="translate(434 0)">
+      <text x="0" y="258" fill="#96958e" font-size="15" font-family="ui-monospace,monospace">LOOM FIXED</text>
+      <text x="0" y="330" fill="#ece9df" font-size="62" font-weight="700" font-family="Inter,system-ui,sans-serif">100.0%</text>
+      <rect x="0" y="354" width="292" height="9" fill="#252925"/><rect x="0" y="354" width="292.0" height="9" fill="#b7f36b"/>
+      <text x="0" y="405" fill="#96958e" font-size="14" font-family="ui-monospace,monospace">PASS 100.0%</text>
+      <text x="0" y="435" fill="#96958e" font-size="14" font-family="ui-monospace,monospace">P95 88.77s</text>
+      <text x="0" y="465" fill="#96958e" font-size="14" font-family="ui-monospace,monospace">COST 4.00 cr</text>
+    </g><g transform="translate(804 0)">
+      <text x="0" y="258" fill="#96958e" font-size="15" font-family="ui-monospace,monospace">LOOM ADAPTIVE</text>
+      <text x="0" y="330" fill="#ece9df" font-size="62" font-weight="700" font-family="Inter,system-ui,sans-serif">98.3%</text>
+      <rect x="0" y="354" width="292" height="9" fill="#252925"/><rect x="0" y="354" width="287.1" height="9" fill="#b7f36b"/>
+      <text x="0" y="405" fill="#96958e" font-size="14" font-family="ui-monospace,monospace">PASS 66.7%</text>
+      <text x="0" y="435" fill="#96958e" font-size="14" font-family="ui-monospace,monospace">P95 82.25s</text>
+      <text x="0" y="465" fill="#96958e" font-size="14" font-family="ui-monospace,monospace">COST 4.00 cr</text>
+    </g>
+    <line x1="64" y1="530" x2="1136" y2="530" stroke="#2d302d"/>
+    <text x="64" y="570" fill="#96958e" font-size="14" font-family="ui-monospace,monospace">QUALITY SOURCE: MODEL-JUDGE</text>
+    <text x="1136" y="570" text-anchor="end" fill="#96958e" font-size="14" font-family="ui-monospace,monospace">MEASURED, NOT ESTIMATED</text>
+  </svg>

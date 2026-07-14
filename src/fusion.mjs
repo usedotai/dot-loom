@@ -77,9 +77,10 @@ function summarize(trace, elapsedMs) {
       sum.promptTokens += Number(u.prompt_tokens || 0);
       sum.completionTokens += Number(u.completion_tokens || 0);
       sum.totalTokens += Number(u.total_tokens || 0);
+      sum.spentCredits += Number(item.payment?.spent_credits || 0);
       return sum;
     },
-    { promptTokens: 0, completionTokens: 0, totalTokens: 0 },
+    { promptTokens: 0, completionTokens: 0, totalTokens: 0, spentCredits: 0 },
   );
   return {
     calls: trace.length,
