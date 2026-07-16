@@ -137,9 +137,9 @@
       "sha256": "76f3b0d7993b1ecd951dcc6f273b20a6f5302c26fdf2a0c2debf27eb7b5e62ea"
     },
     {
-      "bytes": 410,
+      "bytes": 412,
       "path": "demo/00_show_machine.sh",
-      "sha256": "5915e275645a4c7ea65628149a9c70f250295c9d18a15b75bc510fc509c3aaef"
+      "sha256": "57296d716fb711b00f80488904fe1693a9e8f95beb9135bb50bb4c7596a8fc88"
     },
     {
       "bytes": 966,
@@ -162,9 +162,9 @@
       "sha256": "bc0b90c4743d3c6f7602b2502b25737b6caade6f83e61ef3aa8e86d8fe008831"
     },
     {
-      "bytes": 336,
+      "bytes": 644,
       "path": "demo/05_verify_artifacts.sh",
-      "sha256": "4364561b91ebed501ccbc90ad90203ac3ee5536a7b06f6a066d7ce1670caee7f"
+      "sha256": "f35147ee5f5f21577d553509995ec1598a286905e1735c4bc3c7cfb2dc3a6cc8"
     },
     {
       "bytes": 5966,
@@ -217,9 +217,9 @@
       "sha256": "d5249139b886a519e7d36aa697d8e3312441b5a4e1c59840f2d8abcee0406495"
     },
     {
-      "bytes": 458,
+      "bytes": 253,
       "path": "receipts/input-sha256.txt",
-      "sha256": "a5e993e24a2e5064f6df78df15ad669d5c1e62c4b64564fe316fba8c69a53d77"
+      "sha256": "2a90bff84f228a2d41101adc3abff2db8462a4ad1e07907e8c4892cf126ed351"
     },
     {
       "bytes": 3416,
@@ -418,5 +418,5 @@
     }
   ],
   "format": "dot-loom-conductor-results-v1",
-  "total_bytes": 61413088
+  "total_bytes": 61413193
 }

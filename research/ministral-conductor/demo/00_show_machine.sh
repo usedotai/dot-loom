@@ -9,6 +9,6 @@ lscpu | grep -E '^(Model name|CPU\(s\)|Thread|Core|Socket)'
 free -h
 printf '\nStorage\n'
 df -h .
-printf '\nPinned model and input receipts\n'
+printf '\nPinned model and dataset receipts\n'
 cat receipts/model-sha256.txt
 cat receipts/input-sha256.txt
