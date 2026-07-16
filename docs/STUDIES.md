@@ -17,7 +17,7 @@ Ong et al. train routers from preference data to select between stronger and wea
 
 - Paper: [RouteLLM: Learning to Route LLMs with Preference Data](https://arxiv.org/abs/2406.18665)
 - Code: [lm-sys/RouteLLM](https://github.com/lm-sys/RouteLLM)
-- Loom connection: future learned routing policies calibrated from benchmark traces.
+- Loom connection: the Ministral conductor research track now tests learned strategy depth and role assignment; production work still needs continual calibration from measured traces.
 
 ### BEST-Route
 

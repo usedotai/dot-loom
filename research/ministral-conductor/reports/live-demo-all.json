@@ -1,0 +1,168 @@
+[
+  {
+    "conductor_latency_ms": 9661.0,
+    "gpu": "NVIDIA H200",
+    "limits": {
+      "max_calls": 1,
+      "max_credits": 0.5,
+      "max_latency_ms": 10000,
+      "minimum_quality": 0.55
+    },
+    "named_roles": {
+      "finalizer": null,
+      "reviewer": null,
+      "writer": "Local Ministral via Ollama"
+    },
+    "plan": {
+      "access": {
+        "finalizer": [],
+        "reviewer": [],
+        "writer": []
+      },
+      "estimated_credits": 0.15,
+      "estimated_latency_ms": 6500,
+      "estimated_pass_rate": 0.51,
+      "estimated_quality": 0.74,
+      "finalizer": null,
+      "independent_verification": false,
+      "max_calls": 1,
+      "max_credits": 0.5,
+      "max_latency_ms": 10000,
+      "policy": "lean",
+      "reason_codes": [
+        "single_call_sufficient"
+      ],
+      "reviewer": null,
+      "writer": "worker_a"
+    },
+    "preset": "low-risk",
+    "runtime_validation": {
+      "hard_constraints_met": true,
+      "independent_verification": false,
+      "json_valid": true,
+      "plan_valid": true,
+      "recomputed_calls": 1,
+      "recomputed_credits": 0.15,
+      "recomputed_latency_ms": 6500,
+      "recomputed_pass_rate": 0.515,
+      "recomputed_quality": 0.7424
+    },
+    "task": "Rewrite a short internal release note without changing facts."
+  },
+  {
+    "conductor_latency_ms": 7852.488,
+    "gpu": "NVIDIA H200",
+    "limits": {
+      "max_calls": 3,
+      "max_credits": 16.5,
+      "max_latency_ms": 95000,
+      "minimum_quality": 0.96
+    },
+    "named_roles": {
+      "finalizer": "OpenAI frontier lane",
+      "reviewer": "Claude review lane",
+      "writer": "Local Ministral via Ollama"
+    },
+    "plan": {
+      "access": {
+        "finalizer": [
+          "writer",
+          "reviewer"
+        ],
+        "reviewer": [
+          "writer"
+        ],
+        "writer": []
+      },
+      "estimated_credits": 16.15,
+      "estimated_latency_ms": 83500,
+      "estimated_pass_rate": 0.77,
+      "estimated_quality": 0.91,
+      "finalizer": "worker_c",
+      "independent_verification": true,
+      "max_calls": 3,
+      "max_credits": 16.5,
+      "max_latency_ms": 95000,
+      "policy": "strict",
+      "reason_codes": [
+        "best_feasible_below_target",
+        "complex_task",
+        "credit_constrained",
+        "high_consequence"
+      ],
+      "reviewer": "worker_b",
+      "writer": "worker_a"
+    },
+    "preset": "payment-race",
+    "runtime_validation": {
+      "hard_constraints_met": true,
+      "independent_verification": true,
+      "json_valid": true,
+      "plan_valid": true,
+      "recomputed_calls": 3,
+      "recomputed_credits": 16.15,
+      "recomputed_latency_ms": 83500,
+      "recomputed_pass_rate": 0.7771,
+      "recomputed_quality": 0.913
+    },
+    "task": "Audit a USDC credit claim for concurrent debit, retry, settlement, and recovery failures."
+  },
+  {
+    "conductor_latency_ms": 6817.267,
+    "gpu": "NVIDIA H200",
+    "limits": {
+      "max_calls": 3,
+      "max_credits": 16.5,
+      "max_latency_ms": 95000,
+      "minimum_quality": 0.96
+    },
+    "named_roles": {
+      "finalizer": "OpenAI frontier lane",
+      "reviewer": "Claude review lane",
+      "writer": "Local Ministral via Ollama"
+    },
+    "plan": {
+      "access": {
+        "finalizer": [
+          "writer",
+          "reviewer"
+        ],
+        "reviewer": [
+          "writer"
+        ],
+        "writer": []
+      },
+      "estimated_credits": 16.15,
+      "estimated_latency_ms": 83500,
+      "estimated_pass_rate": 0.77,
+      "estimated_quality": 0.91,
+      "finalizer": "worker_c",
+      "independent_verification": true,
+      "max_calls": 3,
+      "max_credits": 16.5,
+      "max_latency_ms": 95000,
+      "policy": "strict",
+      "reason_codes": [
+        "best_feasible_below_target",
+        "complex_task",
+        "credit_constrained",
+        "high_consequence"
+      ],
+      "reviewer": "worker_b",
+      "writer": "worker_a"
+    },
+    "preset": "ssrf",
+    "runtime_validation": {
+      "hard_constraints_met": true,
+      "independent_verification": true,
+      "json_valid": true,
+      "plan_valid": true,
+      "recomputed_calls": 3,
+      "recomputed_credits": 16.15,
+      "recomputed_latency_ms": 83500,
+      "recomputed_pass_rate": 0.7771,
+      "recomputed_quality": 0.913
+    },
+    "task": "Audit a user-controlled fetcher for redirect, DNS rebinding, and metadata endpoint access."
+  }
+]

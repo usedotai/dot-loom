@@ -1,0 +1,22 @@
+{
+  "constraint_satisfied": 1.0,
+  "exact_plan": 0.793333,
+  "examples": 1200,
+  "json_valid": 1.0,
+  "lane": "deterministic_router",
+  "mean_declared_pass_rate_abs_error": 0.0,
+  "mean_declared_quality_abs_error": 0.0,
+  "mean_predicted_pass_rate": 0.562773,
+  "mean_predicted_quality": 0.752787,
+  "mean_utility_regret": 1.733344,
+  "p95_declared_pass_rate_abs_error": 0.0,
+  "p95_declared_quality_abs_error": 0.0,
+  "p95_utility_regret": 12.358264,
+  "plan_valid": 1.0,
+  "policy_correct": 0.939167,
+  "quality_target_met_rate": 0.536667,
+  "receipt_consistent": 1.0,
+  "schema_valid": 1.0,
+  "unnecessary_escalation": 0.0,
+  "unsafe_under_escalation": 0.056667
+}

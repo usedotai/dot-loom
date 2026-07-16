@@ -1,0 +1,24 @@
+{
+  "adapter_files": [
+    {
+      "bytes": 5218,
+      "path": "README.md",
+      "sha256": "2f4d18ab8fe53522614df0b07ff1254d954fa01a9a7d1dd1dc835b1036269069"
+    },
+    {
+      "bytes": 1111,
+      "path": "adapter_config.json",
+      "sha256": "47b0e5aced4c06cf1728c7c85cda1fc4e704cd4610f3338ea9a21cc0f688fb17"
+    },
+    {
+      "bytes": 560078656,
+      "path": "adapter_model.safetensors",
+      "sha256": "e0e6655a16a10f28cbce898e564640bf6a4a64ca84bb2014a1da3a60c5f11eda"
+    }
+  ],
+  "best_checkpoint": "checkpoint-564",
+  "best_metric": 0.07016760855913162,
+  "completed_epoch": 2.0,
+  "completed_optimizer_steps": 564,
+  "selection_method": "lowest validation loss across saved checkpoints"
+}

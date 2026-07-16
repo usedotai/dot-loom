@@ -1,0 +1,15 @@
+torch==2.13.0
+transformers==5.14.1
+peft==0.19.1
+trl==1.8.0
+accelerate
+datasets
+safetensors
+sentencepiece
+mistral-common>=1.11.5,<1.12
+jsonschema
+pandas
+matplotlib
+seaborn
+scikit-learn
+huggingface-hub

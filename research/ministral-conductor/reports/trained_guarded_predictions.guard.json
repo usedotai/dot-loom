@@ -1,0 +1,11 @@
+{
+  "accepted": 1187,
+  "examples": 1200,
+  "fallback_count": 13,
+  "fallback_rate": 0.010833,
+  "reasons": {
+    "invalid_json": 0,
+    "invalid_plan": 0,
+    "over_budget": 13
+  }
+}

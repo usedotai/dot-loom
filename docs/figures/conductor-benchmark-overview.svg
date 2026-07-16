@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="820" viewBox="0 0 1400 820" role="img" aria-labelledby="title desc">
+<title id="title">Held-out conductor benchmark</title>
+<desc id="desc">Six benchmark facets compare deterministic Loom, raw base Ministral, and the Dot-trained conductor.</desc>
+<rect width="1400" height="820" fill="#ffffff"/>
+<style>
+      text { font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif; fill: #172033; }
+      .title { font-size: 30px; font-weight: 700; }
+      .subtitle { font-size: 16px; fill: #687083; }
+      .label { font-size: 15px; font-weight: 600; }
+      .small { font-size: 13px; fill: #687083; }
+      .value { font-size: 14px; font-weight: 700; }
+      .axis { stroke: #d9deea; stroke-width: 1; }
+    </style>
+<text x="70.0" y="58.0" class="title" text-anchor="start">Held-out conductor benchmark</text>
+<text x="70.0" y="88.0" class="subtitle" text-anchor="start">Balanced 1,200-case test set with disjoint task families</text>
+<circle cx="70.0" cy="120.0" r="6.0" fill="#67758d" stroke="#ffffff" stroke-width="2"/>
+<text x="82.0" y="125.0" class="small" text-anchor="start">Deterministic Loom</text>
+<circle cx="285.0" cy="120.0" r="6.0" fill="#df8b3a" stroke="#ffffff" stroke-width="2"/>
+<text x="297.0" y="125.0" class="small" text-anchor="start">Base Ministral 14B</text>
+<circle cx="500.0" cy="120.0" r="6.0" fill="#2d68c4" stroke="#ffffff" stroke-width="2"/>
+<text x="512.0" y="125.0" class="small" text-anchor="start">Dot-trained + runtime guard</text>
+<text x="70.0" y="175.0" class="label" text-anchor="start">Policy accuracy</text>
+<text x="470.0" y="175.0" class="small" text-anchor="end">higher is better</text>
+<line x1="70.0" y1="395.0" x2="470.0" y2="395.0" stroke="#d9deea" stroke-width="1.0"/>
+<line x1="70.0" y1="395.0" x2="470.0" y2="395.0" stroke="#d9deea" stroke-width="1.0"/>
+<text x="62.0" y="399.0" class="small" text-anchor="end">0%</text>
+<line x1="70.0" y1="347.5" x2="470.0" y2="347.5" stroke="#d9deea" stroke-width="1.0"/>
+<text x="62.0" y="351.5" class="small" text-anchor="end">25%</text>
+<line x1="70.0" y1="300.0" x2="470.0" y2="300.0" stroke="#d9deea" stroke-width="1.0"/>
+<text x="62.0" y="304.0" class="small" text-anchor="end">50%</text>
+<line x1="70.0" y1="252.5" x2="470.0" y2="252.5" stroke="#d9deea" stroke-width="1.0"/>
+<text x="62.0" y="256.5" class="small" text-anchor="end">75%</text>
+<line x1="70.0" y1="205.0" x2="470.0" y2="205.0" stroke="#d9deea" stroke-width="1.0"/>
+<text x="62.0" y="209.0" class="small" text-anchor="end">100%</text>
+<rect x="118.0" y="216.6" width="72.0" height="178.4" rx="3.0" fill="#67758d"/>
+<text x="154.0" y="208.6" class="value" text-anchor="middle">93.9%</text>
+<rect x="236.0" y="394.2" width="72.0" height="0.8" rx="3.0" fill="#df8b3a"/>
+<text x="272.0" y="386.2" class="value" text-anchor="middle">0.4%</text>
+<rect x="354.0" y="205.0" width="72.0" height="190.0" rx="3.0" fill="#2d68c4"/>
+<text x="390.0" y="197.0" class="value" text-anchor="middle">100.0%</text>
+<text x="515.0" y="175.0" class="label" text-anchor="start">Exact plan match</text>
+<text x="915.0" y="175.0" class="small" text-anchor="end">higher is better</text>
+<line x1="515.0" y1="395.0" x2="915.0" y2="395.0" stroke="#d9deea" stroke-width="1.0"/>
+<line x1="515.0" y1="395.0" x2="915.0" y2="395.0" stroke="#d9deea" stroke-width="1.0"/>
+<text x="507.0" y="399.0" class="small" text-anchor="end">0%</text>
+<line x1="515.0" y1="347.5" x2="915.0" y2="347.5" stroke="#d9deea" stroke-width="1.0"/>
+<text x="507.0" y="351.5" class="small" text-anchor="end">25%</text>
+<line x1="515.0" y1="300.0" x2="915.0" y2="300.0" stroke="#d9deea" stroke-width="1.0"/>
+<text x="507.0" y="304.0" class="small" text-anchor="end">50%</text>
+<line x1="515.0" y1="252.5" x2="915.0" y2="252.5" stroke="#d9deea" stroke-width="1.0"/>
+<text x="507.0" y="256.5" class="small" text-anchor="end">75%</text>
+<line x1="515.0" y1="205.0" x2="915.0" y2="205.0" stroke="#d9deea" stroke-width="1.0"/>
+<text x="507.0" y="209.0" class="small" text-anchor="end">100%</text>
+<rect x="563.0" y="244.3" width="72.0" height="150.7" rx="3.0" fill="#67758d"/>
+<text x="599.0" y="236.3" class="value" text-anchor="middle">79.3%</text>
+<rect x="681.0" y="394.8" width="72.0" height="0.2" rx="3.0" fill="#df8b3a"/>
+<text x="717.0" y="386.8" class="value" text-anchor="middle">0.1%</text>
+<rect x="799.0" y="222.4" width="72.0" height="172.6" rx="3.0" fill="#2d68c4"/>
+<text x="835.0" y="214.4" class="value" text-anchor="middle">90.8%</text>
+<text x="960.0" y="175.0" class="label" text-anchor="start">Hard constraints met</text>
+<text x="1360.0" y="175.0" class="small" text-anchor="end">higher is better</text>
+<line x1="960.0" y1="395.0" x2="1360.0" y2="395.0" stroke="#d9deea" stroke-width="1.0"/>
+<line x1="960.0" y1="395.0" x2="1360.0" y2="395.0" stroke="#d9deea" stroke-width="1.0"/>
+<text x="952.0" y="399.0" class="small" text-anchor="end">0%</text>
+<line x1="960.0" y1="347.5" x2="1360.0" y2="347.5" stroke="#d9deea" stroke-width="1.0"/>
+<text x="952.0" y="351.5" class="small" text-anchor="end">25%</text>
+<line x1="960.0" y1="300.0" x2="1360.0" y2="300.0" stroke="#d9deea" stroke-width="1.0"/>
+<text x="952.0" y="304.0" class="small" text-anchor="end">50%</text>
+<line x1="960.0" y1="252.5" x2="1360.0" y2="252.5" stroke="#d9deea" stroke-width="1.0"/>
+<text x="952.0" y="256.5" class="small" text-anchor="end">75%</text>
+<line x1="960.0" y1="205.0" x2="1360.0" y2="205.0" stroke="#d9deea" stroke-width="1.0"/>
+<text x="952.0" y="209.0" class="small" text-anchor="end">100%</text>
+<rect x="1008.0" y="205.0" width="72.0" height="190.0" rx="3.0" fill="#67758d"/>
+<text x="1044.0" y="197.0" class="value" text-anchor="middle">100.0%</text>
+<rect x="1126.0" y="394.8" width="72.0" height="0.2" rx="3.0" fill="#df8b3a"/>
+<text x="1162.0" y="386.8" class="value" text-anchor="middle">0.1%</text>
+<rect x="1244.0" y="205.0" width="72.0" height="190.0" rx="3.0" fill="#2d68c4"/>
+<text x="1280.0" y="197.0" class="value" text-anchor="middle">100.0%</text>
+<text x="70.0" y="475.0" class="label" text-anchor="start">Quality target met</text>
+<text x="470.0" y="475.0" class="small" text-anchor="end">higher is better</text>
+<line x1="70.0" y1="695.0" x2="470.0" y2="695.0" stroke="#d9deea" stroke-width="1.0"/>
+<line x1="70.0" y1="695.0" x2="470.0" y2="695.0" stroke="#d9deea" stroke-width="1.0"/>
+<text x="62.0" y="699.0" class="small" text-anchor="end">0%</text>
+<line x1="70.0" y1="647.5" x2="470.0" y2="647.5" stroke="#d9deea" stroke-width="1.0"/>
+<text x="62.0" y="651.5" class="small" text-anchor="end">25%</text>
+<line x1="70.0" y1="600.0" x2="470.0" y2="600.0" stroke="#d9deea" stroke-width="1.0"/>
+<text x="62.0" y="604.0" class="small" text-anchor="end">50%</text>
+<line x1="70.0" y1="552.5" x2="470.0" y2="552.5" stroke="#d9deea" stroke-width="1.0"/>
+<text x="62.0" y="556.5" class="small" text-anchor="end">75%</text>
+<line x1="70.0" y1="505.0" x2="470.0" y2="505.0" stroke="#d9deea" stroke-width="1.0"/>
+<text x="62.0" y="509.0" class="small" text-anchor="end">100%</text>
+<rect x="118.0" y="593.0" width="72.0" height="102.0" rx="3.0" fill="#67758d"/>
+<text x="154.0" y="585.0" class="value" text-anchor="middle">53.7%</text>
+<rect x="236.0" y="694.8" width="72.0" height="0.2" rx="3.0" fill="#df8b3a"/>
+<text x="272.0" y="686.8" class="value" text-anchor="middle">0.1%</text>
+<rect x="354.0" y="576.2" width="72.0" height="118.8" rx="3.0" fill="#2d68c4"/>
+<text x="390.0" y="568.2" class="value" text-anchor="middle">62.5%</text>
+<text x="515.0" y="475.0" class="label" text-anchor="start">Mean utility regret (log scale)</text>
+<text x="915.0" y="475.0" class="small" text-anchor="end">lower is better</text>
+<line x1="515.0" y1="695.0" x2="915.0" y2="695.0" stroke="#d9deea" stroke-width="1.0"/>
+<line x1="515.0" y1="695.0" x2="915.0" y2="695.0" stroke="#d9deea" stroke-width="1.0"/>
+<text x="507.0" y="699.0" class="small" text-anchor="end">0.0</text>
+<line x1="515.0" y1="647.5" x2="915.0" y2="647.5" stroke="#d9deea" stroke-width="1.0"/>
+<text x="507.0" y="651.5" class="small" text-anchor="end">6.4</text>
+<line x1="515.0" y1="600.0" x2="915.0" y2="600.0" stroke="#d9deea" stroke-width="1.0"/>
+<text x="507.0" y="604.0" class="small" text-anchor="end">53.7</text>
+<line x1="515.0" y1="552.5" x2="915.0" y2="552.5" stroke="#d9deea" stroke-width="1.0"/>
+<text x="507.0" y="556.5" class="small" text-anchor="end">403.2</text>
+<line x1="515.0" y1="505.0" x2="915.0" y2="505.0" stroke="#d9deea" stroke-width="1.0"/>
+<text x="507.0" y="509.0" class="small" text-anchor="end">2987.1</text>
+<rect x="563.0" y="671.1" width="72.0" height="23.9" rx="3.0" fill="#67758d"/>
+<text x="599.0" y="663.1" class="value" text-anchor="middle">1.73</text>
+<rect x="681.0" y="529.8" width="72.0" height="165.2" rx="3.0" fill="#df8b3a"/>
+<text x="717.0" y="521.8" class="value" text-anchor="middle">1051.17</text>
+<rect x="799.0" y="689.8" width="72.0" height="5.2" rx="3.0" fill="#2d68c4"/>
+<text x="835.0" y="681.8" class="value" text-anchor="middle">0.24</text>
+<text x="960.0" y="475.0" class="label" text-anchor="start">Unsafe under-escalation</text>
+<text x="1360.0" y="475.0" class="small" text-anchor="end">lower is better</text>
+<line x1="960.0" y1="695.0" x2="1360.0" y2="695.0" stroke="#d9deea" stroke-width="1.0"/>
+<line x1="960.0" y1="695.0" x2="1360.0" y2="695.0" stroke="#d9deea" stroke-width="1.0"/>
+<text x="952.0" y="699.0" class="small" text-anchor="end">0%</text>
+<line x1="960.0" y1="647.5" x2="1360.0" y2="647.5" stroke="#d9deea" stroke-width="1.0"/>
+<text x="952.0" y="651.5" class="small" text-anchor="end">25%</text>
+<line x1="960.0" y1="600.0" x2="1360.0" y2="600.0" stroke="#d9deea" stroke-width="1.0"/>
+<text x="952.0" y="604.0" class="small" text-anchor="end">50%</text>
+<line x1="960.0" y1="552.5" x2="1360.0" y2="552.5" stroke="#d9deea" stroke-width="1.0"/>
+<text x="952.0" y="556.5" class="small" text-anchor="end">75%</text>
+<line x1="960.0" y1="505.0" x2="1360.0" y2="505.0" stroke="#d9deea" stroke-width="1.0"/>
+<text x="952.0" y="509.0" class="small" text-anchor="end">100%</text>
+<rect x="1008.0" y="684.2" width="72.0" height="10.8" rx="3.0" fill="#67758d"/>
+<text x="1044.0" y="676.2" class="value" text-anchor="middle">5.7%</text>
+<rect x="1126.0" y="508.6" width="72.0" height="186.4" rx="3.0" fill="#df8b3a"/>
+<text x="1162.0" y="500.6" class="value" text-anchor="middle">98.1%</text>
+<rect x="1244.0" y="695.0" width="72.0" height="0.0" rx="3.0" fill="#2d68c4"/>
+<text x="1280.0" y="687.0" class="value" text-anchor="middle">0.0%</text>
+<text x="70.0" y="790.0" class="small" text-anchor="start">Quality and utility are calculated from the frozen v2 oracle. Raw predictions and scoring receipts are included.</text>
+</svg>

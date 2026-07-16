@@ -1,0 +1,10 @@
+{
+  "adapter": "artifacts/ministral-14b-loom-conductor-v2/adapter",
+  "duration_seconds": 221.093,
+  "examples": 1200,
+  "examples_per_second": 5.427586,
+  "gpu": "NVIDIA H200",
+  "lane": "trained_conductor",
+  "model": "models/Ministral-3-14B-Base-2512",
+  "peak_gpu_memory_bytes": 50337655296
+}

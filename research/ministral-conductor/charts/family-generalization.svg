@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="820" viewBox="0 0 1400 820" role="img" aria-labelledby="title desc">
+<title id="title">Generalization to unseen task families</title>
+<desc id="desc">A dot plot compares exact plan match across held-out task families.</desc>
+<rect width="1400" height="820" fill="#ffffff"/>
+<style>
+      text { font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif; fill: #172033; }
+      .title { font-size: 30px; font-weight: 700; }
+      .subtitle { font-size: 16px; fill: #687083; }
+      .label { font-size: 15px; font-weight: 600; }
+      .small { font-size: 13px; fill: #687083; }
+      .value { font-size: 14px; font-weight: 700; }
+      .axis { stroke: #d9deea; stroke-width: 1; }
+    </style>
+<text x="70.0" y="58.0" class="title" text-anchor="start">Generalization to unseen task families</text>
+<text x="70.0" y="88.0" class="subtitle" text-anchor="start">Exact plan match on families excluded from training and validation</text>
+<circle cx="70.0" cy="120.0" r="6.0" fill="#67758d" stroke="#ffffff" stroke-width="2"/>
+<text x="82.0" y="125.0" class="small" text-anchor="start">Deterministic Loom</text>
+<circle cx="285.0" cy="120.0" r="6.0" fill="#df8b3a" stroke="#ffffff" stroke-width="2"/>
+<text x="297.0" y="125.0" class="small" text-anchor="start">Base Ministral 14B</text>
+<circle cx="500.0" cy="120.0" r="6.0" fill="#2d68c4" stroke="#ffffff" stroke-width="2"/>
+<text x="512.0" y="125.0" class="small" text-anchor="start">Dot-trained + runtime guard</text>
+<line x1="330.0" y1="160.0" x2="330.0" y2="703.0" stroke="#d9deea" stroke-width="1.0"/>
+<text x="330.0" y="150.0" class="small" text-anchor="middle">0%</text>
+<line x1="528.0" y1="160.0" x2="528.0" y2="703.0" stroke="#d9deea" stroke-width="1.0"/>
+<text x="528.0" y="150.0" class="small" text-anchor="middle">20%</text>
+<line x1="726.0" y1="160.0" x2="726.0" y2="703.0" stroke="#d9deea" stroke-width="1.0"/>
+<text x="726.0" y="150.0" class="small" text-anchor="middle">40%</text>
+<line x1="924.0" y1="160.0" x2="924.0" y2="703.0" stroke="#d9deea" stroke-width="1.0"/>
+<text x="924.0" y="150.0" class="small" text-anchor="middle">60%</text>
+<line x1="1122.0" y1="160.0" x2="1122.0" y2="703.0" stroke="#d9deea" stroke-width="1.0"/>
+<text x="1122.0" y="150.0" class="small" text-anchor="middle">80%</text>
+<line x1="1320.0" y1="160.0" x2="1320.0" y2="703.0" stroke="#d9deea" stroke-width="1.0"/>
+<text x="1320.0" y="150.0" class="small" text-anchor="middle">100%</text>
+<text x="308.0" y="183.0" class="label" text-anchor="end">contract risk</text>
+<line x1="330.0" y1="191.0" x2="1320.0" y2="191.0" stroke="#edf0f6" stroke-width="1.0"/>
+<circle cx="1103.6" cy="161.0" r="7.0" fill="#67758d" stroke="#ffffff" stroke-width="2"/>
+<text x="1115.6" y="166.0" class="small" text-anchor="start">78.1%</text>
+<circle cx="330.0" cy="175.0" r="7.0" fill="#df8b3a" stroke="#ffffff" stroke-width="2"/>
+<text x="342.0" y="180.0" class="small" text-anchor="start">0.0%</text>
+<circle cx="1267.5" cy="189.0" r="7.0" fill="#2d68c4" stroke="#ffffff" stroke-width="2"/>
+<text x="1279.5" y="194.0" class="small" text-anchor="start">94.7%</text>
+<text x="308.0" y="249.0" class="label" text-anchor="end">health triage</text>
+<line x1="330.0" y1="257.0" x2="1320.0" y2="257.0" stroke="#edf0f6" stroke-width="1.0"/>
+<circle cx="1060.2" cy="227.0" r="7.0" fill="#67758d" stroke="#ffffff" stroke-width="2"/>
+<text x="1072.2" y="232.0" class="small" text-anchor="start">73.8%</text>
+<circle cx="337.0" cy="241.0" r="7.0" fill="#df8b3a" stroke="#ffffff" stroke-width="2"/>
+<text x="349.0" y="246.0" class="small" text-anchor="start">0.7%</text>
+<circle cx="1256.8" cy="255.0" r="7.0" fill="#2d68c4" stroke="#ffffff" stroke-width="2"/>
+<text x="1268.8" y="260.0" class="small" text-anchor="start">93.6%</text>
+<text x="308.0" y="315.0" class="label" text-anchor="end">oauth integrity</text>
+<line x1="330.0" y1="323.0" x2="1320.0" y2="323.0" stroke="#edf0f6" stroke-width="1.0"/>
+<circle cx="1123.3" cy="293.0" r="7.0" fill="#67758d" stroke="#ffffff" stroke-width="2"/>
+<text x="1135.3" y="298.0" class="small" text-anchor="start">80.1%</text>
+<circle cx="330.0" cy="307.0" r="7.0" fill="#df8b3a" stroke="#ffffff" stroke-width="2"/>
+<text x="342.0" y="312.0" class="small" text-anchor="start">0.0%</text>
+<circle cx="1234.8" cy="321.0" r="7.0" fill="#2d68c4" stroke="#ffffff" stroke-width="2"/>
+<text x="1246.8" y="326.0" class="small" text-anchor="start">91.4%</text>
+<text x="308.0" y="381.0" class="label" text-anchor="end">payment races</text>
+<line x1="330.0" y1="389.0" x2="1320.0" y2="389.0" stroke="#edf0f6" stroke-width="1.0"/>
+<circle cx="1085.9" cy="359.0" r="7.0" fill="#67758d" stroke="#ffffff" stroke-width="2"/>
+<text x="1097.9" y="364.0" class="small" text-anchor="start">76.4%</text>
+<circle cx="330.0" cy="373.0" r="7.0" fill="#df8b3a" stroke="#ffffff" stroke-width="2"/>
+<text x="342.0" y="378.0" class="small" text-anchor="start">0.0%</text>
+<circle cx="1213.0" cy="387.0" r="7.0" fill="#2d68c4" stroke="#ffffff" stroke-width="2"/>
+<text x="1225.0" y="392.0" class="small" text-anchor="start">89.2%</text>
+<text x="308.0" y="447.0" class="label" text-anchor="end">ssrf egress</text>
+<line x1="330.0" y1="455.0" x2="1320.0" y2="455.0" stroke="#edf0f6" stroke-width="1.0"/>
+<circle cx="1186.7" cy="425.0" r="7.0" fill="#67758d" stroke="#ffffff" stroke-width="2"/>
+<text x="1198.7" y="430.0" class="small" text-anchor="start">86.5%</text>
+<circle cx="330.0" cy="439.0" r="7.0" fill="#df8b3a" stroke="#ffffff" stroke-width="2"/>
+<text x="342.0" y="444.0" class="small" text-anchor="start">0.0%</text>
+<circle cx="1212.1" cy="453.0" r="7.0" fill="#2d68c4" stroke="#ffffff" stroke-width="2"/>
+<text x="1224.1" y="458.0" class="small" text-anchor="start">89.1%</text>
+<text x="308.0" y="513.0" class="label" text-anchor="end">stream settlement</text>
+<line x1="330.0" y1="521.0" x2="1320.0" y2="521.0" stroke="#edf0f6" stroke-width="1.0"/>
+<circle cx="1161.3" cy="491.0" r="7.0" fill="#67758d" stroke="#ffffff" stroke-width="2"/>
+<text x="1173.3" y="496.0" class="small" text-anchor="start">84.0%</text>
+<circle cx="330.0" cy="505.0" r="7.0" fill="#df8b3a" stroke="#ffffff" stroke-width="2"/>
+<text x="342.0" y="510.0" class="small" text-anchor="start">0.0%</text>
+<circle cx="1250.2" cy="519.0" r="7.0" fill="#2d68c4" stroke="#ffffff" stroke-width="2"/>
+<text x="1262.2" y="524.0" class="small" text-anchor="start">92.9%</text>
+<text x="308.0" y="579.0" class="label" text-anchor="end">tenant isolation</text>
+<line x1="330.0" y1="587.0" x2="1320.0" y2="587.0" stroke="#edf0f6" stroke-width="1.0"/>
+<circle cx="1116.6" cy="557.0" r="7.0" fill="#67758d" stroke="#ffffff" stroke-width="2"/>
+<text x="1128.6" y="562.0" class="small" text-anchor="start">79.5%</text>
+<circle cx="330.0" cy="571.0" r="7.0" fill="#df8b3a" stroke="#ffffff" stroke-width="2"/>
+<text x="342.0" y="576.0" class="small" text-anchor="start">0.0%</text>
+<circle cx="1143.7" cy="585.0" r="7.0" fill="#2d68c4" stroke="#ffffff" stroke-width="2"/>
+<text x="1155.7" y="590.0" class="small" text-anchor="start">82.2%</text>
+<text x="308.0" y="645.0" class="label" text-anchor="end">webhook replay</text>
+<line x1="330.0" y1="653.0" x2="1320.0" y2="653.0" stroke="#edf0f6" stroke-width="1.0"/>
+<circle cx="1077.4" cy="623.0" r="7.0" fill="#67758d" stroke="#ffffff" stroke-width="2"/>
+<text x="1089.4" y="628.0" class="small" text-anchor="start">75.5%</text>
+<circle cx="330.0" cy="637.0" r="7.0" fill="#df8b3a" stroke="#ffffff" stroke-width="2"/>
+<text x="342.0" y="642.0" class="small" text-anchor="start">0.0%</text>
+<circle cx="1254.4" cy="651.0" r="7.0" fill="#2d68c4" stroke="#ffffff" stroke-width="2"/>
+<text x="1266.4" y="656.0" class="small" text-anchor="start">93.4%</text>
+<text x="70.0" y="790.0" class="small" text-anchor="start">Families: payment races, tenant isolation, webhook replay, OAuth integrity, SSRF, stream settlement, health triage, and contract risk.</text>
+</svg>

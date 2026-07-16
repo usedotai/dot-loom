@@ -1,0 +1,129 @@
+{
+  "created_by": "src/generate_dataset.py",
+  "empirical_anchor": {
+    "anchors": [
+      {
+        "anchor": "frontier_high",
+        "credits": 12.6667,
+        "latency_ms": 72371,
+        "pass_rate": 1.0,
+        "quality": 1.0,
+        "strengths": [
+          "implementation",
+          "reasoning",
+          "synthesis"
+        ]
+      },
+      {
+        "anchor": "frontier_efficient",
+        "credits": 3.5,
+        "latency_ms": 64730,
+        "pass_rate": 0.8333,
+        "quality": 0.8833,
+        "strengths": [
+          "review",
+          "reasoning",
+          "writing"
+        ]
+      },
+      {
+        "anchor": "specialist_low_cost",
+        "credits": 1.0,
+        "latency_ms": 25862,
+        "pass_rate": 0.5,
+        "quality": 0.7,
+        "strengths": [
+          "drafting",
+          "coding",
+          "speed"
+        ]
+      }
+    ],
+    "case_count": 6,
+    "models_anonymized": true,
+    "receipt": "dot-loom/docs/benchmarks/cross-model-baselines-v1.json"
+  },
+  "family_leakage": {
+    "train_test_overlap": [],
+    "train_validation_overlap": [],
+    "validation_test_overlap": []
+  },
+  "files": {
+    "test": {
+      "families": {
+        "contract_risk": 151,
+        "health_triage": 141,
+        "oauth_integrity": 151,
+        "payment_races": 148,
+        "ssrf_egress": 156,
+        "stream_settlement": 156,
+        "tenant_isolation": 146,
+        "webhook_replay": 151
+      },
+      "path": "test.jsonl",
+      "policies": {
+        "balanced": 400,
+        "lean": 400,
+        "strict": 400
+      },
+      "rows": 1200,
+      "sha256": "9cd3065a36787ce18042aa8bde7e10b1ccf3acd04093058cf78c77f338c5d049"
+    },
+    "train": {
+      "families": {
+        "content_revision": 377,
+        "data_analysis": 635,
+        "debugging": 1759,
+        "direct_facts": 409,
+        "feature_implementation": 1151,
+        "incident_response": 2404,
+        "product_tradeoff": 804,
+        "research_synthesis": 1461
+      },
+      "path": "train.jsonl",
+      "policies": {
+        "balanced": 3000,
+        "lean": 3000,
+        "strict": 3000
+      },
+      "rows": 9000,
+      "sha256": "8e8244bb5ad7034f6d2a5949503526762895072875998662510d5a3a9b269739"
+    },
+    "validation": {
+      "families": {
+        "migration_planning": 372,
+        "performance_tuning": 171,
+        "policy_compliance": 357
+      },
+      "path": "validation.jsonl",
+      "policies": {
+        "balanced": 300,
+        "lean": 300,
+        "strict": 300
+      },
+      "rows": 900,
+      "sha256": "b6579587f1123c32b58fe5e55ca9516a5e2d94c47e04a1a84405802dfa4f2795"
+    }
+  },
+  "label_method": {
+    "finalizer_model": "evidence synthesis blended with finalizer capability",
+    "hard_constraints": [
+      "max_calls",
+      "max_credits",
+      "max_latency_ms"
+    ],
+    "name": "exhaustive constrained plan search",
+    "quality_target": "minimum_quality",
+    "review_model": "reliability-weighted correction with regression risk",
+    "role_fitness": [
+      "review reliability",
+      "finalizer output quality",
+      "capability strengths"
+    ]
+  },
+  "license": "Apache-2.0 compatible synthetic corpus",
+  "no_user_prompts": true,
+  "schema_version": "loom-conductor-v2",
+  "seed": 20260716,
+  "split_method": "disjoint task families plus balanced policy labels"
+}

@@ -2,7 +2,7 @@
 
 [![GitHub stars](https://img.shields.io/github/stars/usedotai/dot-loom?style=social)](https://github.com/usedotai/dot-loom/stargazers)
 
-[Changelog](CHANGELOG.md) · [Benchmark methodology](docs/BENCHMARKING.md) · [Raw benchmark receipts](docs/benchmarks/)
+[Changelog](CHANGELOG.md) · [Benchmark methodology](docs/BENCHMARKING.md) · [Conductor research](research/ministral-conductor/) · [Raw benchmark receipts](docs/benchmarks/)
 
 **Set a quality target and a cost ceiling. Spend extra inference only when the task earns it.**
 
@@ -38,7 +38,7 @@ Dot Loom is the open R&D surface behind the same systems philosophy as Dot Super
 
 ## Status
 
-This repository is an early technical scaffold. It is suitable for experimentation, demos, local provider tests, and architecture review. It is not yet a benchmarked replacement for commercial multi-agent systems.
+This repository is a testable alpha runtime with reproducible public evaluations and a learned-conductor research track. It is suitable for experiments, demos, provider tests, and architecture review. It is not yet a production replacement for commercial multi-agent systems.
 
 Current maturity: testable alpha.
 
@@ -61,11 +61,12 @@ What works now:
 - BYOK Studio bridge that can run arbitrary role maps without persisting provider keys.
 - Provider cancellation signals for adaptive latency ceilings.
 - Access-list based prior-output gating in adaptive mode.
+- A reproducible Ministral 14B conductor research run with a held-out 1,200-case benchmark, raw predictions, runtime-guard fallback, GPU telemetry, and adapter hashes.
 
 What is not done yet:
 
 - Human-reviewed benchmark results across multiple providers.
-- Learned or continually calibrated routing policies; routing is currently a local deterministic policy.
+- Production integration and continual calibration of the learned conductor; the JavaScript runtime still defaults to its local deterministic policy.
 - Parallel branch execution.
 - Tool-call isolation per worker.
 - Long-term trace corpus and regression dashboard.
@@ -96,6 +97,7 @@ dot-loom/
   docs/
     BENCHMARKING.md                 publication methodology
     STUDIES.md                      research evidence and boundaries
+  research/ministral-conductor/     learned policy source, corpus, receipts, and results
   studio/
     server.mjs                      local Studio bridge
     src/                            React visualization surface
@@ -276,6 +278,50 @@ report.json    complete machine-readable receipt
 ```
 
 Read the [benchmark methodology](docs/BENCHMARKING.md) before publishing performance claims.
+
+## We trained a Mistral model to conduct Loom
+
+![Held-out Dot Loom conductor benchmark](docs/figures/conductor-benchmark-overview.svg)
+
+We trained `mistralai/Ministral-3-14B-Base-2512` to decide when one model is enough and when a task needs independent verification. It does not answer the user. It emits a constrained execution plan: Lean, Balanced, or Strict; writer, reviewer, and finalizer roles; call, credit, and latency budgets; provider independence; and role-access lists.
+
+Provider names are examples, not dependencies. In the retained live demo:
+
+- A low-risk rewrite routes Lean to one local Ministral call at 0.15 estimated credits.
+- A payment-race audit routes Strict: local Ministral writes, Claude reviews, OpenAI finalizes.
+- An SSRF audit routes Strict through the same independently verified three-model path.
+
+The conductor remains model and provider agnostic. The same roles can be OpenAI, Claude, DeepSeek, Qwen, a Dot model, Ollama, or any OpenAI-compatible endpoint.
+
+### Held-out result
+
+The test contains 1,200 balanced synthetic routing cases from eight task families absent from training and validation. Every raw output is published.
+
+| Lane | Policy accuracy | Exact role plan | Hard budgets met | Unsafe under-escalation | Mean utility regret |
+|---|---:|---:|---:|---:|---:|
+| Deterministic Loom | 93.9% | 79.3% | 100.0% | 5.7% | 1.733 |
+| Dot-trained raw proposals | 99.7% | 90.2% | 98.9% | 0.0% | 11.823 |
+| Dot-trained + runtime guard | 100.0% | 90.8% | 100.0% | 0.0% | 0.245 |
+
+The raw model exceeded a hard budget on 13 of 1,200 proposals. Loom's local guard recomputed the plans, rejected those 13, and used the deterministic fallback. We publish both lanes because a learned router should propose and deterministic code should enforce.
+
+Against deterministic Loom, the guarded conductor delivered:
+
+- +11.5 percentage points exact-plan match, paired bootstrap 95% CI +9.4 to +13.7 points
+- +8.8 points quality-target attainment, paired bootstrap 95% CI +7.3 to +10.5 points
+- 86% lower mean utility regret
+- 0% unsafe under-escalation versus 5.7%
+- 1.1% runtime fallback rate
+
+Training used 9,000 synthetic examples and 900 validation examples with no user prompts. Rank-32 BF16 LoRA training took 52.6 minutes on one H200, averaged 96.6% GPU utilization, used 0.588 kWh, and produced a 534.1 MiB adapter. A blinded 90-label OpenAI audit agreed with 84.4% of labels; deterministic validation found that none of its feasible alternatives improved the disclosed oracle utility.
+
+- [Full technical report](research/ministral-conductor/reports/CONDUCTOR-BENCHMARK.md)
+- [Methods and limitations](research/ministral-conductor/docs/METHODS.md)
+- [Raw predictions, scored outputs, and paired statistics](research/ministral-conductor/reports/)
+- [Training, machine, audit, telemetry, and hash receipts](research/ministral-conductor/receipts/)
+- [Reproducible source, corpus, tests, and demo commands](research/ministral-conductor/)
+
+This result measures routing-plan generation against a disclosed synthetic oracle calibrated to the frozen six-case cross-model receipt below. It does not claim end-to-end code-quality improvement or a universal model ranking.
 
 ## OpenAI vs Claude vs Dot baseline benchmark
 
@@ -486,7 +532,7 @@ escalation decision and reason
 actual provider receipts when available
 ```
 
-This is a cold-start policy, not a learned router. The next research step is fitting per-strategy quality and cost predictors from held-out traces.
+This remains the default cold-start policy in the JavaScript runtime. The [Ministral conductor research track](research/ministral-conductor/) now tests learned plan generation behind deterministic guards; the next step is opt-in runtime integration and calibration from measured traces.
 
 ### Baseline
 
@@ -572,18 +618,19 @@ Dot Loom gets close on these primitives:
 - Provider abstraction.
 - Streaming trace and receipts.
 - UI that exposes orchestration instead of hiding it.
+- A trained local 14B conductor research prototype with deterministic runtime fallback.
 
 Dot Loom is still behind on:
 
-- Learned conductor policy.
+- Production serving, integration, and continual calibration of the learned conductor policy.
 - Multi-provider, human-reviewed benchmark corpus.
 - Automatically evolved worker selection.
 - Parallel execution scheduler.
 - Built-in tool sandboxing.
 - Long-run memory and trace learning.
-- Public performance claims.
+- Production performance claims across real user workloads.
 
-The honest framing is: Loom is an open, inspectable scaffold for Fugu-style orchestration experiments. It is not a solved orchestration model.
+The honest framing is: Loom is an open, inspectable orchestration runtime with a promising learned-conductor research result. It is not a solved production orchestration model.
 
 ## Security Notes
 
@@ -641,10 +688,12 @@ Near term:
 - Add LM Studio examples.
 - Add tool-call isolation and explicit tool permissions.
 - Add parallel worker branches.
+- Wire the learned conductor into an opt-in runtime path behind deterministic hard-budget validation.
+- Publish the adapter through a versioned model registry without placing a 534 MiB binary in Git.
 
 Medium term:
 
-- Learn routing policies from trace outcomes.
+- Continually calibrate learned routing policies from measured trace outcomes.
 - Add model-pair calibration for drafter/verifier compatibility.
 - Fit modular per-strategy quality, cost, and latency predictors from held-out traces.
 - Jointly route output-token budgets and strategy depth.
@@ -655,7 +704,7 @@ Long term:
 
 - Evolve role maps automatically.
 - Evolve prompt policies automatically.
-- Train a conductor model for task decomposition.
+- Train conductor variants for task decomposition and tool-aware execution graphs.
 - Support hybrid local plus hosted execution.
 - Publish reproducible benchmarks for orchestration strategies.
 

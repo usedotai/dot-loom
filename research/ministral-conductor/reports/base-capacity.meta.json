@@ -1,0 +1,10 @@
+{
+  "adapter": null,
+  "duration_seconds": 21.126,
+  "examples": 96,
+  "examples_per_second": 4.544265,
+  "gpu": "NVIDIA H200",
+  "lane": "base_ministral",
+  "model": "models/Ministral-3-14B-Base-2512",
+  "peak_gpu_memory_bytes": 43504153600
+}

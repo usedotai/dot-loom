@@ -22,4 +22,8 @@ coverage/
 
 tmp/
 *.tmp
+__pycache__/
+*.pyc
 reports/
+!research/ministral-conductor/reports/
+!research/ministral-conductor/reports/**

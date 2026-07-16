@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="820" viewBox="0 0 1400 820" role="img" aria-labelledby="title desc">
+<title id="title">Independent label audit</title>
+<desc id="desc">A stacked bar separates judge agreements, feasible alternatives, and invalid alternatives.</desc>
+<rect width="1400" height="820" fill="#ffffff"/>
+<style>
+      text { font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif; fill: #172033; }
+      .title { font-size: 30px; font-weight: 700; }
+      .subtitle { font-size: 16px; fill: #687083; }
+      .label { font-size: 15px; font-weight: 600; }
+      .small { font-size: 13px; fill: #687083; }
+      .value { font-size: 14px; font-weight: 700; }
+      .axis { stroke: #d9deea; stroke-width: 1; }
+    </style>
+<text x="70.0" y="58.0" class="title" text-anchor="start">Independent label audit</text>
+<text x="70.0" y="88.0" class="subtitle" text-anchor="start">90 stratified pretraining labels, model identities blinded</text>
+<rect x="110.0" y="250.0" width="996.4" height="100.0" rx="0.0" fill="#2d68c4"/>
+<text x="608.2" y="308.0" class="value" text-anchor="middle">84.4%</text>
+<rect x="1106.4" y="250.0" width="39.3" height="100.0" rx="0.0" fill="#df8b3a"/>
+<rect x="1145.8" y="250.0" width="144.2" height="100.0" rx="0.0" fill="#67758d"/>
+<text x="1217.9" y="308.0" class="value" text-anchor="middle">12.2%</text>
+<circle cx="130.0" cy="425.0" r="8.0" fill="#2d68c4" stroke="#ffffff" stroke-width="2"/>
+<text x="150.0" y="430.0" class="label" text-anchor="start">Judge agreed</text>
+<text x="620.0" y="430.0" class="value" text-anchor="end">76 of 90</text>
+<circle cx="130.0" cy="489.0" r="8.0" fill="#df8b3a" stroke="#ffffff" stroke-width="2"/>
+<text x="150.0" y="494.0" class="label" text-anchor="start">Feasible alternative</text>
+<text x="620.0" y="494.0" class="value" text-anchor="end">3 of 90</text>
+<circle cx="130.0" cy="553.0" r="8.0" fill="#67758d" stroke="#ffffff" stroke-width="2"/>
+<text x="150.0" y="558.0" class="label" text-anchor="start">Invalid or over-budget alternative</text>
+<text x="620.0" y="558.0" class="value" text-anchor="end">11 of 90</text>
+<text x="70.0" y="690.0" class="subtitle" text-anchor="start">Disagreements had to name a complete alternative writer, reviewer, and finalizer plan.</text>
+<text x="70.0" y="720.0" class="subtitle" text-anchor="start">A deterministic validator then checked role uniqueness plus call, credit, and latency limits.</text>
+</svg>

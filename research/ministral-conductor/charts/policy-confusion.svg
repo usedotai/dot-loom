@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="820" viewBox="0 0 1400 820" role="img" aria-labelledby="title desc">
+<title id="title">Policy confusion matrices</title>
+<desc id="desc">Three heatmaps show lean, balanced, strict, and invalid predictions for each benchmark lane.</desc>
+<rect width="1400" height="820" fill="#ffffff"/>
+<style>
+      text { font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif; fill: #172033; }
+      .title { font-size: 30px; font-weight: 700; }
+      .subtitle { font-size: 16px; fill: #687083; }
+      .label { font-size: 15px; font-weight: 600; }
+      .small { font-size: 13px; fill: #687083; }
+      .value { font-size: 14px; font-weight: 700; }
+      .axis { stroke: #d9deea; stroke-width: 1; }
+    </style>
+<text x="70.0" y="58.0" class="title" text-anchor="start">Policy confusion matrices</text>
+<text x="70.0" y="88.0" class="subtitle" text-anchor="start">Rows are oracle policy, columns are predicted policy. Values are row percentages.</text>
+<text x="70.0" y="135.0" class="label" text-anchor="start">Deterministic Loom</text>
+<text x="219.0" y="160.0" class="small" text-anchor="middle">lean</text>
+<text x="297.0" y="160.0" class="small" text-anchor="middle">balanced</text>
+<text x="375.0" y="160.0" class="small" text-anchor="middle">strict</text>
+<text x="453.0" y="160.0" class="small" text-anchor="middle">invalid</text>
+<text x="165.0" y="224.0" class="small" text-anchor="end">lean</text>
+<rect x="180" y="180" width="74" height="74" rx="4" fill="#67758d" fill-opacity="0.900"/>
+<text x="217.0" y="224.0" class="value" text-anchor="middle">100.0%</text>
+<rect x="258" y="180" width="74" height="74" rx="4" fill="#67758d" fill-opacity="0.080"/>
+<text x="295.0" y="224.0" class="value" text-anchor="middle">0.0%</text>
+<rect x="336" y="180" width="74" height="74" rx="4" fill="#67758d" fill-opacity="0.080"/>
+<text x="373.0" y="224.0" class="value" text-anchor="middle">0.0%</text>
+<rect x="414" y="180" width="74" height="74" rx="4" fill="#67758d" fill-opacity="0.080"/>
+<text x="451.0" y="224.0" class="value" text-anchor="middle">0.0%</text>
+<text x="165.0" y="302.0" class="small" text-anchor="end">balanced</text>
+<rect x="180" y="258" width="74" height="74" rx="4" fill="#67758d" fill-opacity="0.080"/>
+<text x="217.0" y="302.0" class="value" text-anchor="middle">0.0%</text>
+<rect x="258" y="258" width="74" height="74" rx="4" fill="#67758d" fill-opacity="0.900"/>
+<text x="295.0" y="302.0" class="value" text-anchor="middle">100.0%</text>
+<rect x="336" y="258" width="74" height="74" rx="4" fill="#67758d" fill-opacity="0.080"/>
+<text x="373.0" y="302.0" class="value" text-anchor="middle">0.0%</text>
+<rect x="414" y="258" width="74" height="74" rx="4" fill="#67758d" fill-opacity="0.080"/>
+<text x="451.0" y="302.0" class="value" text-anchor="middle">0.0%</text>
+<text x="165.0" y="380.0" class="small" text-anchor="end">strict</text>
+<rect x="180" y="336" width="74" height="74" rx="4" fill="#67758d" fill-opacity="0.080"/>
+<text x="217.0" y="380.0" class="value" text-anchor="middle">0.0%</text>
+<rect x="258" y="336" width="74" height="74" rx="4" fill="#67758d" fill-opacity="0.230"/>
+<text x="295.0" y="380.0" class="value" text-anchor="middle">18.2%</text>
+<rect x="336" y="336" width="74" height="74" rx="4" fill="#67758d" fill-opacity="0.750"/>
+<text x="373.0" y="380.0" class="value" text-anchor="middle">81.8%</text>
+<rect x="414" y="336" width="74" height="74" rx="4" fill="#67758d" fill-opacity="0.080"/>
+<text x="451.0" y="380.0" class="value" text-anchor="middle">0.0%</text>
+<text x="515.0" y="135.0" class="label" text-anchor="start">Base Ministral 14B</text>
+<text x="664.0" y="160.0" class="small" text-anchor="middle">lean</text>
+<text x="742.0" y="160.0" class="small" text-anchor="middle">balanced</text>
+<text x="820.0" y="160.0" class="small" text-anchor="middle">strict</text>
+<text x="898.0" y="160.0" class="small" text-anchor="middle">invalid</text>
+<text x="610.0" y="224.0" class="small" text-anchor="end">lean</text>
+<rect x="625" y="180" width="74" height="74" rx="4" fill="#df8b3a" fill-opacity="0.082"/>
+<text x="662.0" y="224.0" class="value" text-anchor="middle">0.2%</text>
+<rect x="703" y="180" width="74" height="74" rx="4" fill="#df8b3a" fill-opacity="0.080"/>
+<text x="740.0" y="224.0" class="value" text-anchor="middle">0.0%</text>
+<rect x="781" y="180" width="74" height="74" rx="4" fill="#df8b3a" fill-opacity="0.080"/>
+<text x="818.0" y="224.0" class="value" text-anchor="middle">0.0%</text>
+<rect x="859" y="180" width="74" height="74" rx="4" fill="#df8b3a" fill-opacity="0.898"/>
+<text x="896.0" y="224.0" class="value" text-anchor="middle">99.8%</text>
+<text x="610.0" y="302.0" class="small" text-anchor="end">balanced</text>
+<rect x="625" y="258" width="74" height="74" rx="4" fill="#df8b3a" fill-opacity="0.080"/>
+<text x="662.0" y="302.0" class="value" text-anchor="middle">0.0%</text>
+<rect x="703" y="258" width="74" height="74" rx="4" fill="#df8b3a" fill-opacity="0.088"/>
+<text x="740.0" y="302.0" class="value" text-anchor="middle">1.0%</text>
+<rect x="781" y="258" width="74" height="74" rx="4" fill="#df8b3a" fill-opacity="0.080"/>
+<text x="818.0" y="302.0" class="value" text-anchor="middle">0.0%</text>
+<rect x="859" y="258" width="74" height="74" rx="4" fill="#df8b3a" fill-opacity="0.892"/>
+<text x="896.0" y="302.0" class="value" text-anchor="middle">99.0%</text>
+<text x="610.0" y="380.0" class="small" text-anchor="end">strict</text>
+<rect x="625" y="336" width="74" height="74" rx="4" fill="#df8b3a" fill-opacity="0.080"/>
+<text x="662.0" y="380.0" class="value" text-anchor="middle">0.0%</text>
+<rect x="703" y="336" width="74" height="74" rx="4" fill="#df8b3a" fill-opacity="0.082"/>
+<text x="740.0" y="380.0" class="value" text-anchor="middle">0.2%</text>
+<rect x="781" y="336" width="74" height="74" rx="4" fill="#df8b3a" fill-opacity="0.080"/>
+<text x="818.0" y="380.0" class="value" text-anchor="middle">0.0%</text>
+<rect x="859" y="336" width="74" height="74" rx="4" fill="#df8b3a" fill-opacity="0.898"/>
+<text x="896.0" y="380.0" class="value" text-anchor="middle">99.8%</text>
+<text x="960.0" y="135.0" class="label" text-anchor="start">Dot-trained + runtime guard</text>
+<text x="1109.0" y="160.0" class="small" text-anchor="middle">lean</text>
+<text x="1187.0" y="160.0" class="small" text-anchor="middle">balanced</text>
+<text x="1265.0" y="160.0" class="small" text-anchor="middle">strict</text>
+<text x="1343.0" y="160.0" class="small" text-anchor="middle">invalid</text>
+<text x="1055.0" y="224.0" class="small" text-anchor="end">lean</text>
+<rect x="1070" y="180" width="74" height="74" rx="4" fill="#2d68c4" fill-opacity="0.900"/>
+<text x="1107.0" y="224.0" class="value" text-anchor="middle">100.0%</text>
+<rect x="1148" y="180" width="74" height="74" rx="4" fill="#2d68c4" fill-opacity="0.080"/>
+<text x="1185.0" y="224.0" class="value" text-anchor="middle">0.0%</text>
+<rect x="1226" y="180" width="74" height="74" rx="4" fill="#2d68c4" fill-opacity="0.080"/>
+<text x="1263.0" y="224.0" class="value" text-anchor="middle">0.0%</text>
+<rect x="1304" y="180" width="74" height="74" rx="4" fill="#2d68c4" fill-opacity="0.080"/>
+<text x="1341.0" y="224.0" class="value" text-anchor="middle">0.0%</text>
+<text x="1055.0" y="302.0" class="small" text-anchor="end">balanced</text>
+<rect x="1070" y="258" width="74" height="74" rx="4" fill="#2d68c4" fill-opacity="0.080"/>
+<text x="1107.0" y="302.0" class="value" text-anchor="middle">0.0%</text>
+<rect x="1148" y="258" width="74" height="74" rx="4" fill="#2d68c4" fill-opacity="0.900"/>
+<text x="1185.0" y="302.0" class="value" text-anchor="middle">100.0%</text>
+<rect x="1226" y="258" width="74" height="74" rx="4" fill="#2d68c4" fill-opacity="0.080"/>
+<text x="1263.0" y="302.0" class="value" text-anchor="middle">0.0%</text>
+<rect x="1304" y="258" width="74" height="74" rx="4" fill="#2d68c4" fill-opacity="0.080"/>
+<text x="1341.0" y="302.0" class="value" text-anchor="middle">0.0%</text>
+<text x="1055.0" y="380.0" class="small" text-anchor="end">strict</text>
+<rect x="1070" y="336" width="74" height="74" rx="4" fill="#2d68c4" fill-opacity="0.080"/>
+<text x="1107.0" y="380.0" class="value" text-anchor="middle">0.0%</text>
+<rect x="1148" y="336" width="74" height="74" rx="4" fill="#2d68c4" fill-opacity="0.080"/>
+<text x="1185.0" y="380.0" class="value" text-anchor="middle">0.0%</text>
+<rect x="1226" y="336" width="74" height="74" rx="4" fill="#2d68c4" fill-opacity="0.900"/>
+<text x="1263.0" y="380.0" class="value" text-anchor="middle">100.0%</text>
+<rect x="1304" y="336" width="74" height="74" rx="4" fill="#2d68c4" fill-opacity="0.080"/>
+<text x="1341.0" y="380.0" class="value" text-anchor="middle">0.0%</text>
+<text x="70.0" y="790.0" class="small" text-anchor="start">Invalid includes non-JSON output, missing roles, duplicate roles, or plans that do not match the declared execution depth.</text>
+</svg>

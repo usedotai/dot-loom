@@ -1,0 +1,3781 @@
+{
+  "results": [
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "Lean is the only proposed plan satisfying the one-call, credit, and latency limits; higher-quality worker_b exceeds the latency cap, while worker_c exceeds credits and latency. Target quality is unattainable within constraints."
+      },
+      "elapsed_ms": 5712.869,
+      "id": "synthetic-content_revision-001962",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4321,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "lean",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"Lean is the only proposed plan satisfying the one-call, credit, and latency limits; higher-quality worker_b exceeds the latency cap, while worker_c exceeds credits and latency. Target quality is unattainable within constraints.\"}",
+      "usage": {
+        "cache_creation_input_tokens": 1726,
+        "completion_tokens": 211,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 115
+        },
+        "prompt_tokens": 1856,
+        "prompt_tokens_details": {
+          "cache_creation_input_tokens": 1726,
+          "cached_tokens": 0
+        },
+        "total_tokens": 2067
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "Lean single-call routing fits the one-call, credit, and latency limits; worker_b is the only feasible option and meets the stated quality target."
+      },
+      "elapsed_ms": 6203.998,
+      "id": "synthetic-content_revision-003962",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4309,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "lean",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"Lean single-call routing fits the one-call, credit, and latency limits; worker_b is the only feasible option and meets the stated quality target.\"}",
+      "usage": {
+        "completion_tokens": 207,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 125
+        },
+        "prompt_tokens": 709,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 916
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "Lean single-call routing to worker_b is the only feasible option under the 3.927-credit and 29,988 ms limits; higher-quality workers exceed both budget and/or latency constraints. The below-target quality is an explicit feasibility tradeoff, not a hard-constraint violation."
+      },
+      "elapsed_ms": 4373.518,
+      "id": "synthetic-content_revision-007626",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4320,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "lean",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"Lean single-call routing to worker_b is the only feasible option under the 3.927-credit and 29,988 ms limits; higher-quality workers exceed both budget and/or latency constraints. The below-target quality is an explicit feasibility tradeoff, not a hard-constraint violation.\"}",
+      "usage": {
+        "completion_tokens": 221,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 112
+        },
+        "prompt_tokens": 714,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 935
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "Lean one-call routing is the only option within the 1.995-credit and 34,818-ms limits; higher-quality workers exceed the credit budget. It is feasible but expected quality remains below the target."
+      },
+      "elapsed_ms": 4604.09,
+      "id": "synthetic-data_analysis-000558",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4326,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "lean",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"Lean one-call routing is the only option within the 1.995-credit and 34,818-ms limits; higher-quality workers exceed the credit budget. It is feasible but expected quality remains below the target.\"}",
+      "usage": {
+        "completion_tokens": 237,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 142
+        },
+        "prompt_tokens": 709,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 946
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "Lean routing to worker_c is the only option within the 2.236-credit and 28,140-ms limits; its quality is below target, but the plan correctly flags that no feasible candidate meets the target."
+      },
+      "elapsed_ms": 4652.016,
+      "id": "synthetic-data_analysis-001294",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4306,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "lean",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"Lean routing to worker_c is the only option within the 2.236-credit and 28,140-ms limits; its quality is below target, but the plan correctly flags that no feasible candidate meets the target.\"}",
+      "usage": {
+        "completion_tokens": 204,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 108
+        },
+        "prompt_tokens": 706,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 910
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The proposed lean plan is the only listed option within the 3.55-credit and 36,758 ms hard limits; workers A and B exceed both resource constraints. Quality is below target, but that is explicitly identified as unavoidable under the feasible options."
+      },
+      "elapsed_ms": 4388.784,
+      "id": "synthetic-data_analysis-001918",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4271,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "lean",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The proposed lean plan is the only listed option within the 3.55-credit and 36,758 ms hard limits; workers A and B exceed both resource constraints. Quality is below target, but that is explicitly identified as unavoidable under the feasible options.\"}",
+      "usage": {
+        "completion_tokens": 176,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 72
+        },
+        "prompt_tokens": 712,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 888
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The proposed lean plan is within all stated call, credit, and latency limits; its predicted quality exceeds the target, and the single fast writer fits the evidence-heavy task under the available budget."
+      },
+      "elapsed_ms": 4650.042,
+      "id": "synthetic-data_analysis-005494",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4283,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "lean",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The proposed lean plan is within all stated call, credit, and latency limits; its predicted quality exceeds the target, and the single fast writer fits the evidence-heavy task under the available budget.\"}",
+      "usage": {
+        "completion_tokens": 171,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 80
+        },
+        "prompt_tokens": 710,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 881
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "Lean single-call routing to worker_b is the only option within the 1.473-credit and 28,935 ms limits; alternatives exceed credits or latency. It is below the quality target, but no feasible higher-quality route exists."
+      },
+      "elapsed_ms": 4604.716,
+      "id": "synthetic-data_analysis-006014",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4282,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "lean",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"Lean single-call routing to worker_b is the only option within the 1.473-credit and 28,935 ms limits; alternatives exceed credits or latency. It is below the quality target, but no feasible higher-quality route exists.\"}",
+      "usage": {
+        "completion_tokens": 179,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 79
+        },
+        "prompt_tokens": 712,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 891
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": "lean",
+        "alternative_reviewer": null,
+        "alternative_writer": "worker_b",
+        "hard_constraint_violation": false,
+        "reason": "Balanced routing is feasible: two calls stay within credit and latency limits, and the estimated quality exceeds the target. Independent review is reasonable for anomaly detection and limitations, despite the lower-quality reviewer."
+      },
+      "elapsed_ms": 18528.148,
+      "id": "synthetic-data_analysis-006070",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4269,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "balanced",
+      "raw": "{\"agree\":true,\"alternative_policy\":\"lean\",\"alternative_writer\":\"worker_b\",\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"Balanced routing is feasible: two calls stay within credit and latency limits, and the estimated quality exceeds the target. Independent review is reasonable for anomaly detection and limitations, despite the lower-quality reviewer.\"}",
+      "usage": {
+        "completion_tokens": 340,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 248
+        },
+        "prompt_tokens": 710,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 1050
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The lean plan is the only feasible option: worker_a fits the one-call, credit, and latency limits. Its quality is below target, but higher-quality workers violate credit and/or latency constraints, so no compliant alternative is available."
+      },
+      "elapsed_ms": 20136.373,
+      "id": "synthetic-debugging-001436",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4275,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "lean",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The lean plan is the only feasible option: worker_a fits the one-call, credit, and latency limits. Its quality is below target, but higher-quality workers violate credit and/or latency constraints, so no compliant alternative is available.\"}",
+      "usage": {
+        "completion_tokens": 241,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 142
+        },
+        "prompt_tokens": 710,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 951
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "Strict three-stage routing is feasible within all call, credit, and latency limits; it uses the strongest synthesis worker as finalizer and adds independent review. The quality target is missed, but the plan is identified as the best feasible option."
+      },
+      "elapsed_ms": 4518.292,
+      "id": "synthetic-debugging-001444",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4271,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "strict",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"Strict three-stage routing is feasible within all call, credit, and latency limits; it uses the strongest synthesis worker as finalizer and adds independent review. The quality target is missed, but the plan is identified as the best feasible option.\"}",
+      "usage": {
+        "completion_tokens": 257,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 157
+        },
+        "prompt_tokens": 732,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 989
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": true
+      },
+      "audit": {
+        "agree": false,
+        "alternative_finalizer": null,
+        "alternative_policy": "balanced",
+        "alternative_reviewer": null,
+        "alternative_writer": "worker_a",
+        "hard_constraint_violation": false,
+        "reason": "The proposed route is feasible and respects hard limits, but its predicted quality (0.5377) misses the 0.6182 target. A balanced policy is preferable, though workers B/C exceed the stated credit and/or latency constraints, so no compliant higher-quality route is evident."
+      },
+      "elapsed_ms": 6017.289,
+      "id": "synthetic-debugging-001500",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4268,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "lean",
+      "raw": "{\"agree\":false,\"alternative_policy\":\"balanced\",\"alternative_writer\":\"worker_a\",\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The proposed route is feasible and respects hard limits, but its predicted quality (0.5377) misses the 0.6182 target. A balanced policy is preferable, though workers B/C exceed the stated credit and/or latency constraints, so no compliant higher-quality route is evident.\"}",
+      "usage": {
+        "completion_tokens": 285,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 174
+        },
+        "prompt_tokens": 717,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 1002
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The balanced plan stays within the 2-call, 20.92-credit, and 136279-ms limits, uses the strongest writer for a complex debugging task, and adds independent review while meeting the stated quality target."
+      },
+      "elapsed_ms": 5148.248,
+      "id": "synthetic-debugging-005212",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4321,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "balanced",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The balanced plan stays within the 2-call, 20.92-credit, and 136279-ms limits, uses the strongest writer for a complex debugging task, and adds independent review while meeting the stated quality target.\"}",
+      "usage": {
+        "completion_tokens": 157,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 60
+        },
+        "prompt_tokens": 721,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 878
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "Lean single-call routing is appropriate: worker_b stays within call, credit, and latency limits while the predicted quality exceeds the minimum target; alternatives violate budget or latency constraints."
+      },
+      "elapsed_ms": 5230.827,
+      "id": "synthetic-debugging-005412",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4267,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "lean",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"Lean single-call routing is appropriate: worker_b stays within call, credit, and latency limits while the predicted quality exceeds the minimum target; alternatives violate budget or latency constraints.\"}",
+      "usage": {
+        "completion_tokens": 205,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 118
+        },
+        "prompt_tokens": 712,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 917
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "Balanced two-call plan satisfies all hard constraints: 4.637 credits <= 5.549, 88,391 ms <= 118,896 ms, and estimated quality 0.772 >= 0.7534. Worker B is infeasible on credits, while A plus independent C review is the strongest feasible allocation."
+      },
+      "elapsed_ms": 4516.966,
+      "id": "synthetic-debugging-006524",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4311,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "balanced",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"Balanced two-call plan satisfies all hard constraints: 4.637 credits <= 5.549, 88,391 ms <= 118,896 ms, and estimated quality 0.772 >= 0.7534. Worker B is infeasible on credits, while A plus independent C review is the strongest feasible allocation.\"}",
+      "usage": {
+        "cache_creation_input_tokens": 1728,
+        "completion_tokens": 261,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 142
+        },
+        "prompt_tokens": 1858,
+        "prompt_tokens_details": {
+          "cache_creation_input_tokens": 1728,
+          "cached_tokens": 0
+        },
+        "total_tokens": 2119
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The proposed three-call strict pipeline fits all stated budgets, meets the quality target, and appropriately adds independent review for an ambiguous, load-sensitive debugging task."
+      },
+      "elapsed_ms": 5838.635,
+      "id": "synthetic-debugging-006548",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4296,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "strict",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The proposed three-call strict pipeline fits all stated budgets, meets the quality target, and appropriately adds independent review for an ambiguous, load-sensitive debugging task.\"}",
+      "usage": {
+        "completion_tokens": 245,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 162
+        },
+        "prompt_tokens": 725,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 970
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The balanced two-call plan stays within the call, credit, and latency limits, uses an inexpensive writer plus an independent reviewer, and meets the stated quality target. Worker B is not feasible under the credit budget."
+      },
+      "elapsed_ms": 4797.572,
+      "id": "synthetic-debugging-006988",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4303,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "balanced",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The balanced two-call plan stays within the call, credit, and latency limits, uses an inexpensive writer plus an independent reviewer, and meets the stated quality target. Worker B is not feasible under the credit budget.\"}",
+      "usage": {
+        "completion_tokens": 203,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 108
+        },
+        "prompt_tokens": 718,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 921
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "Lean routing is the only feasible plan within the one-call, credit, and latency limits; higher-quality workers exceed hard budgets, so the below-target quality is an accepted constraint tradeoff."
+      },
+      "elapsed_ms": 5372.79,
+      "id": "synthetic-debugging-008164",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4320,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "lean",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"Lean routing is the only feasible plan within the one-call, credit, and latency limits; higher-quality workers exceed hard budgets, so the below-target quality is an accepted constraint tradeoff.\"}",
+      "usage": {
+        "completion_tokens": 174,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 84
+        },
+        "prompt_tokens": 714,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 888
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The proposed three-call strict plan stays within call, credit, and latency limits, meets the quality target, and uses independent review/finalization for a complex concurrency debugging task."
+      },
+      "elapsed_ms": 3878.897,
+      "id": "synthetic-debugging-008396",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4323,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "strict",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The proposed three-call strict plan stays within call, credit, and latency limits, meets the quality target, and uses independent review/finalization for a complex concurrency debugging task.\"}",
+      "usage": {
+        "completion_tokens": 188,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 100
+        },
+        "prompt_tokens": 725,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 913
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The strict three-call plan satisfies all stated hard limits: 14.632 credits <= 15.064, 151567 ms <= 216996, and estimated quality 0.8941 >= 0.8064. Its writer-reviewer-finalizer structure also fits the complex debugging task and includes independent verification."
+      },
+      "elapsed_ms": 5372.698,
+      "id": "synthetic-debugging-011156",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4327,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "strict",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The strict three-call plan satisfies all stated hard limits: 14.632 credits <= 15.064, 151567 ms <= 216996, and estimated quality 0.8941 >= 0.8064. Its writer-reviewer-finalizer structure also fits the complex debugging task and includes independent verification.\"}",
+      "usage": {
+        "completion_tokens": 231,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 114
+        },
+        "prompt_tokens": 722,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 953
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "Balanced two-call plan stays within all hard budgets, uses independent review, and its estimated quality of 0.805 exceeds the 0.7803 target. No stronger feasible alternative is evident from the provided worker data."
+      },
+      "elapsed_ms": 4952.381,
+      "id": "synthetic-debugging-011284",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4274,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "balanced",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"Balanced two-call plan stays within all hard budgets, uses independent review, and its estimated quality of 0.805 exceeds the 0.7803 target. No stronger feasible alternative is evident from the provided worker data.\"}",
+      "usage": {
+        "completion_tokens": 205,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 108
+        },
+        "prompt_tokens": 711,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 916
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "Strict three-stage routing fits the complex, ambiguous concurrency-debugging task and stays within all call, credit, latency, and quality constraints; independent review/finalization is justified."
+      },
+      "elapsed_ms": 5752.811,
+      "id": "synthetic-debugging-012100",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4274,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "strict",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"Strict three-stage routing fits the complex, ambiguous concurrency-debugging task and stays within all call, credit, latency, and quality constraints; independent review/finalization is justified.\"}",
+      "usage": {
+        "completion_tokens": 220,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 132
+        },
+        "prompt_tokens": 722,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 942
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The strict three-stage plan stays within the call, credit, and latency caps, uses independent verification, and meets the stated quality target."
+      },
+      "elapsed_ms": 4959.259,
+      "id": "synthetic-debugging-012204",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4285,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "strict",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The strict three-stage plan stays within the call, credit, and latency caps, uses independent verification, and meets the stated quality target.\"}",
+      "usage": {
+        "completion_tokens": 184,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 104
+        },
+        "prompt_tokens": 726,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 910
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "Proposed two-call plan stays within credit, latency, and call limits; it uses the strongest implementation/reasoning worker for drafting and a capable independent reviewer, and meets the stated quality target. No routing change is necessary."
+      },
+      "elapsed_ms": 5482.406,
+      "id": "synthetic-debugging-012788",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4333,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "balanced",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"Proposed two-call plan stays within credit, latency, and call limits; it uses the strongest implementation/reasoning worker for drafting and a capable independent reviewer, and meets the stated quality target. No routing change is necessary.\"}",
+      "usage": {
+        "completion_tokens": 273,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 175
+        },
+        "prompt_tokens": 727,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 1000
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The proposed balanced plan is within all stated call, credit, and latency limits; it uses the strongest implementation/reasoning worker plus independent review, and its estimated quality and pass rate meet the targets."
+      },
+      "elapsed_ms": 10548.752,
+      "id": "synthetic-debugging-013260",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4264,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "balanced",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The proposed balanced plan is within all stated call, credit, and latency limits; it uses the strongest implementation/reasoning worker plus independent review, and its estimated quality and pass rate meet the targets.\"}",
+      "usage": {
+        "completion_tokens": 170,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 77
+        },
+        "prompt_tokens": 710,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 880
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The balanced two-call plan fits the call, credit, and latency budgets, uses independent verification, and meets the stated quality target. Worker B is a strong reviewer while worker A provides a lower-cost draft."
+      },
+      "elapsed_ms": 5687.056,
+      "id": "synthetic-debugging-013716",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4297,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "balanced",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The balanced two-call plan fits the call, credit, and latency budgets, uses independent verification, and meets the stated quality target. Worker B is a strong reviewer while worker A provides a lower-cost draft.\"}",
+      "usage": {
+        "completion_tokens": 177,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 83
+        },
+        "prompt_tokens": 711,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 888
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The strict three-call plan fits all hard limits: 18.626/19.654 credits and 174611/238796 ms, meets the quality target, and provides independent review before synthesis."
+      },
+      "elapsed_ms": 4170.366,
+      "id": "synthetic-debugging-015276",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4343,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "strict",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The strict three-call plan fits all hard limits: 18.626/19.654 credits and 174611/238796 ms, meets the quality target, and provides independent review before synthesis.\"}",
+      "usage": {
+        "completion_tokens": 209,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 116
+        },
+        "prompt_tokens": 721,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 930
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The proposed three-call strict plan stays within the 23.371-credit and 215885-ms limits, meets the 0.9206 quality target at 0.9235, and includes independent review and verification appropriate for the ambiguity and evidence need."
+      },
+      "elapsed_ms": 5619.148,
+      "id": "synthetic-debugging-016196",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4338,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "strict",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The proposed three-call strict plan stays within the 23.371-credit and 215885-ms limits, meets the 0.9206 quality target at 0.9235, and includes independent review and verification appropriate for the ambiguity and evidence need.\"}",
+      "usage": {
+        "completion_tokens": 173,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 69
+        },
+        "prompt_tokens": 721,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 894
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The proposed two-call plan stays within call, credit, and latency limits. It misses the quality target, but worker_c is infeasible on credits, so balanced drafting plus independent review is the best feasible option."
+      },
+      "elapsed_ms": 4172.912,
+      "id": "synthetic-debugging-016572",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4335,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "balanced",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The proposed two-call plan stays within call, credit, and latency limits. It misses the quality target, but worker_c is infeasible on credits, so balanced drafting plus independent review is the best feasible option.\"}",
+      "usage": {
+        "completion_tokens": 222,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 127
+        },
+        "prompt_tokens": 719,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 941
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The proposed strict three-call plan stays within the call, credit, and latency limits, meets the quality target, and uses reviewer plus finalizer synthesis appropriate for a moderately ambiguous debugging task."
+      },
+      "elapsed_ms": 6267.949,
+      "id": "synthetic-debugging-018628",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4280,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "strict",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The proposed strict three-call plan stays within the call, credit, and latency limits, meets the quality target, and uses reviewer plus finalizer synthesis appropriate for a moderately ambiguous debugging task.\"}",
+      "usage": {
+        "completion_tokens": 340,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 250
+        },
+        "prompt_tokens": 722,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 1062
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": true
+      },
+      "audit": {
+        "agree": false,
+        "alternative_finalizer": "worker_a",
+        "alternative_policy": "strict",
+        "alternative_reviewer": "worker_b",
+        "alternative_writer": "worker_a",
+        "hard_constraint_violation": true,
+        "reason": "The proposed graph fits call, credit, and latency budgets but misses the explicit minimum-quality constraint (0.8793 versus 0.9028). No clearly feasible three-call alternative is shown; worker_a should lead drafting/finalization, with worker_b reviewing if retained."
+      },
+      "elapsed_ms": 6954.038,
+      "id": "synthetic-debugging-019076",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4315,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "strict",
+      "raw": "{\"agree\":false,\"alternative_policy\":\"strict\",\"alternative_writer\":\"worker_a\",\"alternative_reviewer\":\"worker_b\",\"alternative_finalizer\":\"worker_a\",\"hard_constraint_violation\":true,\"reason\":\"The proposed graph fits call, credit, and latency budgets but misses the explicit minimum-quality constraint (0.8793 versus 0.9028). No clearly feasible three-call alternative is shown; worker_a should lead drafting/finalization, with worker_b reviewing if retained.\"}",
+      "usage": {
+        "cache_read_input_tokens": 1747,
+        "completion_tokens": 534,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 423
+        },
+        "prompt_tokens": 1877,
+        "prompt_tokens_details": {
+          "cached_tokens": 1747
+        },
+        "total_tokens": 2411
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The strict three-call plan stays within the call, credit, and latency limits, meets the quality target, and provides reviewer plus finalizer access for independent verification. No hard constraint is violated."
+      },
+      "elapsed_ms": 5092.104,
+      "id": "synthetic-debugging-020068",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4295,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "strict",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The strict three-call plan stays within the call, credit, and latency limits, meets the quality target, and provides reviewer plus finalizer access for independent verification. No hard constraint is violated.\"}",
+      "usage": {
+        "completion_tokens": 257,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 166
+        },
+        "prompt_tokens": 727,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 984
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The lean single-call plan fits all stated limits and is proportionate to a low-risk, low-complexity summarization task."
+      },
+      "elapsed_ms": 5120.176,
+      "id": "synthetic-direct_facts-000057",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4302,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "lean",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The lean single-call plan fits all stated limits and is proportionate to a low-risk, low-complexity summarization task.\"}",
+      "usage": {
+        "completion_tokens": 156,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 77
+        },
+        "prompt_tokens": 708,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 864
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The lean single-call plan satisfies all hard constraints and meets the quality target; the higher-quality alternatives exceed the credit and latency budgets."
+      },
+      "elapsed_ms": 5755.063,
+      "id": "synthetic-direct_facts-000825",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4318,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "lean",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The lean single-call plan satisfies all hard constraints and meets the quality target; the higher-quality alternatives exceed the credit and latency budgets.\"}",
+      "usage": {
+        "completion_tokens": 172,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 93
+        },
+        "prompt_tokens": 704,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 876
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "Lean single-call routing is appropriate: the task is low-risk, low-ambiguity, reversible, and the proposed plan stays within all credit and latency limits while meeting the quality target."
+      },
+      "elapsed_ms": 4439.995,
+      "id": "synthetic-direct_facts-001281",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4335,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "lean",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"Lean single-call routing is appropriate: the task is low-risk, low-ambiguity, reversible, and the proposed plan stays within all credit and latency limits while meeting the quality target.\"}",
+      "usage": {
+        "completion_tokens": 174,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 84
+        },
+        "prompt_tokens": 708,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 882
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The lean single-call plan stays within the call, credit, and latency limits and meets the stated quality target; worker_a is the strongest feasible option under those constraints."
+      },
+      "elapsed_ms": 5093.039,
+      "id": "synthetic-direct_facts-003481",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4304,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "lean",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The lean single-call plan stays within the call, credit, and latency limits and meets the stated quality target; worker_a is the strongest feasible option under those constraints.\"}",
+      "usage": {
+        "completion_tokens": 212,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 126
+        },
+        "prompt_tokens": 710,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 922
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "Balanced routing fits the complex coding task: high-quality worker_b implements, worker_a independently reviews, and the two-call plan stays within credit and latency limits."
+      },
+      "elapsed_ms": 4573.489,
+      "id": "synthetic-feature_implementation-001371",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4287,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "balanced",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"Balanced routing fits the complex coding task: high-quality worker_b implements, worker_a independently reviews, and the two-call plan stays within credit and latency limits.\"}",
+      "usage": {
+        "completion_tokens": 155,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 71
+        },
+        "prompt_tokens": 724,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 879
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": true,
+        "reason": "The lean plan is the only feasible option under the one-call, credit, and latency limits, but its predicted quality (0.7093) is below the required minimum (0.758)."
+      },
+      "elapsed_ms": 5859.92,
+      "id": "synthetic-feature_implementation-004187",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4307,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "lean",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":true,\"reason\":\"The lean plan is the only feasible option under the one-call, credit, and latency limits, but its predicted quality (0.7093) is below the required minimum (0.758).\"}",
+      "usage": {
+        "completion_tokens": 299,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 207
+        },
+        "prompt_tokens": 713,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 1012
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "Balanced routing satisfies the stated call, credit, latency, and quality constraints; worker_a is the strongest implementation writer and worker_c is a suitable reviewer."
+      },
+      "elapsed_ms": 4049.926,
+      "id": "synthetic-feature_implementation-008099",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4340,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "balanced",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"Balanced routing satisfies the stated call, credit, latency, and quality constraints; worker_a is the strongest implementation writer and worker_c is a suitable reviewer.\"}",
+      "usage": {
+        "cache_creation_input_tokens": 1733,
+        "completion_tokens": 218,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 135
+        },
+        "prompt_tokens": 1863,
+        "prompt_tokens_details": {
+          "cache_creation_input_tokens": 1733,
+          "cached_tokens": 0
+        },
+        "total_tokens": 2081
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The balanced plan stays within the 2-call, credit, and latency limits, includes independent review, and meets the stated quality target. Worker C is materially stronger but exceeds the credit cap, so it is not feasible."
+      },
+      "elapsed_ms": 4390.982,
+      "id": "synthetic-feature_implementation-011523",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4286,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "balanced",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The balanced plan stays within the 2-call, credit, and latency limits, includes independent review, and meets the stated quality target. Worker C is materially stronger but exceeds the credit cap, so it is not feasible.\"}",
+      "usage": {
+        "completion_tokens": 246,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 149
+        },
+        "prompt_tokens": 711,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 957
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The proposed two-call writer-plus-reviewer plan stays within credit and latency limits, meets the minimum quality target, and uses independent verification. Worker C exceeds the credit budget, so the selected balanced plan is appropriate."
+      },
+      "elapsed_ms": 4668.472,
+      "id": "synthetic-feature_implementation-012979",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4276,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "balanced",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The proposed two-call writer-plus-reviewer plan stays within credit and latency limits, meets the minimum quality target, and uses independent verification. Worker C exceeds the credit budget, so the selected balanced plan is appropriate.\"}",
+      "usage": {
+        "completion_tokens": 282,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 187
+        },
+        "prompt_tokens": 711,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 993
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": true,
+        "plan": {
+          "access": {
+            "finalizer": [],
+            "reviewer": [],
+            "writer": []
+          },
+          "estimated_credits": 2.986,
+          "estimated_latency_ms": 66074,
+          "finalizer": null,
+          "independent_verification": false,
+          "max_calls": 1,
+          "policy": "lean",
+          "reviewer": null,
+          "writer": "worker_a"
+        },
+        "plan_valid": true,
+        "provided": true
+      },
+      "audit": {
+        "agree": false,
+        "alternative_finalizer": null,
+        "alternative_policy": "lean",
+        "alternative_reviewer": null,
+        "alternative_writer": "worker_a",
+        "hard_constraint_violation": false,
+        "reason": "The proposed two-call plan is below the minimum quality target (0.8274 < 0.8552). A single worker_a call is within all budgets and has the strongest available quality estimate (0.8964); worker_b review appears to reduce expected quality."
+      },
+      "elapsed_ms": 7433.558,
+      "id": "synthetic-feature_implementation-018563",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4309,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "balanced",
+      "raw": "{\"agree\":false,\"alternative_policy\":\"lean\",\"alternative_writer\":\"worker_a\",\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The proposed two-call plan is below the minimum quality target (0.8274 < 0.8552). A single worker_a call is within all budgets and has the strongest available quality estimate (0.8964); worker_b review appears to reduce expected quality.\"}",
+      "usage": {
+        "completion_tokens": 422,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 314
+        },
+        "prompt_tokens": 720,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 1142
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": "worker_b",
+        "alternative_policy": "balanced",
+        "alternative_reviewer": "worker_a",
+        "alternative_writer": "worker_b",
+        "hard_constraint_violation": false,
+        "reason": "The strict three-call plan stays within all hard limits and meets the quality target, with independent review and strong final synthesis. A balanced variant using worker_b for implementation could improve draft quality but is not necessary to validate the proposed routing."
+      },
+      "elapsed_ms": 5988.432,
+      "id": "synthetic-feature_implementation-019379",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4280,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "strict",
+      "raw": "{\"agree\":true,\"alternative_policy\":\"balanced\",\"alternative_writer\":\"worker_b\",\"alternative_reviewer\":\"worker_a\",\"alternative_finalizer\":\"worker_b\",\"hard_constraint_violation\":false,\"reason\":\"The strict three-call plan stays within all hard limits and meets the quality target, with independent review and strong final synthesis. A balanced variant using worker_b for implementation could improve draft quality but is not necessary to validate the proposed routing.\"}",
+      "usage": {
+        "completion_tokens": 268,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 166
+        },
+        "prompt_tokens": 721,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 989
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The strict three-call plan stays within call, credit, and latency limits, meets the quality target, and includes independent verification for a consequential production rollback fix."
+      },
+      "elapsed_ms": 3762.64,
+      "id": "synthetic-feature_implementation-020339",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4304,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "strict",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The strict three-call plan stays within call, credit, and latency limits, meets the quality target, and includes independent verification for a consequential production rollback fix.\"}",
+      "usage": {
+        "completion_tokens": 199,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 115
+        },
+        "prompt_tokens": 724,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 923
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": true
+      },
+      "audit": {
+        "agree": false,
+        "alternative_finalizer": null,
+        "alternative_policy": "strict",
+        "alternative_reviewer": "worker_b",
+        "alternative_writer": "worker_a",
+        "hard_constraint_violation": false,
+        "reason": "The two-call, credit, latency, and quality constraints are met, and worker_a plus worker_b is a strong pairing. However, marking independent_verification=true is inconsistent with access reviewer:[\"writer\"], which exposes the reviewer to the draft and creates anchoring risk. Keep the same workers but require an unprim\u200b"
+      },
+      "elapsed_ms": 6556.25,
+      "id": "synthetic-incident_response-000519",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4289,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "balanced",
+      "raw": "{\"agree\":false,\"alternative_policy\":\"strict\",\"alternative_writer\":\"worker_a\",\"alternative_reviewer\":\"worker_b\",\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The two-call, credit, latency, and quality constraints are met, and worker_a plus worker_b is a strong pairing. However, marking independent_verification=true is inconsistent with access reviewer:[\\\"writer\\\"], which exposes the reviewer to the draft and creates anchoring risk. Keep the same workers but require an unprim\u200b\" }",
+      "usage": {
+        "completion_tokens": 446,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 325
+        },
+        "prompt_tokens": 722,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 1168
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "Strict three-stage routing is appropriate for a high-consequence incident-response review requiring independent evidence and verification. It stays within all call, credit, latency, and quality constraints."
+      },
+      "elapsed_ms": 3920.332,
+      "id": "synthetic-incident_response-001439",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4338,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "strict",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"Strict three-stage routing is appropriate for a high-consequence incident-response review requiring independent evidence and verification. It stays within all call, credit, latency, and quality constraints.\"}",
+      "usage": {
+        "completion_tokens": 206,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 119
+        },
+        "prompt_tokens": 730,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 936
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The balanced two-call plan stays within all hard limits, meets the quality target, and adds independent review for a high-risk incident-response task. Its projected quality matches the oracle outcome, so no routing change is warranted."
+      },
+      "elapsed_ms": 5407.647,
+      "id": "synthetic-incident_response-001471",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4266,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "balanced",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The balanced two-call plan stays within all hard limits, meets the quality target, and adds independent review for a high-risk incident-response task. Its projected quality matches the oracle outcome, so no routing change is warranted.\"}",
+      "usage": {
+        "completion_tokens": 338,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 242
+        },
+        "prompt_tokens": 721,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 1059
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The proposed lean plan is the only worker option satisfying the one-call, credit, and latency limits. It meets the stated quality target, and alternatives exceed hard resource constraints."
+      },
+      "elapsed_ms": 6083.096,
+      "id": "synthetic-incident_response-002255",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4349,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "lean",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The proposed lean plan is the only worker option satisfying the one-call, credit, and latency limits. It meets the stated quality target, and alternatives exceed hard resource constraints.\"}",
+      "usage": {
+        "completion_tokens": 275,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 188
+        },
+        "prompt_tokens": 713,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 988
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "Lean routing to worker_a is the only plan within the 2.013-credit and 58.7s limits; higher-quality workers exceed the credit budget, and the below-target outcome is acknowledged rather than a hard-constraint violation."
+      },
+      "elapsed_ms": 9143.8,
+      "id": "synthetic-incident_response-002671",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4277,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "lean",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"Lean routing to worker_a is the only plan within the 2.013-credit and 58.7s limits; higher-quality workers exceed the credit budget, and the below-target outcome is acknowledged rather than a hard-constraint violation.\"}",
+      "usage": {
+        "completion_tokens": 308,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 208
+        },
+        "prompt_tokens": 713,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 1021
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The strict three-call plan stays within call, credit, and latency budgets; its estimated quality exceeds the minimum target and adds independent review/finalization for a high-risk incident task."
+      },
+      "elapsed_ms": 8122.698,
+      "id": "synthetic-incident_response-002887",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4317,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "strict",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The strict three-call plan stays within call, credit, and latency budgets; its estimated quality exceeds the minimum target and adds independent review/finalization for a high-risk incident task.\"}",
+      "usage": {
+        "completion_tokens": 333,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 244
+        },
+        "prompt_tokens": 725,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 1058
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The lean plan is the only clearly feasible option within the 3-call, 3.972-credit, and 50,908 ms limits. Its quality is below target, but worker_a exceeds the latency cap and worker_b exceeds both credit and latency limits; adding review is not feasible without a qualified reviewer route."
+      },
+      "elapsed_ms": 8459.289,
+      "id": "synthetic-incident_response-003951",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4312,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "lean",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The lean plan is the only clearly feasible option within the 3-call, 3.972-credit, and 50,908 ms limits. Its quality is below target, but worker_a exceeds the latency cap and worker_b exceeds both credit and latency limits; adding review is not feasible without a qualified reviewer route.\"}",
+      "usage": {
+        "completion_tokens": 492,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 376
+        },
+        "prompt_tokens": 723,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 1215
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The balanced two-call plan stays within the call, credit, and latency limits, and appropriately uses an independent high-quality reviewer for this complex, high-consequence incident-response task."
+      },
+      "elapsed_ms": 5681.111,
+      "id": "synthetic-incident_response-004263",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4300,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "balanced",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The balanced two-call plan stays within the call, credit, and latency limits, and appropriately uses an independent high-quality reviewer for this complex, high-consequence incident-response task.\"}",
+      "usage": {
+        "completion_tokens": 165,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 77
+        },
+        "prompt_tokens": 725,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 890
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The strict three-stage plan fits all hard budgets: 3 calls, 18.519 credits versus 22.785, and 163644 ms versus 201739 ms. It meets the 0.8028 quality target and includes review plus final synthesis for a consequential incident-response task."
+      },
+      "elapsed_ms": 6945.558,
+      "id": "synthetic-incident_response-004679",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4333,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "strict",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The strict three-stage plan fits all hard budgets: 3 calls, 18.519 credits versus 22.785, and 163644 ms versus 201739 ms. It meets the 0.8028 quality target and includes review plus final synthesis for a consequential incident-response task.\"}",
+      "usage": {
+        "completion_tokens": 255,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 143
+        },
+        "prompt_tokens": 725,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 980
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The strict three-stage plan stays within all stated call, credit, and latency limits and uses independent review plus a high-quality finalizer. The quality target is missed, but the oracle explicitly identifies this as the best feasible option under the credit constraint."
+      },
+      "elapsed_ms": 6054.817,
+      "id": "synthetic-incident_response-005559",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4330,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "strict",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The strict three-stage plan stays within all stated call, credit, and latency limits and uses independent review plus a high-quality finalizer. The quality target is missed, but the oracle explicitly identifies this as the best feasible option under the credit constraint.\"}",
+      "usage": {
+        "completion_tokens": 360,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 258
+        },
+        "prompt_tokens": 733,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 1093
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": true
+      },
+      "audit": {
+        "agree": false,
+        "alternative_finalizer": "worker_c",
+        "alternative_policy": "balanced",
+        "alternative_reviewer": null,
+        "alternative_writer": "worker_a",
+        "hard_constraint_violation": false,
+        "reason": "Plan is within call, credit, and latency limits, but its estimated quality 0.8769 misses the 0.8813 target. A two-call A-to-C path may improve drafting quality while staying within budget and latency, though it removes independent review."
+      },
+      "elapsed_ms": 6238.688,
+      "id": "synthetic-incident_response-006503",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4344,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "strict",
+      "raw": "{\"agree\":false,\"alternative_policy\":\"balanced\",\"alternative_writer\":\"worker_a\",\"alternative_reviewer\":null,\"alternative_finalizer\":\"worker_c\",\"hard_constraint_violation\":false,\"reason\":\"Plan is within call, credit, and latency limits, but its estimated quality 0.8769 misses the 0.8813 target. A two-call A-to-C path may improve drafting quality while staying within budget and latency, though it removes independent review.\"}",
+      "usage": {
+        "completion_tokens": 462,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 354
+        },
+        "prompt_tokens": 733,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 1195
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": true
+      },
+      "audit": {
+        "agree": false,
+        "alternative_finalizer": null,
+        "alternative_policy": "strict",
+        "alternative_reviewer": "worker_a",
+        "alternative_writer": "worker_b",
+        "hard_constraint_violation": false,
+        "reason": "The proposed routing is budget- and latency-feasible, but it assigns the primary draft to the much weaker writer_a despite a high-risk, complex incident task. Reversing roles keeps the same resource envelope while using worker_b's stronger reasoning and writing as the primary output."
+      },
+      "elapsed_ms": 10502.726,
+      "id": "synthetic-incident_response-008071",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4324,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "balanced",
+      "raw": "{\"agree\":false,\"alternative_policy\":\"strict\",\"alternative_writer\":\"worker_b\",\"alternative_reviewer\":\"worker_a\",\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The proposed routing is budget- and latency-feasible, but it assigns the primary draft to the much weaker writer_a despite a high-risk, complex incident task. Reversing roles keeps the same resource envelope while using worker_b's stronger reasoning and writing as the primary output.\"}",
+      "usage": {
+        "completion_tokens": 593,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 483
+        },
+        "prompt_tokens": 721,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 1314
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": {
+          "access": {
+            "finalizer": [],
+            "reviewer": [
+              "writer"
+            ],
+            "writer": []
+          },
+          "estimated_credits": 18.939,
+          "estimated_latency_ms": 132686,
+          "finalizer": null,
+          "independent_verification": true,
+          "max_calls": 2,
+          "policy": "balanced",
+          "reviewer": "worker_a",
+          "writer": "worker_b"
+        },
+        "plan_valid": true,
+        "provided": true
+      },
+      "audit": {
+        "agree": false,
+        "alternative_finalizer": null,
+        "alternative_policy": "balanced",
+        "alternative_reviewer": "worker_a",
+        "alternative_writer": "worker_b",
+        "hard_constraint_violation": false,
+        "reason": "The balanced two-call structure and independent verification fit all hard limits and meet the quality target, but worker_b is a materially stronger, cheaper writer than worker_c. Using worker_b with worker_a as reviewer should improve drafting quality while staying within credits and latency."
+      },
+      "elapsed_ms": 8816.688,
+      "id": "synthetic-incident_response-008959",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4341,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "balanced",
+      "raw": "{\"agree\":false,\"alternative_policy\":\"balanced\",\"alternative_writer\":\"worker_b\",\"alternative_reviewer\":\"worker_a\",\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The balanced two-call structure and independent verification fit all hard limits and meet the quality target, but worker_b is a materially stronger, cheaper writer than worker_c. Using worker_b with worker_a as reviewer should improve drafting quality while staying within credits and latency.\"}",
+      "usage": {
+        "completion_tokens": 328,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 222
+        },
+        "prompt_tokens": 722,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 1050
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The proposed strict three-call DAG stays within all stated limits, meets the minimum quality target, and uses independent review plus final verification for a complex, high-consequence incident-response task."
+      },
+      "elapsed_ms": 4379.54,
+      "id": "synthetic-incident_response-011071",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4277,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "strict",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The proposed strict three-call DAG stays within all stated limits, meets the minimum quality target, and uses independent review plus final verification for a complex, high-consequence incident-response task.\"}",
+      "usage": {
+        "completion_tokens": 178,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 89
+        },
+        "prompt_tokens": 729,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 907
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The proposed strict plan stays within 3 calls, 25.525 credits, and 169174 ms, and preserves independent review for a high-consequence incident. Its estimated quality misses the 0.938 target, but the oracle identifies it as the best feasible option under the stated constraints."
+      },
+      "elapsed_ms": 8833.391,
+      "id": "synthetic-incident_response-011759",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4315,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "strict",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The proposed strict plan stays within 3 calls, 25.525 credits, and 169174 ms, and preserves independent review for a high-consequence incident. Its estimated quality misses the 0.938 target, but the oracle identifies it as the best feasible option under the stated constraints.\"}",
+      "usage": {
+        "completion_tokens": 594,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 482
+        },
+        "prompt_tokens": 724,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 1318
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The balanced plan satisfies all stated call, credit, latency, and quality constraints, and its independent review is appropriate for a high-consequence incident-response task."
+      },
+      "elapsed_ms": 7405.507,
+      "id": "synthetic-incident_response-014319",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4347,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "balanced",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The balanced plan satisfies all stated call, credit, latency, and quality constraints, and its independent review is appropriate for a high-consequence incident-response task.\"}",
+      "usage": {
+        "completion_tokens": 156,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 72
+        },
+        "prompt_tokens": 723,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 879
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": true
+      },
+      "audit": {
+        "agree": false,
+        "alternative_finalizer": null,
+        "alternative_policy": "strict",
+        "alternative_reviewer": null,
+        "alternative_writer": "worker_b",
+        "hard_constraint_violation": false,
+        "reason": "The proposed two-call plan stays within budget and latency but misses the 0.8805 quality target. Prefer the substantially stronger worker_b alone under a strict quality policy; adding worker_c is unlikely to improve reliability enough for this high-consequence incident."
+      },
+      "elapsed_ms": 6295.846,
+      "id": "synthetic-incident_response-015767",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4301,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "balanced",
+      "raw": "{\"agree\":false,\"alternative_policy\":\"strict\",\"alternative_writer\":\"worker_b\",\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The proposed two-call plan stays within budget and latency but misses the 0.8805 quality target. Prefer the substantially stronger worker_b alone under a strict quality policy; adding worker_c is unlikely to improve reliability enough for this high-consequence incident.\"}",
+      "usage": {
+        "completion_tokens": 475,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 371
+        },
+        "prompt_tokens": 723,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 1198
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": true
+      },
+      "audit": {
+        "agree": false,
+        "alternative_finalizer": null,
+        "alternative_policy": "strict",
+        "alternative_reviewer": null,
+        "alternative_writer": "worker_a",
+        "hard_constraint_violation": true,
+        "reason": "The proposed plan is under the minimum quality target (0.7878 vs 0.861), so it violates a stated constraint. Use worker_a as the sole writer: its estimated quality (0.8681) clears the target within budget, though it sacrifices independent verification."
+      },
+      "elapsed_ms": 7205.869,
+      "id": "synthetic-incident_response-016183",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4265,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "balanced",
+      "raw": "{\"agree\":false,\"alternative_policy\":\"strict\",\"alternative_writer\":\"worker_a\",\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":true,\"reason\":\"The proposed plan is under the minimum quality target (0.7878 vs 0.861), so it violates a stated constraint. Use worker_a as the sole writer: its estimated quality (0.8681) clears the target within budget, though it sacrifices independent verification.\"}",
+      "usage": {
+        "completion_tokens": 385,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 275
+        },
+        "prompt_tokens": 728,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 1113
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "Balanced two-call routing is appropriate for high-consequence incident response: strong writer_a plus independent reviewer_c, with verification, stays within the 2-call, credit, latency, and quality constraints."
+      },
+      "elapsed_ms": 4737.974,
+      "id": "synthetic-incident_response-018151",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4281,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "balanced",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"Balanced two-call routing is appropriate for high-consequence incident response: strong writer_a plus independent reviewer_c, with verification, stays within the 2-call, credit, latency, and quality constraints.\"}",
+      "usage": {
+        "completion_tokens": 175,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 83
+        },
+        "prompt_tokens": 717,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 892
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The strict three-call plan stays within call, credit, and latency limits, meets the quality target, and appropriately uses independent review for a high-risk, consequential incident-response task."
+      },
+      "elapsed_ms": 5842.922,
+      "id": "synthetic-incident_response-019983",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4346,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "strict",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The strict three-call plan stays within call, credit, and latency limits, meets the quality target, and appropriately uses independent review for a high-risk, consequential incident-response task.\"}",
+      "usage": {
+        "completion_tokens": 263,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 175
+        },
+        "prompt_tokens": 725,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 988
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "Strict three-stage routing fits all stated budgets and targets; independent review is appropriate for a high-risk, complex incident response despite the writer's lower estimated quality."
+      },
+      "elapsed_ms": 6209.057,
+      "id": "synthetic-incident_response-020391",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4292,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "strict",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"Strict three-stage routing fits all stated budgets and targets; independent review is appropriate for a high-risk, complex incident response despite the writer's lower estimated quality.\"}",
+      "usage": {
+        "completion_tokens": 169,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 85
+        },
+        "prompt_tokens": 727,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 896
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The proposed balanced plan is feasible within the 2-call, 11.819-credit, and 170154-ms limits. It uses independent drafting and review, and the available higher-quality worker_a exceeds the credit budget. The quality target is missed, but the oracle explicitly identifies this as the best feasible below-target option."
+      },
+      "elapsed_ms": 5928.99,
+      "id": "synthetic-migration_planning-000193",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4274,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "balanced",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The proposed balanced plan is feasible within the 2-call, 11.819-credit, and 170154-ms limits. It uses independent drafting and review, and the available higher-quality worker_a exceeds the credit budget. The quality target is missed, but the oracle explicitly identifies this as the best feasible below-target option.\"}",
+      "usage": {
+        "completion_tokens": 465,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 348
+        },
+        "prompt_tokens": 719,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 1184
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": true
+      },
+      "audit": {
+        "agree": false,
+        "alternative_finalizer": null,
+        "alternative_policy": "strict",
+        "alternative_reviewer": null,
+        "alternative_writer": "worker_a",
+        "hard_constraint_violation": true,
+        "reason": "For a high-risk, high-consequence compliance review with strong evidence needs, lean single-pass drafting is under-verified and misses the quality target. worker_a is the stronger feasible-quality alternative but exceeds both credit and latency limits; worker_b is even less feasible."
+      },
+      "elapsed_ms": 5116.549,
+      "id": "synthetic-policy_compliance-000861",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4332,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "lean",
+      "raw": "{\"agree\":false,\"alternative_policy\":\"strict\",\"alternative_writer\":\"worker_a\",\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":true,\"reason\":\"For a high-risk, high-consequence compliance review with strong evidence needs, lean single-pass drafting is under-verified and misses the quality target. worker_a is the stronger feasible-quality alternative but exceeds both credit and latency limits; worker_b is even less feasible.\"}",
+      "usage": {
+        "completion_tokens": 311,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 205
+        },
+        "prompt_tokens": 715,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 1026
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The lean plan is the only feasible option under the one-call, credit, and latency limits. Its quality is below target, but that is explicitly acknowledged and no eligible alternative fits the constraints."
+      },
+      "elapsed_ms": 6332.556,
+      "id": "synthetic-policy_compliance-000882",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4328,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "lean",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The lean plan is the only feasible option under the one-call, credit, and latency limits. Its quality is below target, but that is explicitly acknowledged and no eligible alternative fits the constraints.\"}",
+      "usage": {
+        "completion_tokens": 197,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 106
+        },
+        "prompt_tokens": 719,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 916
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": true
+      },
+      "audit": {
+        "agree": false,
+        "alternative_finalizer": null,
+        "alternative_policy": "strict",
+        "alternative_reviewer": "worker_b",
+        "alternative_writer": "worker_a",
+        "hard_constraint_violation": false,
+        "reason": "The plan fits call, credit, latency, and quality limits, and worker_a is the stronger reviewer. However, its claimed independent verification is weakened because the reviewer receives the writer output; for this high-consequence compliance audit, strict role separation is preferable, with worker_a drafting and worker_b"
+      },
+      "elapsed_ms": 8591.793,
+      "id": "synthetic-policy_compliance-001197",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4265,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "balanced",
+      "raw": "{\"agree\":false,\"alternative_policy\":\"strict\",\"alternative_writer\":\"worker_a\",\"alternative_reviewer\":\"worker_b\",\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The plan fits call, credit, latency, and quality limits, and worker_a is the stronger reviewer. However, its claimed independent verification is weakened because the reviewer receives the writer output; for this high-consequence compliance audit, strict role separation is preferable, with worker_a drafting and worker_b\"\n\n}",
+      "usage": {
+        "completion_tokens": 550,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 436
+        },
+        "prompt_tokens": 719,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 1269
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "Lean is the only plan within both credit and latency limits; higher-quality workers exceed hard constraints, so the below-target outcome is unavoidable among feasible options."
+      },
+      "elapsed_ms": 5880.595,
+      "id": "synthetic-product_tradeoff-000608",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4301,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "lean",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"Lean is the only plan within both credit and latency limits; higher-quality workers exceed hard constraints, so the below-target outcome is unavoidable among feasible options.\"}",
+      "usage": {
+        "cache_read_input_tokens": 1727,
+        "completion_tokens": 385,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 302
+        },
+        "prompt_tokens": 1857,
+        "prompt_tokens_details": {
+          "cached_tokens": 1727
+        },
+        "total_tokens": 2242
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The lean single-worker plan is appropriate under the hard one-call and 1.197-credit limits; worker_a is the only listed option within budget and latency, and its estimated quality exceeds the target."
+      },
+      "elapsed_ms": 7111.306,
+      "id": "synthetic-product_tradeoff-003184",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4293,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "lean",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The lean single-worker plan is appropriate under the hard one-call and 1.197-credit limits; worker_a is the only listed option within budget and latency, and its estimated quality exceeds the target.\"}",
+      "usage": {
+        "completion_tokens": 189,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 96
+        },
+        "prompt_tokens": 710,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 899
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The lean single-call plan stays within call, credit, and latency limits, and its estimated quality meets the target; the higher-quality alternatives exceed the stated budget or latency constraints."
+      },
+      "elapsed_ms": 5406.497,
+      "id": "synthetic-product_tradeoff-004536",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4262,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "lean",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The lean single-call plan stays within call, credit, and latency limits, and its estimated quality meets the target; the higher-quality alternatives exceed the stated budget or latency constraints.\"}",
+      "usage": {
+        "completion_tokens": 202,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 114
+        },
+        "prompt_tokens": 706,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 908
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "Lean single-worker routing is appropriate under the hard one-call, credit, and latency limits. Worker_a is the only feasible option; the plan meets the stated quality target, though its pass rate is modest."
+      },
+      "elapsed_ms": 4432.324,
+      "id": "synthetic-product_tradeoff-004808",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4310,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "lean",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"Lean single-worker routing is appropriate under the hard one-call, credit, and latency limits. Worker_a is the only feasible option; the plan meets the stated quality target, though its pass rate is modest.\"}",
+      "usage": {
+        "completion_tokens": 234,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 140
+        },
+        "prompt_tokens": 710,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 944
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "Balanced two-call routing is within all hard limits and meets the quality target; the higher-quality writer plus independent low-cost reviewer is a reasonable fit for this moderately complex, ambiguity-heavy product tradeoff."
+      },
+      "elapsed_ms": 4087.667,
+      "id": "synthetic-product_tradeoff-008952",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4325,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "balanced",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"Balanced two-call routing is within all hard limits and meets the quality target; the higher-quality writer plus independent low-cost reviewer is a reasonable fit for this moderately complex, ambiguity-heavy product tradeoff.\"}",
+      "usage": {
+        "completion_tokens": 200,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 108
+        },
+        "prompt_tokens": 717,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 917
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": true,
+        "plan": {
+          "access": {
+            "finalizer": [],
+            "reviewer": [],
+            "writer": []
+          },
+          "estimated_credits": 3.771,
+          "estimated_latency_ms": 73889,
+          "finalizer": null,
+          "independent_verification": false,
+          "max_calls": 1,
+          "policy": "lean",
+          "reviewer": null,
+          "writer": "worker_b"
+        },
+        "plan_valid": true,
+        "provided": true
+      },
+      "audit": {
+        "agree": false,
+        "alternative_finalizer": null,
+        "alternative_policy": "lean",
+        "alternative_reviewer": null,
+        "alternative_writer": "worker_b",
+        "hard_constraint_violation": true,
+        "reason": "The proposed two-call plan stays within calls, credits, and latency, but misses the minimum quality target (0.8327 < 0.8362). A single worker_b call is within budget and has estimated quality 0.8689, so verification with lower-quality worker_c is not worthwhile here."
+      },
+      "elapsed_ms": 6781.117,
+      "id": "synthetic-product_tradeoff-009400",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4332,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "balanced",
+      "raw": "{\"agree\":false,\"alternative_policy\":\"lean\",\"alternative_writer\":\"worker_b\",\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":true,\"reason\":\"The proposed two-call plan stays within calls, credits, and latency, but misses the minimum quality target (0.8327 < 0.8362). A single worker_b call is within budget and has estimated quality 0.8689, so verification with lower-quality worker_c is not worthwhile here.\"}",
+      "usage": {
+        "completion_tokens": 455,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 339
+        },
+        "prompt_tokens": 721,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 1176
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The proposed three-call plan stays within the call, credit, latency, and quality constraints, and its writer-reviewer-finalizer sequence provides independent verification for an ambiguous product tradeoff."
+      },
+      "elapsed_ms": 6000.25,
+      "id": "synthetic-product_tradeoff-012864",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4298,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "strict",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The proposed three-call plan stays within the call, credit, latency, and quality constraints, and its writer-reviewer-finalizer sequence provides independent verification for an ambiguous product tradeoff.\"}",
+      "usage": {
+        "completion_tokens": 176,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 87
+        },
+        "prompt_tokens": 725,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 901
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The balanced two-call plan satisfies every stated hard limit: 2 calls, 15.026 credits <= 15.177, and 110287 ms <= 174820 ms. Its estimated quality of 0.8918 exceeds the 0.8807 target, and the oracle confirms the target is met."
+      },
+      "elapsed_ms": 4081.818,
+      "id": "synthetic-product_tradeoff-017400",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4339,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "balanced",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The balanced two-call plan satisfies every stated hard limit: 2 calls, 15.026 credits <= 15.177, and 110287 ms <= 174820 ms. Its estimated quality of 0.8918 exceeds the 0.8807 target, and the oracle confirms the target is met.\"}",
+      "usage": {
+        "completion_tokens": 237,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 120
+        },
+        "prompt_tokens": 727,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 964
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The proposed balanced two-call plan stays within call, credit, and latency limits, meets the quality target, and uses independent review with writer worker_b and reviewer worker_c."
+      },
+      "elapsed_ms": 5206.049,
+      "id": "synthetic-research_synthesis-000117",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4306,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "balanced",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The proposed balanced two-call plan stays within call, credit, and latency limits, meets the quality target, and uses independent review with writer worker_b and reviewer worker_c.\"}",
+      "usage": {
+        "completion_tokens": 181,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 94
+        },
+        "prompt_tokens": 715,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 896
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "Lean routing to worker_a is the only feasible option within the 1.133-credit and 35,007-ms limits. It misses the quality target, but higher-quality workers violate hard budget/latency constraints; no feasible alternative improves expected utility."
+      },
+      "elapsed_ms": 4964.313,
+      "id": "synthetic-research_synthesis-002013",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4272,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "lean",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"Lean routing to worker_a is the only feasible option within the 1.133-credit and 35,007-ms limits. It misses the quality target, but higher-quality workers violate hard budget/latency constraints; no feasible alternative improves expected utility.\"}",
+      "usage": {
+        "completion_tokens": 247,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 144
+        },
+        "prompt_tokens": 720,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 967
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The lean plan is the only feasible one-call option under the credit and latency caps; higher-quality workers exceed both budget and/or latency constraints. It misses the quality target, but no feasible alternative is available."
+      },
+      "elapsed_ms": 5020.107,
+      "id": "synthetic-research_synthesis-002701",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4341,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "lean",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The lean plan is the only feasible one-call option under the credit and latency caps; higher-quality workers exceed both budget and/or latency constraints. It misses the quality target, but no feasible alternative is available.\"}",
+      "usage": {
+        "completion_tokens": 191,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 97
+        },
+        "prompt_tokens": 711,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 902
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "Lean routing is the only feasible option within the 2-call, 2.56-credit, and 27,492-ms limits. Higher-quality workers exceed the credit and latency budgets; the unmet quality target is a feasibility limitation, not a hard-constraint violation."
+      },
+      "elapsed_ms": 23372.19,
+      "id": "synthetic-research_synthesis-005605",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4271,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "lean",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"Lean routing is the only feasible option within the 2-call, 2.56-credit, and 27,492-ms limits. Higher-quality workers exceed the credit and latency budgets; the unmet quality target is a feasibility limitation, not a hard-constraint violation.\"}",
+      "usage": {
+        "completion_tokens": 243,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 137
+        },
+        "prompt_tokens": 718,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 961
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "Lean plan is the only listed worker choice within the 1-call, 2.931-credit, and 33,716 ms limits; higher-quality alternatives exceed budget and/or latency. It knowingly falls below the quality target but violates no hard constraint."
+      },
+      "elapsed_ms": 5169.262,
+      "id": "synthetic-research_synthesis-007077",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4338,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "lean",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"Lean plan is the only listed worker choice within the 1-call, 2.931-credit, and 33,716 ms limits; higher-quality alternatives exceed budget and/or latency. It knowingly falls below the quality target but violates no hard constraint.\"}",
+      "usage": {
+        "completion_tokens": 207,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 104
+        },
+        "prompt_tokens": 712,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 919
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The strict three-call plan stays within all stated hard limits: 17.133/21.66 credits, 162242/179684 ms latency, and quality 0.9351 exceeds the 0.9337 target. It also includes independent review and verification for a high-evidence research synthesis task."
+      },
+      "elapsed_ms": 3904.38,
+      "id": "synthetic-research_synthesis-007557",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4279,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "strict",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The strict three-call plan stays within all stated hard limits: 17.133/21.66 credits, 162242/179684 ms latency, and quality 0.9351 exceeds the 0.9337 target. It also includes independent review and verification for a high-evidence research synthesis task.\"}",
+      "usage": {
+        "cache_read_input_tokens": 1743,
+        "completion_tokens": 222,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 106
+        },
+        "prompt_tokens": 1873,
+        "prompt_tokens_details": {
+          "cached_tokens": 1743
+        },
+        "total_tokens": 2095
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The strict three-call DAG stays within all stated budgets, meets the quality target, and uses distinct provider groups with reviewer and finalizer access for verification."
+      },
+      "elapsed_ms": 5778.79,
+      "id": "synthetic-research_synthesis-012437",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4298,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "strict",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The strict three-call DAG stays within all stated budgets, meets the quality target, and uses distinct provider groups with reviewer and finalizer access for verification.\"}",
+      "usage": {
+        "cache_read_input_tokens": 1741,
+        "completion_tokens": 235,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 152
+        },
+        "prompt_tokens": 1871,
+        "prompt_tokens_details": {
+          "cached_tokens": 1741
+        },
+        "total_tokens": 2106
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The strict three-stage plan stays within all stated caps: 3 calls, 16.674 credits, and 148874 ms versus limits of 3, 19.9, and 209971. Its predicted quality (0.937) exceeds the 0.9163 target. The low-quality writer is a weakness, but reviewer and high-quality finalizer provide appropriate correction and verification."
+      },
+      "elapsed_ms": 6984.713,
+      "id": "synthetic-research_synthesis-013213",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4348,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "strict",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The strict three-stage plan stays within all stated caps: 3 calls, 16.674 credits, and 148874 ms versus limits of 3, 19.9, and 209971. Its predicted quality (0.937) exceeds the 0.9163 target. The low-quality writer is a weakness, but reviewer and high-quality finalizer provide appropriate correction and verification.\"}",
+      "usage": {
+        "completion_tokens": 311,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 178
+        },
+        "prompt_tokens": 725,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 1036
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": true
+      },
+      "audit": {
+        "agree": false,
+        "alternative_finalizer": "worker_a",
+        "alternative_policy": "balanced",
+        "alternative_reviewer": "worker_c",
+        "alternative_writer": "worker_a",
+        "hard_constraint_violation": true,
+        "reason": "The proposed plan is feasible on calls, credits, and latency, but its estimated quality (0.8929) misses the stated minimum (0.9236). It is therefore not fully compliant; worker_a should lead drafting/finalization, with worker_c reviewing if a three-call plan is retained."
+      },
+      "elapsed_ms": 6305.485,
+      "id": "synthetic-research_synthesis-013861",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4284,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "strict",
+      "raw": "{\"agree\":false,\"alternative_policy\":\"balanced\",\"alternative_writer\":\"worker_a\",\"alternative_reviewer\":\"worker_c\",\"alternative_finalizer\":\"worker_a\",\"hard_constraint_violation\":true,\"reason\":\"The proposed plan is feasible on calls, credits, and latency, but its estimated quality (0.8929) misses the stated minimum (0.9236). It is therefore not fully compliant; worker_a should lead drafting/finalization, with worker_c reviewing if a three-call plan is retained.\"}",
+      "usage": {
+        "completion_tokens": 355,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 238
+        },
+        "prompt_tokens": 731,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 1086
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": true,
+        "plan": {
+          "access": {
+            "finalizer": [],
+            "reviewer": [
+              "writer"
+            ],
+            "writer": []
+          },
+          "estimated_credits": 13.668,
+          "estimated_latency_ms": 162022,
+          "finalizer": null,
+          "independent_verification": true,
+          "max_calls": 2,
+          "policy": "balanced",
+          "reviewer": "worker_a",
+          "writer": "worker_c"
+        },
+        "plan_valid": true,
+        "provided": true
+      },
+      "audit": {
+        "agree": false,
+        "alternative_finalizer": null,
+        "alternative_policy": "balanced",
+        "alternative_reviewer": "worker_a",
+        "alternative_writer": "worker_c",
+        "hard_constraint_violation": true,
+        "reason": "The plan stays within calls, credits, and latency, but its estimated quality 0.9097 misses the required 0.9381 target. A higher-quality feasible route is worker_c drafting with worker_a review, omitting a separate finalizer; worker_c's quality is 0.995 and this avoids the weak worker_b draft."
+      },
+      "elapsed_ms": 8403.381,
+      "id": "synthetic-research_synthesis-016429",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4278,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "strict",
+      "raw": "{\"agree\":false,\"alternative_policy\":\"balanced\",\"alternative_writer\":\"worker_c\",\"alternative_reviewer\":\"worker_a\",\"alternative_finalizer\":null,\"hard_constraint_violation\":true,\"reason\":\"The plan stays within calls, credits, and latency, but its estimated quality 0.9097 misses the required 0.9381 target. A higher-quality feasible route is worker_c drafting with worker_a review, omitting a separate finalizer; worker_c's quality is 0.995 and this avoids the weak worker_b draft.\"}",
+      "usage": {
+        "completion_tokens": 640,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 516
+        },
+        "prompt_tokens": 733,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 1373
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The strict three-call chain fits all stated budgets: 19.029 credits <= 22.876, 139,693 ms <= 194,137 ms, and estimated quality 0.9237 exceeds the 0.8116 target. Independent review and final verification are appropriate for the high evidence need and ambiguity."
+      },
+      "elapsed_ms": 5232.049,
+      "id": "synthetic-research_synthesis-017221",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4322,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "strict",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The strict three-call chain fits all stated budgets: 19.029 credits <= 22.876, 139,693 ms <= 194,137 ms, and estimated quality 0.9237 exceeds the 0.8116 target. Independent review and final verification are appropriate for the high evidence need and ambiguity.\"}",
+      "usage": {
+        "completion_tokens": 266,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 148
+        },
+        "prompt_tokens": 731,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 997
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The balanced two-call plan stays within the 15.054-credit and 172,743-ms limits, meets the 0.7686 quality target, and uses the strongest synthesis worker plus a reviewer. No hard constraint is violated."
+      },
+      "elapsed_ms": 5775.333,
+      "id": "synthetic-research_synthesis-018677",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4299,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "balanced",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The balanced two-call plan stays within the 15.054-credit and 172,743-ms limits, meets the 0.7686 quality target, and uses the strongest synthesis worker plus a reviewer. No hard constraint is violated.\"}",
+      "usage": {
+        "completion_tokens": 293,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 193
+        },
+        "prompt_tokens": 717,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 1010
+      }
+    },
+    {
+      "alternative_validation": {
+        "constraint_satisfied": false,
+        "plan": null,
+        "plan_valid": false,
+        "provided": false
+      },
+      "audit": {
+        "agree": true,
+        "alternative_finalizer": null,
+        "alternative_policy": null,
+        "alternative_reviewer": null,
+        "alternative_writer": null,
+        "hard_constraint_violation": false,
+        "reason": "The strict 3-call plan stays within the call, credit, and latency caps; uses independent writer/reviewer evidence plus verification; and meets the stated minimum-quality target. The role assignments match the workers' strengths, with the strongest worker reserved for final synthesis."
+      },
+      "elapsed_ms": 7751.026,
+      "id": "synthetic-research_synthesis-019053",
+      "model": "openai-gpt-5.6-luna",
+      "payment": {
+        "balance_credits": 4350,
+        "refunded_credits": 3,
+        "reserved_credits": 4,
+        "spent_credits": 1
+      },
+      "policy": "strict",
+      "raw": "{\"agree\":true,\"alternative_policy\":null,\"alternative_writer\":null,\"alternative_reviewer\":null,\"alternative_finalizer\":null,\"hard_constraint_violation\":false,\"reason\":\"The strict 3-call plan stays within the call, credit, and latency caps; uses independent writer/reviewer evidence plus verification; and meets the stated minimum-quality target. The role assignments match the workers' strengths, with the strongest worker reserved for final synthesis.\"}",
+      "usage": {
+        "cache_creation_input_tokens": 1746,
+        "completion_tokens": 292,
+        "completion_tokens_details": {
+          "audio_tokens": 0,
+          "image_tokens": 0,
+          "reasoning_tokens": 187
+        },
+        "prompt_tokens": 1876,
+        "prompt_tokens_details": {
+          "cache_creation_input_tokens": 1746,
+          "cached_tokens": 0
+        },
+        "total_tokens": 2168
+      }
+    }
+  ],
+  "summary": {
+    "agreement_count": 76,
+    "agreement_rate": 0.844444,
+    "disagreement_count": 14,
+    "hard_constraint_violations": 7,
+    "invalid_or_infeasible_alternatives": 11,
+    "model": "openai-gpt-5.6-luna",
+    "no_test_labels_audited": true,
+    "no_user_prompts": true,
+    "sample_size": 90,
+    "spent_credits": 90.0,
+    "valid_feasible_alternatives": 3,
+    "valid_json": 90,
+    "validated_disagreement_rate": 0.033333
+  }
+}
