@@ -157,9 +157,9 @@
       "sha256": "dc8b3bd458c59bfedcae30e5674485d2bd4adca00abfaecf8b188c6630726491"
     },
     {
-      "bytes": 141,
+      "bytes": 215,
       "path": "demo/04_live_route.sh",
-      "sha256": "bc0b90c4743d3c6f7602b2502b25737b6caade6f83e61ef3aa8e86d8fe008831"
+      "sha256": "6ccc424f9f98ba8359cc3e9406db9f497f97d3f73ee648a3a545e86b0778cfa1"
     },
     {
       "bytes": 644,
@@ -418,5 +418,5 @@
     }
   ],
   "format": "dot-loom-conductor-results-v1",
-  "total_bytes": 61413193
+  "total_bytes": 61413267
 }
